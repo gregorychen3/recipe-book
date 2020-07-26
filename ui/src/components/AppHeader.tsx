@@ -23,7 +23,7 @@ export default function Dashboard() {
   const classes = useStyles();
 
   return (
-    <AppBar position="absolute" className={classes.appBar}>
+    <AppBar position="absolute" color="inherit" className={classes.appBar}>
       <Toolbar>
         <Typography
           component="h1"
