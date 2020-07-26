@@ -7,13 +7,6 @@ import GitHubIcon from "@material-ui/icons/GitHub";
 import React from "react";
 
 const useStyles = makeStyles((theme) => ({
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
   title: {
     flexGrow: 1,
   },
@@ -23,7 +16,7 @@ export default function Dashboard() {
   const classes = useStyles();
 
   return (
-    <AppBar position="absolute" color="inherit" className={classes.appBar}>
+    <AppBar position="absolute" color="inherit">
       <Toolbar>
         <Typography
           component="h1"
