@@ -60,6 +60,7 @@ export default function Dashboard() {
           variant="h6"
           color="inherit"
           noWrap
+          onClick={navToHome}
           className={classes.title}
         >
           Greg and Ally's Recipe Book
