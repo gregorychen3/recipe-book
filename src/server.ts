@@ -1,4 +1,5 @@
-import express from "express";
+import express, { Request, Response } from "express";
+import createError, { HttpError } from "http-errors";
 import morgan from "morgan";
 import recipeController from "./controllers/recipeController";
 import testController from "./controllers/testController";
@@ -13,8 +14,17 @@ server.use(express.json());
 server.use("/test/", testController);
 server.use("/api/recipes", recipeController);
 
-server.get("/", (req, res) => {
-  res.send("Hello World");
+// catch 404 and forward to error handler
+server.use((req, res, next) => next(createError(404)));
+
+// error handler
+server.use((err: HttpError, req: Request, res: Response) => {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get("env") === "development" ? err : {};
+
+  // render the error page
+  return res.sendStatus(err.status ? err.status : 500);
 });
 
 const PORT = process.env.PORT || 3000;

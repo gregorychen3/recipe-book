@@ -2,7 +2,6 @@ import express, { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { Recipe } from "../db/recipe";
 import { recipeValidation } from "../middlewares/validation";
-import logger from "../logger";
 
 const recipeController = express.Router();
 
@@ -12,8 +11,12 @@ recipeController.get("/", async (_, res) => {
 });
 
 recipeController.get("/:id", async (req, res) => {
-  const recipe = await Recipe.findOne({ _id: req.params.id });
-  return recipe ? res.send(recipe) : res.sendStatus(404);
+  try {
+    const recipe = await Recipe.findOne({ _id: req.params.id });
+    return res.send(recipe);
+  } catch (_) {
+    return res.sendStatus(404);
+  }
 });
 
 recipeController.post(
@@ -46,8 +49,15 @@ recipeController.post(
       instructions,
       sources,
     });
-    const newRecipe = await recipe.save();
-    return res.send(newRecipe);
+
+    try {
+      const newRecipe = await recipe.save();
+      return res.send(newRecipe);
+    } catch (e) {
+      return res
+        .status(500)
+        .send({ errors: errors.array({ onlyFirstError: true }) });
+    }
   }
 );
 
