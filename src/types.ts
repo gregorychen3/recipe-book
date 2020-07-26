@@ -17,7 +17,7 @@ export const CuisineValues = [
   "french",
   "asian",
   "other",
-];
+] as const;
 type ICuisine = typeof CuisineValues[number];
 
 export interface IIngredient {
