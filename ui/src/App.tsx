@@ -4,7 +4,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import AppHeader from "./components/AppHeader";
 import Copyright from "./components/Copyright";
 import AboutPage from "./pages/AboutPage";
@@ -46,6 +46,9 @@ export default function App() {
             </Route>
             <Route path="/about">
               <AboutPage />
+            </Route>
+            <Route path="/">
+              <Redirect to="/recipes" />
             </Route>
           </Switch>
           <Grid container spacing={3}></Grid>
