@@ -3,6 +3,7 @@ import morgan from "morgan";
 import testController from "./controllers/testController";
 import logger from "./logger";
 import recipeController from "./controllers/recipeController";
+import "./db/db"; // for side effect of initializing db conn
 
 const server = express();
 

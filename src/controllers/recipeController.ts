@@ -1,8 +1,12 @@
 import express from "express";
+import { Recipe } from "../db/recipe";
 
 const recipeController = express.Router();
 
-recipeController.get("/", (req, res) => res.send("get recipes"));
+recipeController.get("/", async (_, res) => {
+  const recipes = await Recipe.find();
+  return res.send(recipes);
+});
 
 recipeController.get("/:id", (req, res) => {
   const { id } = req.params;
