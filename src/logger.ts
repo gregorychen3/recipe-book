@@ -6,7 +6,10 @@ const logger = winston.createLogger({
   defaultMeta: { service: "recipe-book" },
   transports: [
     new winston.transports.Console({
-      format: winston.format.simple(),
+      format: winston.format.combine(
+        winston.format.colorize(),
+        winston.format.simple()
+      ),
     }),
   ],
 });

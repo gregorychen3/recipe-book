@@ -1,6 +1,10 @@
 import express from "express";
+import logger from "./logger";
+import morgan from "morgan";
 
 const server = express();
+
+server.use(morgan("dev"));
 
 server.get("/", (req, res) => {
   res.send("Hello World");
@@ -8,5 +12,5 @@ server.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
-  console.log(`Server is running in http://localhost:${PORT}`);
+  logger.info(`Server is running in http://localhost:${PORT}`);
 });
