@@ -1,7 +1,6 @@
 import express, { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { IRecipeModel, Recipe } from "../db/recipe";
-import logger from "../logger";
 import { recipeValidation } from "../middlewares/validation";
 
 const recipeController = express.Router();
@@ -12,12 +11,13 @@ recipeController.get("/", async (_, res) => {
 });
 
 recipeController.get("/:id", async (req, res) => {
+  var recipe: IRecipeModel | null;
   try {
-    const recipe = await Recipe.findOne({ _id: req.params.id });
-    return res.send(recipe);
-  } catch (_) {
-    return res.sendStatus(404);
+    recipe = await Recipe.findOne({ _id: req.params.id });
+  } catch (e) {
+    return res.status(400).send(e.message);
   }
+  return recipe ? res.send(recipe) : res.sendStatus(404);
 });
 
 recipeController.post(
@@ -70,7 +70,6 @@ recipeController.post(
     try {
       recipe = await Recipe.findOne({ _id: req.params.id }).exec();
     } catch (e) {
-      logger.warn(e.message);
       return res.status(400).send(e.message);
     }
     if (!recipe) {
@@ -107,9 +106,19 @@ recipeController.post(
   }
 );
 
-recipeController.delete("/:id", (req, res) => {
-  const { id } = req.params;
-  res.send(`delete recipe ${id}`);
+recipeController.delete("/:id", async (req, res) => {
+  let recipe: IRecipeModel | null;
+  try {
+    recipe = await Recipe.findOne({ _id: req.params.id });
+  } catch (e) {
+    return res.status(400).send(e.message);
+  }
+  if (!recipe) {
+    return res.sendStatus(404);
+  }
+
+  const deleted = await recipe.remove();
+  return res.send({ _id: deleted._id });
 });
 
 export default recipeController;
