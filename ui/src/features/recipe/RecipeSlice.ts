@@ -38,3 +38,5 @@ export default recipeSlice.reducer;
 // ---------
 
 export const selectRecipes = (state: RootState) => state.recipe.recipes;
+export const selectRecipe = (recipeId: string) => (state: RootState) =>
+  state.recipe.recipes.find((r) => r._id === recipeId);
