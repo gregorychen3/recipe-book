@@ -49,6 +49,29 @@ const ByCuisineList = ({ recipes }: { recipes: IRecipeModel[] }) => {
   );
 };
 
+const ByCourseList = ({ recipes }: { recipes: IRecipeModel[] }) => {
+  const courses = [...new Set<string>(recipes.map((r) => r.course))];
+  return (
+    <>
+      {courses.map((course) => (
+        <List
+          component="nav"
+          subheader={<ListSubheader component="div">{course}</ListSubheader>}
+        >
+          <Divider />
+          {recipes
+            .filter((r) => r.course === course)
+            .map((r) => (
+              <ListItem button>
+                <ListItemText primary={r.name} />
+              </ListItem>
+            ))}
+        </List>
+      ))}
+    </>
+  );
+};
+
 interface Props {
   groupBy: GroupBy;
 }
@@ -60,6 +83,8 @@ export default function RecipeList({ groupBy }: Props) {
       return <AlphabeticalList recipes={recipes} />;
     case "cuisine":
       return <ByCuisineList recipes={recipes} />;
+    case "course":
+      return <ByCourseList recipes={recipes} />;
     default:
       return null;
   }
