@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import { validationResult } from "express-validator";
 import { Recipe } from "../db/recipe";
 import { recipeValidation } from "../middlewares/validation";
 
@@ -18,6 +19,13 @@ recipeController.post(
   "/",
   recipeValidation,
   async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res
+        .status(400)
+        .send({ errors: errors.array({ onlyFirstError: true }) });
+    }
+
     const {
       name,
       course,
