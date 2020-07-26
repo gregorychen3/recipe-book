@@ -18,4 +18,9 @@ recipeController.post("/:id", (req, res) => {
   res.send(`update recipe ${id}`);
 });
 
+recipeController.delete("/:id", (req, res) => {
+  const { id } = req.params;
+  res.send(`delete recipe ${id}`);
+});
+
 export default recipeController;
