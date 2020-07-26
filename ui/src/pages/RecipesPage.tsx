@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import RecipeList from "../features/recipe/RecipeList";
-import { fetchRecipes, selectRecipes } from "../features/recipe/RecipeSlice";
+import { fetchRecipes } from "../features/recipe/RecipeSlice";
 
 export const GroupByValues = ["course", "cuisine", "alphabetical"] as const;
 export type GroupBy = typeof GroupByValues[number];
@@ -12,8 +12,6 @@ export default function RecipesPage() {
   useEffect(() => {
     d(fetchRecipes());
   }, [d]);
-
-  const recipes = useSelector(selectRecipes);
 
   const { search } = useLocation();
   const getGroupBy = (): GroupBy => {
