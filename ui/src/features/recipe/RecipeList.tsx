@@ -8,8 +8,24 @@ import {
 import _ from "lodash";
 import React from "react";
 import { useSelector } from "react-redux";
+import { IRecipeModel } from "../../../../src/db/recipe";
 import { GroupBy } from "../../pages/RecipesPage";
 import { selectRecipes } from "./RecipeSlice";
+
+const AlphabeticalList = ({ recipes }: { recipes: IRecipeModel[] }) => (
+  <List
+    component="nav"
+    subheader={<ListSubheader component="div">A-Z</ListSubheader>}
+  >
+    <Divider />
+    {_.sortBy(recipes, (r) => r.name).map((r) => (
+      <ListItem button>
+        <ListItemText primary={r.name} />
+      </ListItem>
+    ))}
+  </List>
+);
+
 interface Props {
   groupBy: GroupBy;
 }
@@ -18,19 +34,7 @@ export default function RecipeList({ groupBy }: Props) {
 
   switch (groupBy) {
     case "alphabetical":
-      return (
-        <List
-          component="nav"
-          subheader={<ListSubheader component="div">A-Z</ListSubheader>}
-        >
-          <Divider />
-          {_.sortBy(recipes, (r) => r.name).map((r) => (
-            <ListItem button>
-              <ListItemText primary={r.name} />
-            </ListItem>
-          ))}
-        </List>
-      );
+      return <AlphabeticalList recipes={recipes} />;
     default:
       return null;
   }
