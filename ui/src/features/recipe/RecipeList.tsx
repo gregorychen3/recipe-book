@@ -14,6 +14,7 @@ import { selectRecipes } from "./RecipeSlice";
 
 const AlphabeticalList = ({ recipes }: { recipes: IRecipeModel[] }) => (
   <List
+    dense
     component="nav"
     subheader={<ListSubheader component="div">A-Z</ListSubheader>}
   >
@@ -32,6 +33,7 @@ const ByCuisineList = ({ recipes }: { recipes: IRecipeModel[] }) => {
     <>
       {cuisines.map((cuisine) => (
         <List
+          dense
           component="nav"
           subheader={<ListSubheader component="div">{cuisine}</ListSubheader>}
         >
@@ -55,6 +57,7 @@ const ByCourseList = ({ recipes }: { recipes: IRecipeModel[] }) => {
     <>
       {courses.map((course) => (
         <List
+          dense
           component="nav"
           subheader={<ListSubheader component="div">{course}</ListSubheader>}
         >
