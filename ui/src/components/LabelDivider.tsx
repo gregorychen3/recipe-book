@@ -3,6 +3,7 @@ import clsx from "clsx";
 import React from "react";
 
 const useStyles = makeStyles((theme) => ({
+  container: { paddingBottom: theme.spacing(1) },
   divider: {
     borderBottomWidth: "1px",
     borderBottomStyle: "solid",
@@ -27,20 +28,22 @@ export default function LabelDivider({ label, backgroundColor }: Props) {
     backgroundColor = "default";
   }
   return (
-    <Typography
-      variant="subtitle2"
-      color="textSecondary"
-      align="center"
-      className={classes.divider}
-    >
-      <span
-        className={clsx(classes.label, {
-          [classes.defaultBg]: backgroundColor === "default",
-          [classes.paperBg]: backgroundColor === "paper",
-        })}
+    <div className={classes.container}>
+      <Typography
+        variant="subtitle2"
+        color="textSecondary"
+        align="center"
+        className={classes.divider}
       >
-        {label}
-      </span>
-    </Typography>
+        <span
+          className={clsx(classes.label, {
+            [classes.defaultBg]: backgroundColor === "default",
+            [classes.paperBg]: backgroundColor === "paper",
+          })}
+        >
+          {label}
+        </span>
+      </Typography>
+    </div>
   );
 }
