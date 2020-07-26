@@ -10,7 +10,7 @@ import { selectRecipes } from "./RecipeSlice";
 const AlphabeticalList = ({ recipes }: { recipes: IRecipeModel[] }) => (
   <List dense component="nav" subheader={<LabelDivider label="A-Z" />}>
     {_.sortBy(recipes, (r) => r.name).map((r) => (
-      <ListItem button component="a" href={`recipes/${r._id}`}>
+      <ListItem button component="a" href={`recipes/${r._id}`} key={r._id}>
         <ListItemText primary={r.name} />
       </ListItem>
     ))}
@@ -30,7 +30,12 @@ const ByCuisineList = ({ recipes }: { recipes: IRecipeModel[] }) => {
           {recipes
             .filter((r) => r.cuisine === cuisine)
             .map((r) => (
-              <ListItem button component="a" href={`recipes/${r._id}`}>
+              <ListItem
+                button
+                component="a"
+                href={`recipes/${r._id}`}
+                key={r._id}
+              >
                 <ListItemText primary={r.name} />
               </ListItem>
             ))}
@@ -49,11 +54,17 @@ const ByCourseList = ({ recipes }: { recipes: IRecipeModel[] }) => {
           dense
           component="nav"
           subheader={<LabelDivider label={course.toUpperCase()} />}
+          key={course}
         >
           {recipes
             .filter((r) => r.course === course)
             .map((r) => (
-              <ListItem button component="a" href={`recipes/${r._id}`}>
+              <ListItem
+                button
+                component="a"
+                href={`recipes/${r._id}`}
+                key={r._id}
+              >
                 <ListItemText primary={r.name} />
               </ListItem>
             ))}

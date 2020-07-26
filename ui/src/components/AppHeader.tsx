@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dashboard() {
+export default function AppHeader() {
   const classes = useStyles();
   let history = useHistory();
 
@@ -82,7 +82,7 @@ export default function Dashboard() {
           onClose={handleClose}
         >
           {browseMenuOpts.map(({ label, value }) => (
-            <MenuItem onClick={() => handleGroupByChanged(value)}>
+            <MenuItem onClick={() => handleGroupByChanged(value)} key={value}>
               {label}
             </MenuItem>
           ))}
