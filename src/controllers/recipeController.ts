@@ -13,4 +13,9 @@ recipeController.post("/", (req, res) => {
   res.send("create recipe");
 });
 
+recipeController.post("/:id", (req, res) => {
+  const { id } = req.params;
+  res.send(`update recipe ${id}`);
+});
+
 export default recipeController;
