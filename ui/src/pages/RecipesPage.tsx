@@ -12,8 +12,8 @@ export default function RecipesPage() {
 
   return (
     <>
-      Recipes Page
-      {JSON.stringify(recipes, null, 2)}
+      <div>Recipes Page</div>
+      <pre>{JSON.stringify(recipes, null, 2)}</pre>
     </>
   );
 }
