@@ -49,30 +49,31 @@ export default function Dashboard() {
         >
           Greg and Ally's Recipe Book
         </Typography>
-        <div>
-          <Button onClick={handleMenu} color="inherit">
-            Browse
-            <ExpandMoreIcon fontSize="small" />
-          </Button>
-          <Menu
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            open={open}
-            onClose={handleClose}
-          >
-            {["By Course", "By Cuisine", "A-Z"].map((browseBy) => (
-              <MenuItem onClick={handleClose}>{browseBy}</MenuItem>
-            ))}
-          </Menu>
-        </div>
+        <Button onClick={handleMenu} color="inherit">
+          Browse
+          <ExpandMoreIcon fontSize="small" />
+        </Button>
+        <Menu
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          open={open}
+          onClose={handleClose}
+        >
+          {["By Course", "By Cuisine", "A-Z"].map((browseBy) => (
+            <MenuItem onClick={handleClose}>{browseBy}</MenuItem>
+          ))}
+        </Menu>
+        <Button onClick={handleMenu} color="inherit">
+          Add Recipe
+        </Button>
         <IconButton color="inherit">
           <GitHubIcon />
         </IconButton>
