@@ -1,13 +1,14 @@
 import express from "express";
 import morgan from "morgan";
-import testController from "./controllers/testController";
-import logger from "./logger";
 import recipeController from "./controllers/recipeController";
+import testController from "./controllers/testController";
 import "./db/db"; // for side effect of initializing db conn
+import logger from "./logger";
 
 const server = express();
 
 server.use(morgan("dev"));
+server.use(express.json());
 
 server.use("/test/", testController);
 server.use("/api/recipes", recipeController);

@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { Recipe } from "../db/recipe";
 import { recipeValidation } from "../middlewares/validation";
+import logger from "../logger";
 
 const recipeController = express.Router();
 
