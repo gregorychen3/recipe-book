@@ -20,7 +20,7 @@ const AlphabeticalList = ({ recipes }: { recipes: IRecipeModel[] }) => (
   >
     <Divider />
     {_.sortBy(recipes, (r) => r.name).map((r) => (
-      <ListItem button>
+      <ListItem button component="a" href={`recipes/${r._id}`}>
         <ListItemText primary={r.name} />
       </ListItem>
     ))}
@@ -41,7 +41,7 @@ const ByCuisineList = ({ recipes }: { recipes: IRecipeModel[] }) => {
           {recipes
             .filter((r) => r.cuisine === cuisine)
             .map((r) => (
-              <ListItem button>
+              <ListItem button component="a" href={`recipes/${r._id}`}>
                 <ListItemText primary={r.name} />
               </ListItem>
             ))}
@@ -65,7 +65,7 @@ const ByCourseList = ({ recipes }: { recipes: IRecipeModel[] }) => {
           {recipes
             .filter((r) => r.course === course)
             .map((r) => (
-              <ListItem button>
+              <ListItem button component="a" href={`recipes/${r._id}`}>
                 <ListItemText primary={r.name} />
               </ListItem>
             ))}

@@ -38,11 +38,11 @@ export default function App() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Switch>
-            <Route path="/recipes">
-              <RecipesPage />
-            </Route>
             <Route path="/recipes/:recipeId">
               <RecipePage />
+            </Route>
+            <Route path="/recipes">
+              <RecipesPage />
             </Route>
             <Route path="/about">
               <AboutPage />
