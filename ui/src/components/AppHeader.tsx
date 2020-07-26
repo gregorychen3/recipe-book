@@ -8,6 +8,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,6 +24,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Dashboard() {
+  let history = useHistory();
+
   const classes = useStyles();
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -39,13 +42,15 @@ export default function Dashboard() {
     setAnchorEl(null);
   };
 
+  const navToHome = () => history.push("/");
+
   return (
     <AppBar position="absolute" color="inherit">
       <Toolbar>
         <IconButton
           edge="start"
           color="inherit"
-          //onClick={handleDrawerOpen}
+          onClick={navToHome}
           className={classes.menuButton}
         >
           <RestaurantIcon />
