@@ -68,9 +68,9 @@ export default function Dashboard() {
             open={open}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>By Course</MenuItem>
-            <MenuItem onClick={handleClose}>By Cuisine</MenuItem>
-            <MenuItem onClick={handleClose}>A-Z</MenuItem>
+            {["By Course", "By Cuisine", "A-Z"].map((browseBy) => (
+              <MenuItem onClick={handleClose}>{browseBy}</MenuItem>
+            ))}
           </Menu>
         </div>
         <IconButton color="inherit">
