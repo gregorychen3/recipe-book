@@ -1,24 +1,14 @@
-import {
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
-  ListSubheader,
-} from "@material-ui/core";
+import { List, ListItem, ListItemText } from "@material-ui/core";
 import _ from "lodash";
 import React from "react";
 import { useSelector } from "react-redux";
 import { IRecipeModel } from "../../../../src/db/recipe";
+import LabelDivider from "../../components/LabelDivider";
 import { GroupBy } from "../../pages/RecipesPage";
 import { selectRecipes } from "./RecipeSlice";
 
 const AlphabeticalList = ({ recipes }: { recipes: IRecipeModel[] }) => (
-  <List
-    dense
-    component="nav"
-    subheader={<ListSubheader component="div">A-Z</ListSubheader>}
-  >
-    <Divider />
+  <List dense component="nav" subheader={<LabelDivider label="A-Z" />}>
     {_.sortBy(recipes, (r) => r.name).map((r) => (
       <ListItem button component="a" href={`recipes/${r._id}`}>
         <ListItemText primary={r.name} />
@@ -35,9 +25,8 @@ const ByCuisineList = ({ recipes }: { recipes: IRecipeModel[] }) => {
         <List
           dense
           component="nav"
-          subheader={<ListSubheader component="div">{cuisine}</ListSubheader>}
+          subheader={<LabelDivider label={cuisine} />}
         >
-          <Divider />
           {recipes
             .filter((r) => r.cuisine === cuisine)
             .map((r) => (
@@ -56,12 +45,7 @@ const ByCourseList = ({ recipes }: { recipes: IRecipeModel[] }) => {
   return (
     <>
       {courses.map((course) => (
-        <List
-          dense
-          component="nav"
-          subheader={<ListSubheader component="div">{course}</ListSubheader>}
-        >
-          <Divider />
+        <List dense component="nav" subheader={<LabelDivider label={course} />}>
           {recipes
             .filter((r) => r.course === course)
             .map((r) => (
