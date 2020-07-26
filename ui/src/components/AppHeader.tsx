@@ -7,8 +7,15 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { GroupBy } from "../pages/RecipesPage";
+
+const browseMenuOpts: { label: string; value: GroupBy }[] = [
+  { label: "By Course", value: "course" },
+  { label: "By Cuisine", value: "cuisine" },
+  { label: "A-Z", value: "alphabetical" },
+];
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,25 +31,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Dashboard() {
+  const classes = useStyles();
   let history = useHistory();
 
-  const classes = useStyles();
-  const [auth, setAuth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleChange = (e: any) => {
-    setAuth(e.target.checked);
-  };
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleMenu = (e: any) => {
+  const handleMenu = (e: React.MouseEvent<HTMLElement>) =>
     setAnchorEl(e.currentTarget);
-  };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const handleClose = () => setAnchorEl(null);
 
   const navToHome = () => history.push("/");
+
+  const handleGroupByChanged = (groupBy: GroupBy) => {
+    history.push(`/recipes?groupBy=${groupBy}`);
+    handleClose();
+  };
 
   return (
     <AppBar position="absolute" color="inherit">
@@ -71,25 +75,19 @@ export default function Dashboard() {
         </Button>
         <Menu
           anchorEl={anchorEl}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
           keepMounted
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-          open={open}
+          transformOrigin={{ vertical: "top", horizontal: "right" }}
+          open={!!anchorEl}
           onClose={handleClose}
         >
-          {["By Course", "By Cuisine", "A-Z"].map((browseBy) => (
-            <MenuItem onClick={handleClose}>{browseBy}</MenuItem>
+          {browseMenuOpts.map(({ label, value }) => (
+            <MenuItem onClick={() => handleGroupByChanged(value)}>
+              {label}
+            </MenuItem>
           ))}
         </Menu>
-        <Button onClick={handleMenu} color="inherit">
-          Add Recipe
-        </Button>
+        <Button color="inherit">Add Recipe</Button>
         <IconButton color="inherit">
           <GitHubIcon />
         </IconButton>

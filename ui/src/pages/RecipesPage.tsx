@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { fetchRecipes, selectRecipes } from "../features/recipe/RecipeSlice";
 
-const GroupByValues = ["course", "cuisine", "alphabetical"] as const;
-type GroupBy = typeof GroupByValues[number];
+export const GroupByValues = ["course", "cuisine", "alphabetical"] as const;
+export type GroupBy = typeof GroupByValues[number];
 
 export default function RecipesPage() {
   const d = useDispatch();
