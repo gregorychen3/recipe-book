@@ -53,7 +53,7 @@ interface Props {
   groupBy: GroupBy;
 }
 export default function RecipeList({ groupBy }: Props) {
-  const recipes = useSelector(selectRecipes);
+  const recipes = _.sortBy(useSelector(selectRecipes), (r) => r.name);
 
   switch (groupBy) {
     case "alphabetical":
