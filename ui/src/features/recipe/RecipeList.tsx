@@ -25,7 +25,7 @@ const ByCuisineList = ({ recipes }: { recipes: IRecipeModel[] }) => {
         <List
           dense
           component="nav"
-          subheader={<LabelDivider label={cuisine} />}
+          subheader={<LabelDivider label={cuisine.toUpperCase()} />}
         >
           {recipes
             .filter((r) => r.cuisine === cuisine)
@@ -45,7 +45,11 @@ const ByCourseList = ({ recipes }: { recipes: IRecipeModel[] }) => {
   return (
     <>
       {courses.map((course) => (
-        <List dense component="nav" subheader={<LabelDivider label={course} />}>
+        <List
+          dense
+          component="nav"
+          subheader={<LabelDivider label={course.toUpperCase()} />}
+        >
           {recipes
             .filter((r) => r.course === course)
             .map((r) => (
