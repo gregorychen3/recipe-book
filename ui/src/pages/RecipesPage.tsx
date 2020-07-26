@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import RecipeList from "../features/recipe/RecipeList";
 import { fetchRecipes, selectRecipes } from "../features/recipe/RecipeSlice";
 
 export const GroupByValues = ["course", "cuisine", "alphabetical"] as const;
@@ -30,8 +31,7 @@ export default function RecipesPage() {
   return (
     <>
       <div>Recipes Page</div>
-      <div>{getGroupBy()}</div>
-      <pre>{JSON.stringify(recipes, null, 2)}</pre>
+      <RecipeList groupBy={getGroupBy()} />
     </>
   );
 }
