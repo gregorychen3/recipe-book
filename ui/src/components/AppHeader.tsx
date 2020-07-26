@@ -1,9 +1,10 @@
-import { Menu, MenuItem } from "@material-ui/core";
+import { Button, Menu, MenuItem } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import React from "react";
 
@@ -49,15 +50,10 @@ export default function Dashboard() {
           Greg and Ally's Recipe Book
         </Typography>
         <div>
-          <IconButton
-            aria-label="account of current user"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            onClick={handleMenu}
-            color="inherit"
-          >
-            <GitHubIcon />
-          </IconButton>
+          <Button onClick={handleMenu} color="inherit">
+            Browse
+            <ExpandMoreIcon fontSize="small" />
+          </Button>
           <Menu
             anchorEl={anchorEl}
             anchorOrigin={{
