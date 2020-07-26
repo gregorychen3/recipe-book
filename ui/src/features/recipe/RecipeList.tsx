@@ -6,18 +6,27 @@ import { IRecipeModel } from "../../../../src/db/recipe";
 import LabelDivider from "../../components/LabelDivider";
 import { GroupBy } from "../../pages/RecipesPage";
 import { selectRecipes } from "./RecipeSlice";
+import { useHistory } from "react-router-dom";
 
-const AlphabeticalList = ({ recipes }: { recipes: IRecipeModel[] }) => (
-  <List dense component="nav" subheader={<LabelDivider label="A-Z" />}>
-    {_.sortBy(recipes, (r) => r.name).map((r) => (
-      <ListItem button component="a" href={`recipes/${r._id}`} key={r._id}>
-        <ListItemText primary={r.name} />
-      </ListItem>
-    ))}
-  </List>
-);
+const AlphabeticalList = ({ recipes }: { recipes: IRecipeModel[] }) => {
+  const history = useHistory();
+  return (
+    <List dense component="nav" subheader={<LabelDivider label="A-Z" />}>
+      {_.sortBy(recipes, (r) => r.name).map((r) => (
+        <ListItem
+          button
+          onClick={() => history.push(`recipes/${r._id}`)}
+          key={r._id}
+        >
+          <ListItemText primary={r.name} />
+        </ListItem>
+      ))}
+    </List>
+  );
+};
 
 const ByCuisineList = ({ recipes }: { recipes: IRecipeModel[] }) => {
+  const history = useHistory();
   const cuisines = [...new Set<string>(recipes.map((r) => r.cuisine))];
   return (
     <>
@@ -33,7 +42,7 @@ const ByCuisineList = ({ recipes }: { recipes: IRecipeModel[] }) => {
               <ListItem
                 button
                 component="a"
-                href={`recipes/${r._id}`}
+                onClick={() => history.push(`recipes/${r._id}`)}
                 key={r._id}
               >
                 <ListItemText primary={r.name} />
@@ -46,6 +55,7 @@ const ByCuisineList = ({ recipes }: { recipes: IRecipeModel[] }) => {
 };
 
 const ByCourseList = ({ recipes }: { recipes: IRecipeModel[] }) => {
+  const history = useHistory();
   const courses = [...new Set<string>(recipes.map((r) => r.course))];
   return (
     <>
@@ -62,7 +72,7 @@ const ByCourseList = ({ recipes }: { recipes: IRecipeModel[] }) => {
               <ListItem
                 button
                 component="a"
-                href={`recipes/${r._id}`}
+                onClick={() => history.push(`recipes/${r._id}`)}
                 key={r._id}
               >
                 <ListItemText primary={r.name} />
