@@ -26,10 +26,5 @@ export default function RecipesPage() {
     }
   };
 
-  return (
-    <>
-      <div>Recipes Page</div>
-      <RecipeList groupBy={getGroupBy()} />
-    </>
-  );
+  return <RecipeList groupBy={getGroupBy()} />;
 }
