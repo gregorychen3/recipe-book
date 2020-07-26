@@ -6,6 +6,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import GitHubIcon from "@material-ui/icons/GitHub";
+import RestaurantIcon from "@material-ui/icons/Restaurant";
 import React from "react";
 
 const useStyles = makeStyles((theme) => ({
@@ -41,6 +42,14 @@ export default function Dashboard() {
   return (
     <AppBar position="absolute" color="inherit">
       <Toolbar>
+        <IconButton
+          edge="start"
+          color="inherit"
+          //onClick={handleDrawerOpen}
+          className={classes.menuButton}
+        >
+          <RestaurantIcon />
+        </IconButton>
         <Typography
           component="h1"
           variant="h6"
