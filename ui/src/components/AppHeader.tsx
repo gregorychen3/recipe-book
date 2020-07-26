@@ -68,8 +68,9 @@ export default function Dashboard() {
             open={open}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>My account</MenuItem>
+            <MenuItem onClick={handleClose}>By Course</MenuItem>
+            <MenuItem onClick={handleClose}>By Cuisine</MenuItem>
+            <MenuItem onClick={handleClose}>A-Z</MenuItem>
           </Menu>
         </div>
         <IconButton color="inherit">
