@@ -7,7 +7,7 @@ import { RootState } from "../../app/store";
 // THUNKS
 // ------
 
-const fetchRecipes = createAsyncThunk("users/fetchRecipes", async () => {
+export const fetchRecipes = createAsyncThunk("users/fetchRecipes", async () => {
   const recipes = await apiClient.fetchRecipes();
   return recipes.data;
 });
@@ -37,4 +37,4 @@ export default recipeSlice.reducer;
 // SELECTORS
 // ---------
 
-export const selectCount = (state: RootState) => state.recipe.recipes;
+export const selectRecipes = (state: RootState) => state.recipe.recipes;
