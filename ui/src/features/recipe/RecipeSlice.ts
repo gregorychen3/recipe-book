@@ -3,10 +3,18 @@ import { IRecipeModel } from "../../../../src/db/recipe";
 import apiClient from "../../apiClient";
 import { RootState } from "../../app/store";
 
+//
+// THUNKS
+// ------
+
 const fetchRecipes = createAsyncThunk("users/fetchRecipes", async () => {
   const recipes = await apiClient.fetchRecipes();
   return recipes.data;
 });
+
+//
+// SLICE
+// -----
 
 interface State {
   recipes: IRecipeModel[];
@@ -24,5 +32,9 @@ export const recipeSlice = createSlice({
 });
 
 export default recipeSlice.reducer;
+
+//
+// SELECTORS
+// ---------
 
 export const selectCount = (state: RootState) => state.recipe.recipes;
