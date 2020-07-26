@@ -33,7 +33,7 @@ export default function Dashboard() {
           noWrap
           className={classes.title}
         >
-          Dashboard
+          Greg and Ally's Recipe Book
         </Typography>
         <IconButton color="inherit">
           <Badge badgeContent={4} color="secondary">
