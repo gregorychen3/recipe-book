@@ -34,7 +34,7 @@ export default function App() {
       <AppHeader />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
+        <Container maxWidth="md" className={classes.container}>
           <Switch>
             <Route path="/recipes/:recipeId">
               <RecipePage />
