@@ -28,16 +28,12 @@ export default function ActionMenu(props: Props & ButtonGroupProps) {
       <IconButton size="small" onClick={onDelete}>
         <DeleteOutlineIcon fontSize="small" color="error" />
       </IconButton>
-      {onSave && (
-        <IconButton size="small" onClick={onSave}>
-          <SaveIcon fontSize="small" />
-        </IconButton>
-      )}
-      {onEdit && (
-        <IconButton size="small" onClick={onEdit}>
-          <EditIcon fontSize="small" />
-        </IconButton>
-      )}
+      <IconButton size="small" onClick={onEdit} disabled={!onEdit}>
+        <EditIcon fontSize="small" />
+      </IconButton>
+      <IconButton size="small" onClick={onSave} disabled={!onSave}>
+        <SaveIcon fontSize="small" />
+      </IconButton>
     </ButtonGroup>
   );
 }
