@@ -1,4 +1,11 @@
-import { Grid, makeStyles, Typography } from "@material-ui/core";
+import {
+  Grid,
+  makeStyles,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+} from "@material-ui/core";
 import LanguageIcon from "@material-ui/icons/Language";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
 import React, { useState } from "react";
@@ -8,6 +15,7 @@ import ActionMenu from "../components/ActionMenu";
 import IconText from "../components/IconText";
 import { selectRecipe } from "../features/recipe/RecipeSlice";
 import LabelDivider from "../components/LabelDivider";
+import { formatIngredient } from "../features/recipe/helpers";
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -78,8 +86,29 @@ export default function RecipePage() {
         </Grid>
       </Grid>
       <LabelDivider label="INGREDIENTS" />
+      <List component="ul" dense>
+        {recipe.ingredients.map((i, idx) => (
+          <ListItem>
+            <ListItemText primary={`• ${formatIngredient(i)}`} />
+          </ListItem>
+        ))}
+      </List>
       <LabelDivider label="INSTRUCTIONS" />
+      <List component="ol" dense>
+        {recipe.instructions.map((i, idx) => (
+          <ListItem>
+            <ListItemText primary={`${idx}. ${i}`} />
+          </ListItem>
+        ))}
+      </List>
       <LabelDivider label="SOURCES" />
+      <List component="ul" dense>
+        {recipe.sources.map((s, idx) => (
+          <ListItem>
+            <ListItemText primary={`• ${s}`} />
+          </ListItem>
+        ))}
+      </List>
     </>
   );
 }

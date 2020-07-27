@@ -11,7 +11,7 @@ import { useHistory } from "react-router-dom";
 const AlphabeticalList = ({ recipes }: { recipes: IRecipeModel[] }) => {
   const history = useHistory();
   return (
-    <List dense component="nav" subheader={<LabelDivider label="A-Z" />}>
+    <List dense component="ol" subheader={<LabelDivider label="A-Z" />}>
       {_.sortBy(recipes, (r) => r.name).map((r) => (
         <ListItem
           button
