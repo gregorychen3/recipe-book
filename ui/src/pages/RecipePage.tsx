@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
   header: {
     display: "flex",
     justifyContent: "space-between",
+    margin: theme.spacing(2),
   },
   metadataRow: {
     display: "flex",
@@ -47,7 +48,7 @@ export default function RecipePage() {
           onEdit={() => {}}
           className={classes.hidden}
         />
-        <Typography variant="h6">{recipe.name.toUpperCase()}</Typography>
+        <Typography variant="h4">{recipe.name.toUpperCase()}</Typography>
         <ActionMenu
           onDelete={handleDeleteClicked}
           onEdit={isEditing ? undefined : handleEditClicked}

@@ -18,7 +18,7 @@ import { formatIngredient } from "../../features/recipe/helpers";
 import { isValidURL } from "../../helpers";
 
 const useStyles = makeStyles((theme) => ({
-  gridItem: { padding: theme.spacing(1) },
+  gridItem: { padding: theme.spacing(2) },
 }));
 
 interface Props {
@@ -35,21 +35,27 @@ export default function Recipe({ recipe }: Props) {
   return (
     <>
       <Grid container direction="row">
-        <Grid item xs={6} className={classes.gridItem}>
-          <LabelDivider label="INGREDIENTS" />
-          <TextField
-            label="Servings"
-            type="number"
-            value={servings}
-            onChange={handleServingsChanged}
-          />
-          <List component="ul" dense>
-            {recipe.ingredients.map((i) => (
-              <ListItem>
-                <ListItemText primary={`• ${formatIngredient(i)}`} />
-              </ListItem>
-            ))}
-          </List>
+        <Grid container item xs={6} className={classes.gridItem}>
+          <Grid item xs={12}>
+            <LabelDivider label="INGREDIENTS" />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              label="Servings"
+              type="number"
+              value={servings}
+              onChange={handleServingsChanged}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <List component="ul" dense>
+              {recipe.ingredients.map((i) => (
+                <ListItem>
+                  <ListItemText primary={`• ${formatIngredient(i)}`} />
+                </ListItem>
+              ))}
+            </List>
+          </Grid>
         </Grid>
         <Grid item xs={6} className={classes.gridItem}>
           <LabelDivider label="INSTRUCTIONS" />
