@@ -4,21 +4,32 @@ import {
   List,
   ListItem,
   ListItemText,
+  makeStyles,
+  TextField,
   Typography,
 } from "@material-ui/core";
 import LanguageIcon from "@material-ui/icons/Language";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
-import React from "react";
+import React, { useState } from "react";
 import { IRecipe } from "../../../../src/types";
 import IconText from "../../components/IconText";
 import LabelDivider from "../../components/LabelDivider";
 import { formatIngredient } from "../../features/recipe/helpers";
 import { isValidURL } from "../../helpers";
 
+const useStyles = makeStyles(() => ({}));
+
 interface Props {
   recipe: IRecipe;
 }
 export default function Recipe({ recipe }: Props) {
+  const classes = useStyles();
+
+  const [servings, setServings] = useState(recipe.servings);
+
+  const handleServingsChanged = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setServings(parseInt(e.target.value));
+
   return (
     <>
       <Grid
@@ -41,8 +52,14 @@ export default function Recipe({ recipe }: Props) {
         </Grid>
       </Grid>
       <LabelDivider label="INGREDIENTS" />
+      <TextField
+        label="Servings"
+        type="number"
+        value={servings}
+        onChange={handleServingsChanged}
+      />
       <List component="ul" dense>
-        {recipe.ingredients.map((i, idx) => (
+        {recipe.ingredients.map((i) => (
           <ListItem>
             <ListItemText primary={`• ${formatIngredient(i)}`} />
           </ListItem>
