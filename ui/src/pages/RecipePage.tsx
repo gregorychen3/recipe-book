@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { Redirect, useParams } from "react-router-dom";
 import ActionMenu from "../components/ActionMenu";
 import Recipe from "../features/recipe/Recipe";
+import RecipeForm from "../features/recipe/RecipeForm";
 import { selectRecipe } from "../features/recipe/RecipeSlice";
 
 const useStyles = makeStyles((theme) => ({
@@ -55,7 +56,7 @@ export default function RecipePage() {
           onSave={isEditing ? handleSaveClicked : undefined}
         />
       </div>
-      <Recipe recipe={recipe} />
+      {isEditing ? <RecipeForm recipe={recipe} /> : <Recipe recipe={recipe} />}
     </>
   );
 }
