@@ -3,6 +3,7 @@ import { IRecipe } from "../../../../src/types";
 import { Formik, Form, Field } from "formik";
 import { Button, LinearProgress, Grid } from "@material-ui/core";
 import { TextField } from "formik-material-ui";
+import LabelDivider from "../../components/LabelDivider";
 
 interface Props {
   recipe: IRecipe;
@@ -58,6 +59,20 @@ export default function RecipeForm({ recipe }: Props) {
                 fullWidth
               />
             </Grid>
+
+            <Grid item xs={12}>
+              <LabelDivider label="INSTRUCTIONS" />
+            </Grid>
+            {recipe.instructions.map((i, idx) => (
+              <Grid item xs={12}>
+                <Field
+                  component={TextField}
+                  name={`instructions.${idx}`}
+                  type="string"
+                  fullWidth
+                />
+              </Grid>
+            ))}
           </Grid>
           <br />
           <Field
