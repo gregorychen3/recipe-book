@@ -45,7 +45,11 @@ export default function RecipePage() {
   return (
     <>
       <div className={classes.header}>
-        <ActionMenu onDelete={() => {}} className={classes.hidden} />
+        <ActionMenu
+          onDelete={() => {}}
+          onEdit={() => {}}
+          className={classes.hidden}
+        />
         <Typography variant="h6">{recipe.name.toUpperCase()}</Typography>
         <ActionMenu
           onDelete={handleDeleteClicked}
