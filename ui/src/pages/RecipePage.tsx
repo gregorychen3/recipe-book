@@ -1,12 +1,19 @@
-import { makeStyles, Typography } from "@material-ui/core";
+import { Grid, makeStyles, Typography } from "@material-ui/core";
+import LanguageIcon from "@material-ui/icons/Language";
+import RestaurantIcon from "@material-ui/icons/Restaurant";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Redirect, useParams } from "react-router-dom";
 import ActionMenu from "../components/ActionMenu";
+import IconText from "../components/IconText";
 import { selectRecipe } from "../features/recipe/RecipeSlice";
 
 const useStyles = makeStyles((theme) => ({
   header: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  metadataRow: {
     display: "flex",
     justifyContent: "space-between",
   },
@@ -45,6 +52,26 @@ export default function RecipePage() {
           onSave={isEditing ? handleSaveClicked : undefined}
         />
       </div>
+
+      <Grid
+        container
+        direction="row"
+        alignItems="center"
+        justify="space-around"
+      >
+        <Grid item>
+          <IconText
+            icon={<RestaurantIcon />}
+            text={<Typography variant="subtitle1">{recipe.course}</Typography>}
+          />
+        </Grid>
+        <Grid item>
+          <IconText
+            icon={<LanguageIcon />}
+            text={<Typography variant="subtitle1">{recipe.cuisine}</Typography>}
+          />
+        </Grid>
+      </Grid>
     </>
   );
 }
