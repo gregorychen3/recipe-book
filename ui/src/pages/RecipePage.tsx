@@ -1,10 +1,11 @@
 import {
   Grid,
-  makeStyles,
-  Typography,
+  Link,
   List,
   ListItem,
   ListItemText,
+  makeStyles,
+  Typography,
 } from "@material-ui/core";
 import LanguageIcon from "@material-ui/icons/Language";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
@@ -13,9 +14,10 @@ import { useSelector } from "react-redux";
 import { Redirect, useParams } from "react-router-dom";
 import ActionMenu from "../components/ActionMenu";
 import IconText from "../components/IconText";
-import { selectRecipe } from "../features/recipe/RecipeSlice";
 import LabelDivider from "../components/LabelDivider";
 import { formatIngredient } from "../features/recipe/helpers";
+import { selectRecipe } from "../features/recipe/RecipeSlice";
+import { isValidURL } from "../helpers";
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -105,7 +107,13 @@ export default function RecipePage() {
       <List component="ul" dense>
         {recipe.sources.map((s, idx) => (
           <ListItem>
-            <ListItemText primary={`• ${s}`} />
+            {isValidURL(s) ? (
+              <ListItemText>
+                • <Link href={s}>{s}</Link>
+              </ListItemText>
+            ) : (
+              <ListItemText primary={`• ${s}`} />
+            )}
           </ListItem>
         ))}
       </List>
