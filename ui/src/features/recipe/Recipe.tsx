@@ -3,23 +3,22 @@ import {
   Link,
   List,
   ListItem,
+  ListItemIcon,
   ListItemText,
+  ListSubheader,
   makeStyles,
   TextField,
-  Typography,
 } from "@material-ui/core";
 import LanguageIcon from "@material-ui/icons/Language";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
 import React, { useState } from "react";
 import { IRecipe } from "../../../../src/types";
-import IconText from "../../components/IconText";
 import LabelDivider from "../../components/LabelDivider";
 import { formatIngredient } from "../../features/recipe/helpers";
 import { isValidURL } from "../../helpers";
 
 const useStyles = makeStyles((theme) => ({
-  ingredientsContainer: { paddingRight: theme.spacing(2) },
-  instructionsContainer: { paddingLeft: theme.spacing(2) },
+  gridItem: { padding: theme.spacing(1) },
 }));
 
 interface Props {
@@ -35,28 +34,8 @@ export default function Recipe({ recipe }: Props) {
 
   return (
     <>
-      <Grid
-        container
-        direction="row"
-        alignItems="center"
-        justify="space-around"
-      >
-        <Grid item>
-          <IconText
-            icon={<RestaurantIcon />}
-            text={<Typography variant="subtitle1">{recipe.course}</Typography>}
-          />
-        </Grid>
-        <Grid item>
-          <IconText
-            icon={<LanguageIcon />}
-            text={<Typography variant="subtitle1">{recipe.cuisine}</Typography>}
-          />
-        </Grid>
-      </Grid>
-
       <Grid container direction="row">
-        <Grid item xs={6} className={classes.ingredientsContainer}>
+        <Grid item xs={6} className={classes.gridItem}>
           <LabelDivider label="INGREDIENTS" />
           <TextField
             label="Servings"
@@ -72,7 +51,7 @@ export default function Recipe({ recipe }: Props) {
             ))}
           </List>
         </Grid>
-        <Grid item xs={6} className={classes.instructionsContainer}>
+        <Grid item xs={6} className={classes.gridItem}>
           <LabelDivider label="INSTRUCTIONS" />
           <List component="ol" dense>
             {recipe.instructions.map((i, idx) => (
@@ -84,20 +63,57 @@ export default function Recipe({ recipe }: Props) {
         </Grid>
       </Grid>
 
-      <LabelDivider label="SOURCES" />
-      <List component="ul" dense>
-        {recipe.sources.map((s, idx) => (
-          <ListItem>
-            {isValidURL(s) ? (
-              <ListItemText>
-                • <Link href={s}>{s}</Link>
-              </ListItemText>
-            ) : (
-              <ListItemText primary={`• ${s}`} />
-            )}
-          </ListItem>
-        ))}
-      </List>
+      <Grid container direction="row">
+        <Grid item xs={12}>
+          <LabelDivider label="INFORMATION" />
+        </Grid>
+
+        <Grid item xs={6} className={classes.gridItem}>
+          <List
+            dense
+            component="nav"
+            subheader={<ListSubheader component="div">Cuisine</ListSubheader>}
+          >
+            <ListItem>
+              <ListItemIcon>
+                <LanguageIcon />
+              </ListItemIcon>
+              <ListItemText primary={recipe.cuisine} />
+            </ListItem>
+          </List>
+          <List
+            dense
+            component="nav"
+            subheader={<ListSubheader component="div">Course</ListSubheader>}
+          >
+            <ListItem>
+              <ListItemIcon>
+                <RestaurantIcon />
+              </ListItemIcon>
+              <ListItemText primary={recipe.course} />
+            </ListItem>
+          </List>
+        </Grid>
+        <Grid item xs={6} className={classes.gridItem}>
+          <List
+            dense
+            component="nav"
+            subheader={<ListSubheader component="div">Sources</ListSubheader>}
+          >
+            {recipe.sources.map((s, idx) => (
+              <ListItem>
+                {isValidURL(s) ? (
+                  <ListItemText>
+                    • <Link href={s}>{s}</Link>
+                  </ListItemText>
+                ) : (
+                  <ListItemText primary={`• ${s}`} />
+                )}
+              </ListItem>
+            ))}
+          </List>
+        </Grid>
+      </Grid>
     </>
   );
 }
