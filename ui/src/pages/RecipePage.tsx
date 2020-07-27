@@ -99,7 +99,7 @@ export default function RecipePage() {
       <List component="ol" dense>
         {recipe.instructions.map((i, idx) => (
           <ListItem>
-            <ListItemText primary={`${idx}. ${i}`} />
+            <ListItemText primary={`${idx + 1}. ${i}`} />
           </ListItem>
         ))}
       </List>
