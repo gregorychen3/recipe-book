@@ -1,24 +1,10 @@
-import {
-  Grid,
-  Link,
-  List,
-  ListItem,
-  ListItemText,
-  makeStyles,
-  Typography,
-} from "@material-ui/core";
-import LanguageIcon from "@material-ui/icons/Language";
-import RestaurantIcon from "@material-ui/icons/Restaurant";
+import { makeStyles, Typography } from "@material-ui/core";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Redirect, useParams } from "react-router-dom";
 import ActionMenu from "../components/ActionMenu";
-import IconText from "../components/IconText";
-import LabelDivider from "../components/LabelDivider";
-import { formatIngredient } from "../features/recipe/helpers";
-import { selectRecipe } from "../features/recipe/RecipeSlice";
-import { isValidURL } from "../helpers";
 import Recipe from "../features/recipe/Recipe";
+import { selectRecipe } from "../features/recipe/RecipeSlice";
 
 const useStyles = makeStyles((theme) => ({
   header: {
