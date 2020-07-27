@@ -1,8 +1,8 @@
+import { Grid } from "@material-ui/core";
+import { Field, Form, Formik } from "formik";
+import { TextField } from "formik-material-ui";
 import React from "react";
 import { IRecipe } from "../../../../src/types";
-import { Formik, Form, Field } from "formik";
-import { Button, LinearProgress, Grid } from "@material-ui/core";
-import { TextField } from "formik-material-ui";
 import LabelDivider from "../../components/LabelDivider";
 
 interface Props {
@@ -61,6 +61,42 @@ export default function RecipeForm({ recipe }: Props) {
             </Grid>
 
             <Grid item xs={12}>
+              <LabelDivider label="INGREDIENTS" />
+            </Grid>
+            {recipe.ingredients.map((i, idx) => (
+              <>
+                <Grid item xs={4}>
+                  <Field
+                    component={TextField}
+                    name={`ingredients.${idx}.qty`}
+                    label={idx === 0 ? "Quantity" : undefined}
+                    type="number"
+                    inputProps={{ step: "0.01" }}
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <Field
+                    component={TextField}
+                    name={`ingredients.${idx}.unit`}
+                    label={idx === 0 ? "Unit" : undefined}
+                    type="text"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <Field
+                    component={TextField}
+                    name={`ingredients.${idx}.name`}
+                    label={idx === 0 ? "Name" : undefined}
+                    type="text"
+                    fullWidth
+                  />
+                </Grid>
+              </>
+            ))}
+
+            <Grid item xs={12}>
               <LabelDivider label="INSTRUCTIONS" />
             </Grid>
             {recipe.instructions.map((i, idx) => (
@@ -73,24 +109,21 @@ export default function RecipeForm({ recipe }: Props) {
                 />
               </Grid>
             ))}
+
+            <Grid item xs={12}>
+              <LabelDivider label="SOURCES" />
+            </Grid>
+            {recipe.sources.map((s, idx) => (
+              <Grid item xs={12}>
+                <Field
+                  component={TextField}
+                  name={`sources.${idx}`}
+                  type="string"
+                  fullWidth
+                />
+              </Grid>
+            ))}
           </Grid>
-          <br />
-          <Field
-            component={TextField}
-            type="password"
-            label="Password"
-            name="password"
-          />
-          {isSubmitting && <LinearProgress />}
-          <br />
-          <Button
-            variant="contained"
-            color="primary"
-            disabled={isSubmitting}
-            onClick={submitForm}
-          >
-            Submit
-          </Button>
         </Form>
       )}
     </Formik>
