@@ -17,7 +17,10 @@ import LabelDivider from "../../components/LabelDivider";
 import { formatIngredient } from "../../features/recipe/helpers";
 import { isValidURL } from "../../helpers";
 
-const useStyles = makeStyles(() => ({}));
+const useStyles = makeStyles((theme) => ({
+  ingredientsContainer: { paddingRight: theme.spacing(2) },
+  instructionsContainer: { paddingLeft: theme.spacing(2) },
+}));
 
 interface Props {
   recipe: IRecipe;
@@ -51,28 +54,36 @@ export default function Recipe({ recipe }: Props) {
           />
         </Grid>
       </Grid>
-      <LabelDivider label="INGREDIENTS" />
-      <TextField
-        label="Servings"
-        type="number"
-        value={servings}
-        onChange={handleServingsChanged}
-      />
-      <List component="ul" dense>
-        {recipe.ingredients.map((i) => (
-          <ListItem>
-            <ListItemText primary={`• ${formatIngredient(i)}`} />
-          </ListItem>
-        ))}
-      </List>
-      <LabelDivider label="INSTRUCTIONS" />
-      <List component="ol" dense>
-        {recipe.instructions.map((i, idx) => (
-          <ListItem>
-            <ListItemText primary={`${idx + 1}. ${i}`} />
-          </ListItem>
-        ))}
-      </List>
+
+      <Grid container direction="row">
+        <Grid item xs={6} className={classes.ingredientsContainer}>
+          <LabelDivider label="INGREDIENTS" />
+          <TextField
+            label="Servings"
+            type="number"
+            value={servings}
+            onChange={handleServingsChanged}
+          />
+          <List component="ul" dense>
+            {recipe.ingredients.map((i) => (
+              <ListItem>
+                <ListItemText primary={`• ${formatIngredient(i)}`} />
+              </ListItem>
+            ))}
+          </List>
+        </Grid>
+        <Grid item xs={6} className={classes.instructionsContainer}>
+          <LabelDivider label="INSTRUCTIONS" />
+          <List component="ol" dense>
+            {recipe.instructions.map((i, idx) => (
+              <ListItem>
+                <ListItemText primary={`${idx + 1}. ${i}`} />
+              </ListItem>
+            ))}
+          </List>
+        </Grid>
+      </Grid>
+
       <LabelDivider label="SOURCES" />
       <List component="ul" dense>
         {recipe.sources.map((s, idx) => (
