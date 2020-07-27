@@ -1,4 +1,3 @@
-import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
@@ -6,7 +5,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import AppHeader from "./components/AppHeader";
-import Copyright from "./components/Copyright";
 import AboutPage from "./pages/AboutPage";
 import RecipePage from "./pages/RecipePage";
 import RecipesPage from "./pages/RecipesPage";
@@ -52,9 +50,6 @@ export default function App() {
             </Route>
           </Switch>
           <Grid container spacing={3}></Grid>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
         </Container>
       </main>
     </div>
