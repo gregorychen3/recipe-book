@@ -6,14 +6,7 @@ import SaveIcon from "@material-ui/icons/Save";
 import React from "react";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    "& > *": {
-      margin: theme.spacing(1),
-    },
-  },
+  success: { color: theme.palette.success.main },
 }));
 
 interface Props {
@@ -23,6 +16,7 @@ interface Props {
 }
 export default function ActionMenu(props: Props & ButtonGroupProps) {
   const { onDelete, onEdit, onSave, ...buttonGroupProps } = props;
+  const classes = useStyles();
   return (
     <ButtonGroup variant="text" color="primary" {...buttonGroupProps}>
       <IconButton size="small" onClick={onDelete}>
@@ -31,7 +25,12 @@ export default function ActionMenu(props: Props & ButtonGroupProps) {
       <IconButton size="small" onClick={onEdit} disabled={!onEdit}>
         <EditIcon fontSize="small" />
       </IconButton>
-      <IconButton size="small" onClick={onSave} disabled={!onSave}>
+      <IconButton
+        size="small"
+        onClick={onSave}
+        disabled={!onSave}
+        className={classes.success}
+      >
         <SaveIcon fontSize="small" />
       </IconButton>
     </ButtonGroup>
