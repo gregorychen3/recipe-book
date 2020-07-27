@@ -18,6 +18,7 @@ import LabelDivider from "../components/LabelDivider";
 import { formatIngredient } from "../features/recipe/helpers";
 import { selectRecipe } from "../features/recipe/RecipeSlice";
 import { isValidURL } from "../helpers";
+import Recipe from "../features/recipe/Recipe";
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -67,56 +68,7 @@ export default function RecipePage() {
           onSave={isEditing ? handleSaveClicked : undefined}
         />
       </div>
-
-      <Grid
-        container
-        direction="row"
-        alignItems="center"
-        justify="space-around"
-      >
-        <Grid item>
-          <IconText
-            icon={<RestaurantIcon />}
-            text={<Typography variant="subtitle1">{recipe.course}</Typography>}
-          />
-        </Grid>
-        <Grid item>
-          <IconText
-            icon={<LanguageIcon />}
-            text={<Typography variant="subtitle1">{recipe.cuisine}</Typography>}
-          />
-        </Grid>
-      </Grid>
-      <LabelDivider label="INGREDIENTS" />
-      <List component="ul" dense>
-        {recipe.ingredients.map((i, idx) => (
-          <ListItem>
-            <ListItemText primary={`• ${formatIngredient(i)}`} />
-          </ListItem>
-        ))}
-      </List>
-      <LabelDivider label="INSTRUCTIONS" />
-      <List component="ol" dense>
-        {recipe.instructions.map((i, idx) => (
-          <ListItem>
-            <ListItemText primary={`${idx + 1}. ${i}`} />
-          </ListItem>
-        ))}
-      </List>
-      <LabelDivider label="SOURCES" />
-      <List component="ul" dense>
-        {recipe.sources.map((s, idx) => (
-          <ListItem>
-            {isValidURL(s) ? (
-              <ListItemText>
-                • <Link href={s}>{s}</Link>
-              </ListItemText>
-            ) : (
-              <ListItemText primary={`• ${s}`} />
-            )}
-          </ListItem>
-        ))}
-      </List>
+      <Recipe recipe={recipe} />
     </>
   );
 }
