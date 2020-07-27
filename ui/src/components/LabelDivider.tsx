@@ -9,6 +9,8 @@ const useStyles = makeStyles((theme) => ({
     borderBottomStyle: "solid",
     borderBottomColor: theme.palette.divider,
     lineHeight: 0,
+    marginBottom: theme.spacing(1),
+    marginTop: theme.spacing(1),
   },
   label: {
     paddingLeft: theme.spacing(1),

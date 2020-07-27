@@ -7,6 +7,7 @@ import { Redirect, useParams } from "react-router-dom";
 import ActionMenu from "../components/ActionMenu";
 import IconText from "../components/IconText";
 import { selectRecipe } from "../features/recipe/RecipeSlice";
+import LabelDivider from "../components/LabelDivider";
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -72,6 +73,9 @@ export default function RecipePage() {
           />
         </Grid>
       </Grid>
+      <LabelDivider label="Ingredients" />
+      <LabelDivider label="Instructions" />
+      <LabelDivider label="Sources" />
     </>
   );
 }
