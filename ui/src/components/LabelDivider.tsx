@@ -3,7 +3,10 @@ import clsx from "clsx";
 import React from "react";
 
 const useStyles = makeStyles((theme) => ({
-  container: { paddingBottom: theme.spacing(1) },
+  container: {
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+  },
   divider: {
     borderBottomWidth: "1px",
     borderBottomStyle: "solid",
