@@ -74,7 +74,7 @@ export default function Recipe({ recipe }: Props) {
           <LabelDivider label="INFORMATION" />
         </Grid>
 
-        <Grid item xs={6} className={classes.gridItem}>
+        <Grid item xs={6}>
           <List
             dense
             component="nav"
@@ -100,7 +100,7 @@ export default function Recipe({ recipe }: Props) {
             </ListItem>
           </List>
         </Grid>
-        <Grid item xs={6} className={classes.gridItem}>
+        <Grid item xs={6}>
           <List
             dense
             component="nav"
