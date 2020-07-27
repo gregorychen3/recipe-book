@@ -73,9 +73,9 @@ export default function RecipePage() {
           />
         </Grid>
       </Grid>
-      <LabelDivider label="Ingredients" />
-      <LabelDivider label="Instructions" />
-      <LabelDivider label="Sources" />
+      <LabelDivider label="INGREDIENTS" />
+      <LabelDivider label="INSTRUCTIONS" />
+      <LabelDivider label="SOURCES" />
     </>
   );
 }
