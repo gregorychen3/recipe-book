@@ -1,4 +1,4 @@
-import { ButtonGroup, makeStyles } from "@material-ui/core";
+import { ButtonGroup, ButtonGroupProps, makeStyles } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import EditIcon from "@material-ui/icons/Edit";
@@ -21,25 +21,23 @@ interface Props {
   onEdit?: () => void;
   onSave?: () => void;
 }
-export default function ActionMenu({ onDelete, onEdit, onSave }: Props) {
-  const classes = useStyles();
+export default function ActionMenu(props: Props & ButtonGroupProps) {
+  const { onDelete, onEdit, onSave, ...buttonGroupProps } = props;
   return (
-    <div className={classes.root}>
-      <ButtonGroup variant="text" color="primary">
-        <IconButton size="small" onClick={onDelete}>
-          <DeleteOutlineIcon fontSize="small" color="error" />
+    <ButtonGroup variant="text" color="primary" {...buttonGroupProps}>
+      <IconButton size="small" onClick={onDelete}>
+        <DeleteOutlineIcon fontSize="small" color="error" />
+      </IconButton>
+      {onSave && (
+        <IconButton size="small" onClick={onSave}>
+          <SaveIcon fontSize="small" />
         </IconButton>
-        {onSave && (
-          <IconButton size="small" onClick={onSave}>
-            <SaveIcon fontSize="small" />
-          </IconButton>
-        )}
-        {onEdit && (
-          <IconButton size="small" onClick={onEdit}>
-            <EditIcon fontSize="small" />
-          </IconButton>
-        )}
-      </ButtonGroup>
-    </div>
+      )}
+      {onEdit && (
+        <IconButton size="small" onClick={onEdit}>
+          <EditIcon fontSize="small" />
+        </IconButton>
+      )}
+    </ButtonGroup>
   );
 }
