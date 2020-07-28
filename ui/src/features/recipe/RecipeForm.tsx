@@ -82,7 +82,7 @@ export default function RecipeForm({ recipe }: Props) {
       }}
     >
       {({ values, submitForm, isSubmitting }) => (
-        <Form>
+        <Form id="recipe-form">
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Field component={TextField} name="name" type="text" label="Recipe Name" fullWidth />

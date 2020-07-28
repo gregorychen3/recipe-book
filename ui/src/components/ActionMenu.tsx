@@ -12,10 +12,10 @@ const useStyles = makeStyles((theme) => ({
 interface Props {
   onDelete: () => void;
   onEdit?: () => void;
-  onSave?: () => void;
+  disableSave: boolean;
 }
 export default function ActionMenu(props: Props & ButtonGroupProps) {
-  const { onDelete, onEdit, onSave, ...buttonGroupProps } = props;
+  const { onDelete, onEdit, disableSave, ...buttonGroupProps } = props;
   const classes = useStyles();
   return (
     <ButtonGroup variant="text" color="primary" {...buttonGroupProps}>
@@ -25,12 +25,7 @@ export default function ActionMenu(props: Props & ButtonGroupProps) {
       <IconButton size="small" onClick={onEdit} disabled={!onEdit}>
         <EditIcon fontSize="small" />
       </IconButton>
-      <IconButton
-        size="small"
-        onClick={onSave}
-        disabled={!onSave}
-        className={classes.success}
-      >
+      <IconButton type="submit" form="recipe-form" size="small" disabled={disableSave} className={classes.success}>
         <SaveIcon fontSize="small" />
       </IconButton>
     </ButtonGroup>

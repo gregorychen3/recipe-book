@@ -44,16 +44,12 @@ export default function RecipePage() {
   return (
     <>
       <div className={classes.header}>
-        <ActionMenu
-          onDelete={() => {}}
-          onEdit={() => {}}
-          className={classes.hidden}
-        />
+        <ActionMenu onDelete={() => {}} onEdit={() => {}} disableSave={false} className={classes.hidden} />
         <Typography variant="h4">{recipe.name.toUpperCase()}</Typography>
         <ActionMenu
           onDelete={handleDeleteClicked}
           onEdit={isEditing ? undefined : handleEditClicked}
-          onSave={isEditing ? handleSaveClicked : undefined}
+          disableSave={!isEditing}
         />
       </div>
       {isEditing ? <RecipeForm recipe={recipe} /> : <Recipe recipe={recipe} />}
