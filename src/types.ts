@@ -8,7 +8,7 @@ export const CourseValues = [
   "beverages",
   "other",
 ] as const;
-type ICourse = typeof CourseValues[number];
+export type ICourse = typeof CourseValues[number];
 
 export const CuisineValues = [
   "italian",
@@ -18,7 +18,7 @@ export const CuisineValues = [
   "asian",
   "other",
 ] as const;
-type ICuisine = typeof CuisineValues[number];
+export type ICuisine = typeof CuisineValues[number];
 
 export interface IIngredient {
   name: string;

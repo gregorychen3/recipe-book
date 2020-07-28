@@ -1,9 +1,50 @@
 import { Grid } from "@material-ui/core";
 import { Field, Form, Formik } from "formik";
 import { TextField } from "formik-material-ui";
+import _ from "lodash";
 import React from "react";
-import { IRecipe } from "../../../../src/types";
+import { ICourse, ICuisine, IIngredient, IRecipe } from "../../../../src/types";
 import LabelDivider from "../../components/LabelDivider";
+
+const valuesFromRecipe = (r: IRecipe): Values => {
+  const {
+    name,
+    course,
+    cuisine,
+    servings,
+    ingredients,
+    instructions,
+    sources,
+  } = r;
+  const ret: Values = {
+    name,
+    course,
+    cuisine,
+    servings,
+    ingredients: ingredients.map((i) => ({
+      qty: i.qty ?? "",
+      unit: i.unit ?? "",
+      name: i.name,
+    })),
+    instructions,
+    sources,
+  };
+  return ret;
+};
+
+interface Values {
+  name: string;
+  course: ICourse;
+  cuisine: ICuisine;
+  servings: number;
+  ingredients: {
+    qty?: number | "";
+    unit?: string;
+    name: string;
+  }[];
+  instructions: string[];
+  sources: string[];
+}
 
 interface Props {
   recipe: IRecipe;
@@ -11,7 +52,7 @@ interface Props {
 export default function RecipeForm({ recipe }: Props) {
   return (
     <Formik
-      initialValues={recipe}
+      initialValues={valuesFromRecipe(recipe)}
       validate={(values) => {
         return {};
       }}
