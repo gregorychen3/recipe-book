@@ -5,22 +5,10 @@ import React from "react";
 import { ICourse, ICuisine, IRecipe } from "../../../../src/types";
 import LabelDivider from "../../components/LabelDivider";
 
-const defaultIngredient = (): IngredientValues => ({
-  qty: "",
-  unit: "",
-  name: "",
-});
+const defaultIngredient = (): IngredientValues => ({ qty: "", unit: "", name: "" });
 
 const valuesFromRecipe = (r: IRecipe): Values => {
-  const {
-    name,
-    course,
-    cuisine,
-    servings,
-    ingredients,
-    instructions,
-    sources,
-  } = r;
+  const { name, course, cuisine, servings, ingredients, instructions, sources } = r;
   const ret: Values = {
     name,
     course,
@@ -74,40 +62,16 @@ export default function RecipeForm({ recipe }: Props) {
         <Form>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Field
-                component={TextField}
-                name="name"
-                type="text"
-                label="Recipe Name"
-                fullWidth
-              />
+              <Field component={TextField} name="name" type="text" label="Recipe Name" fullWidth />
             </Grid>
             <Grid item xs={4}>
-              <Field
-                component={TextField}
-                name="servings"
-                type="number"
-                label="Servings"
-                fullWidth
-              />
+              <Field component={TextField} name="servings" type="number" label="Servings" fullWidth />
             </Grid>
             <Grid item xs={4}>
-              <Field
-                component={TextField}
-                name="course"
-                type="string"
-                label="Course"
-                fullWidth
-              />
+              <Field component={TextField} name="course" type="string" label="Course" fullWidth />
             </Grid>
             <Grid item xs={4}>
-              <Field
-                component={TextField}
-                name="cuisine"
-                type="string"
-                label="Cuisine"
-                fullWidth
-              />
+              <Field component={TextField} name="cuisine" type="string" label="Cuisine" fullWidth />
             </Grid>
 
             <Grid item xs={12}>
@@ -151,12 +115,7 @@ export default function RecipeForm({ recipe }: Props) {
             </Grid>
             {values.instructions.map((i, idx) => (
               <Grid item xs={12}>
-                <Field
-                  component={TextField}
-                  name={`instructions.${idx}`}
-                  type="string"
-                  fullWidth
-                />
+                <Field component={TextField} name={`instructions.${idx}`} type="string" fullWidth />
               </Grid>
             ))}
 
@@ -165,12 +124,7 @@ export default function RecipeForm({ recipe }: Props) {
             </Grid>
             {values.sources.map((s, idx) => (
               <Grid item xs={12}>
-                <Field
-                  component={TextField}
-                  name={`sources.${idx}`}
-                  type="string"
-                  fullWidth
-                />
+                <Field component={TextField} name={`sources.${idx}`} type="string" fullWidth />
               </Grid>
             ))}
           </Grid>
