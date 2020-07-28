@@ -2,6 +2,7 @@ import { makeStyles, Typography } from "@material-ui/core";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Redirect, useParams } from "react-router-dom";
+import { IRecipe } from "../../../src/types";
 import ActionMenu from "../components/ActionMenu";
 import Recipe from "../features/recipe/Recipe";
 import RecipeForm from "../features/recipe/RecipeForm";
@@ -37,7 +38,8 @@ export default function RecipePage() {
     setIsEditing(true);
   };
 
-  const handleSaveClicked = () => {
+  const handleSubmit = (recipe: IRecipe) => {
+    console.log(recipe);
     setIsEditing(false);
   };
 
@@ -52,7 +54,7 @@ export default function RecipePage() {
           disableSave={!isEditing}
         />
       </div>
-      {isEditing ? <RecipeForm recipe={recipe} /> : <Recipe recipe={recipe} />}
+      {isEditing ? <RecipeForm recipe={recipe} onSubmit={handleSubmit} /> : <Recipe recipe={recipe} />}
     </>
   );
 }

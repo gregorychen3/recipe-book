@@ -67,8 +67,9 @@ interface Values {
 
 interface Props {
   recipe: IRecipe;
+  onSubmit: (recipe: IRecipe) => void;
 }
-export default function RecipeForm({ recipe }: Props) {
+export default function RecipeForm({ recipe, onSubmit }: Props) {
   return (
     <Formik
       initialValues={valuesFromRecipe(recipe)}
@@ -77,7 +78,7 @@ export default function RecipeForm({ recipe }: Props) {
       }}
       onSubmit={(values, { setSubmitting }) => {
         const recipe = recipeFromValues(values);
-        console.log(recipe);
+        onSubmit(recipe);
         setSubmitting(false);
       }}
     >
