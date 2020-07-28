@@ -101,7 +101,7 @@ export default function RecipeForm({ recipe }: Props) {
               <LabelDivider label="INGREDIENTS" />
             </Grid>
             {values.ingredients.map((i, idx) => (
-              <>
+              <React.Fragment key={idx}>
                 <Grid item xs={4}>
                   <Field
                     component={TextField}
@@ -130,14 +130,14 @@ export default function RecipeForm({ recipe }: Props) {
                     fullWidth
                   />
                 </Grid>
-              </>
+              </React.Fragment>
             ))}
 
             <Grid item xs={12}>
               <LabelDivider label="INSTRUCTIONS" />
             </Grid>
             {values.instructions.map((i, idx) => (
-              <Grid item xs={12}>
+              <Grid item xs={12} key={idx}>
                 <Field component={TextField} name={`instructions.${idx}`} type="string" fullWidth />
               </Grid>
             ))}
@@ -146,7 +146,7 @@ export default function RecipeForm({ recipe }: Props) {
               <LabelDivider label="SOURCES" />
             </Grid>
             {values.sources.map((s, idx) => (
-              <Grid item xs={12}>
+              <Grid item xs={12} key={idx}>
                 <Field component={TextField} name={`sources.${idx}`} type="string" fullWidth />
               </Grid>
             ))}

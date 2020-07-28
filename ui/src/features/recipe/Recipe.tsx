@@ -29,8 +29,7 @@ export default function Recipe({ recipe }: Props) {
 
   const [servings, setServings] = useState(recipe.servings);
 
-  const handleServingsChanged = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setServings(parseInt(e.target.value));
+  const handleServingsChanged = (e: React.ChangeEvent<HTMLInputElement>) => setServings(parseInt(e.target.value));
 
   return (
     <>
@@ -40,17 +39,12 @@ export default function Recipe({ recipe }: Props) {
             <LabelDivider label="INGREDIENTS" />
           </Grid>
           <Grid item xs={6}>
-            <TextField
-              label="Servings"
-              type="number"
-              value={servings}
-              onChange={handleServingsChanged}
-            />
+            <TextField label="Servings" type="number" value={servings} onChange={handleServingsChanged} />
           </Grid>
           <Grid item xs={6}>
             <List component="ul" dense>
-              {recipe.ingredients.map((i) => (
-                <ListItem>
+              {recipe.ingredients.map((i, idx) => (
+                <ListItem key={idx}>
                   <ListItemText primary={`• ${formatIngredient(i)}`} />
                 </ListItem>
               ))}
@@ -61,7 +55,7 @@ export default function Recipe({ recipe }: Props) {
           <LabelDivider label="INSTRUCTIONS" />
           <List component="ol" dense>
             {recipe.instructions.map((i, idx) => (
-              <ListItem>
+              <ListItem key={idx}>
                 <ListItemText primary={`${idx + 1}. ${i}`} />
               </ListItem>
             ))}
@@ -75,11 +69,7 @@ export default function Recipe({ recipe }: Props) {
         </Grid>
 
         <Grid item xs={6}>
-          <List
-            dense
-            component="nav"
-            subheader={<ListSubheader component="div">Cuisine</ListSubheader>}
-          >
+          <List dense component="nav" subheader={<ListSubheader component="div">Cuisine</ListSubheader>}>
             <ListItem>
               <ListItemIcon>
                 <LanguageIcon />
@@ -87,11 +77,7 @@ export default function Recipe({ recipe }: Props) {
               <ListItemText primary={recipe.cuisine} />
             </ListItem>
           </List>
-          <List
-            dense
-            component="nav"
-            subheader={<ListSubheader component="div">Course</ListSubheader>}
-          >
+          <List dense component="nav" subheader={<ListSubheader component="div">Course</ListSubheader>}>
             <ListItem>
               <ListItemIcon>
                 <RestaurantIcon />
@@ -101,13 +87,9 @@ export default function Recipe({ recipe }: Props) {
           </List>
         </Grid>
         <Grid item xs={6}>
-          <List
-            dense
-            component="nav"
-            subheader={<ListSubheader component="div">Sources</ListSubheader>}
-          >
+          <List dense component="nav" subheader={<ListSubheader component="div">Sources</ListSubheader>}>
             {recipe.sources.map((s, idx) => (
-              <ListItem>
+              <ListItem key={idx}>
                 {isValidURL(s) ? (
                   <ListItemText>
                     • <Link href={s}>{s}</Link>
