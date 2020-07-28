@@ -1,10 +1,15 @@
 import { Grid } from "@material-ui/core";
 import { Field, Form, Formik } from "formik";
 import { TextField } from "formik-material-ui";
-import _ from "lodash";
 import React from "react";
-import { ICourse, ICuisine, IIngredient, IRecipe } from "../../../../src/types";
+import { ICourse, ICuisine, IRecipe } from "../../../../src/types";
 import LabelDivider from "../../components/LabelDivider";
+
+const defaultIngredient = (): IngredientValues => ({
+  qty: "",
+  unit: "",
+  name: "",
+});
 
 const valuesFromRecipe = (r: IRecipe): Values => {
   const {
@@ -21,27 +26,31 @@ const valuesFromRecipe = (r: IRecipe): Values => {
     course,
     cuisine,
     servings,
-    ingredients: ingredients.map((i) => ({
-      qty: i.qty ?? "",
-      unit: i.unit ?? "",
-      name: i.name,
-    })),
-    instructions,
-    sources,
+    ingredients: [
+      ...ingredients.map((i) => ({
+        qty: i.qty ?? ("" as const),
+        unit: i.unit ?? "",
+        name: i.name,
+      })),
+      defaultIngredient(),
+    ],
+    instructions: [...instructions, ""],
+    sources: [...sources, ""],
   };
   return ret;
 };
 
+interface IngredientValues {
+  qty: number | "";
+  unit: string;
+  name: string;
+}
 interface Values {
   name: string;
   course: ICourse;
   cuisine: ICuisine;
   servings: number;
-  ingredients: {
-    qty?: number | "";
-    unit?: string;
-    name: string;
-  }[];
+  ingredients: IngredientValues[];
   instructions: string[];
   sources: string[];
 }
@@ -61,7 +70,7 @@ export default function RecipeForm({ recipe }: Props) {
         setSubmitting(false);
       }}
     >
-      {({ submitForm, isSubmitting }) => (
+      {({ values, submitForm, isSubmitting }) => (
         <Form>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -104,7 +113,7 @@ export default function RecipeForm({ recipe }: Props) {
             <Grid item xs={12}>
               <LabelDivider label="INGREDIENTS" />
             </Grid>
-            {recipe.ingredients.map((i, idx) => (
+            {values.ingredients.map((i, idx) => (
               <>
                 <Grid item xs={4}>
                   <Field
@@ -140,7 +149,7 @@ export default function RecipeForm({ recipe }: Props) {
             <Grid item xs={12}>
               <LabelDivider label="INSTRUCTIONS" />
             </Grid>
-            {recipe.instructions.map((i, idx) => (
+            {values.instructions.map((i, idx) => (
               <Grid item xs={12}>
                 <Field
                   component={TextField}
@@ -154,7 +163,7 @@ export default function RecipeForm({ recipe }: Props) {
             <Grid item xs={12}>
               <LabelDivider label="SOURCES" />
             </Grid>
-            {recipe.sources.map((s, idx) => (
+            {values.sources.map((s, idx) => (
               <Grid item xs={12}>
                 <Field
                   component={TextField}
