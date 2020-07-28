@@ -2,7 +2,7 @@ import { Grid } from "@material-ui/core";
 import { Field, Form, Formik } from "formik";
 import { TextField } from "formik-material-ui";
 import React from "react";
-import { ICourse, ICuisine, IRecipe } from "../../../../src/types";
+import { ICourse, ICuisine, IIngredient, IRecipe } from "../../../../src/types";
 import LabelDivider from "../../components/LabelDivider";
 
 const defaultIngredient = (): IngredientValues => ({ qty: "", unit: "", name: "" });
@@ -24,6 +24,28 @@ const valuesFromRecipe = (r: IRecipe): Values => {
     ],
     instructions: [...instructions, ""],
     sources: [...sources, ""],
+  };
+  return ret;
+};
+
+const recipeFromValues = (values: Values): IRecipe => {
+  const { name, course, cuisine, servings, ingredients, instructions, sources } = values;
+  const ret: IRecipe = {
+    name,
+    course,
+    cuisine,
+    servings,
+    ingredients: ingredients
+      .filter((i) => i.qty && i.unit && i.name)
+      .map(
+        (i): IIngredient => ({
+          qty: i.qty === "" ? undefined : i.qty,
+          unit: i.unit === "" ? undefined : i.unit,
+          name: i.name,
+        })
+      ),
+    instructions: instructions.filter((i) => i),
+    sources: sources.filter((s) => s),
   };
   return ret;
 };
@@ -54,7 +76,8 @@ export default function RecipeForm({ recipe }: Props) {
         return {};
       }}
       onSubmit={(values, { setSubmitting }) => {
-        console.log(values);
+        const recipe = recipeFromValues(values);
+        console.log(recipe);
         setSubmitting(false);
       }}
     >
