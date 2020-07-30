@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { Redirect, useParams } from "react-router-dom";
 import { IRecipe } from "../../../src/types";
 import ActionMenu from "../components/ActionMenu";
+import DeleteRecipeDialog from "../features/recipe/DeleteRecipeDialog";
 import Recipe from "../features/recipe/Recipe";
 import RecipeForm from "../features/recipe/RecipeForm";
 import { selectRecipe } from "../features/recipe/RecipeSlice";
@@ -24,6 +25,8 @@ const useStyles = makeStyles((theme) => ({
 export default function RecipePage() {
   const classes = useStyles();
 
+  const [deleteDialogData, setDeleteDialogData] = useState<string | undefined>(undefined);
+
   const [isEditing, setIsEditing] = useState(false);
 
   const { recipeId } = useParams();
@@ -32,7 +35,8 @@ export default function RecipePage() {
     return <Redirect to="/recipes" />;
   }
 
-  const handleDeleteClicked = () => {};
+  const handleShowDeleteDialog = () => setDeleteDialogData(recipe._id);
+  const handleCloseDeleteDialog = () => setDeleteDialogData(undefined);
 
   const handleEditClicked = () => {
     setIsEditing(true);
@@ -45,11 +49,12 @@ export default function RecipePage() {
 
   return (
     <>
+      <DeleteRecipeDialog recipeId={deleteDialogData} onClose={handleCloseDeleteDialog} />
       <div className={classes.header}>
         <ActionMenu onDelete={() => {}} onEdit={() => {}} disableSave={false} className={classes.hidden} />
         <Typography variant="h4">{recipe.name.toUpperCase()}</Typography>
         <ActionMenu
-          onDelete={handleDeleteClicked}
+          onDelete={handleShowDeleteDialog}
           onEdit={isEditing ? undefined : handleEditClicked}
           disableSave={!isEditing}
         />
