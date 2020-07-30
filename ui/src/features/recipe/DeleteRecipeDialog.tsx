@@ -7,20 +7,23 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
+import { useSelector } from "react-redux";
+import { selectRecipe } from "./RecipeSlice";
 
 export interface DeleteRecipeDialogProps {
   recipeId?: string;
   onClose: () => void;
 }
 export default function DeleteRecipeDialog({ recipeId, onClose }: DeleteRecipeDialogProps) {
+  const recipe = useSelector(selectRecipe(recipeId ?? ""));
+  const recipeName = recipe ? recipe.name : "";
+
   return (
     <Dialog open={!!recipeId} onClose={onClose}>
-      <DialogTitle>Delete Recipe</DialogTitle>
+      <DialogTitle>Confirm Delete Recipe</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          To subscribe to this website, please enter your email address here. We will send updates occasionally.
-        </DialogContentText>
-        <TextField autoFocus margin="dense" id="name" label="Email Address" type="email" fullWidth />
+        <DialogContentText>This will permanently delete the recipe.</DialogContentText>
+        <TextField disabled margin="dense" label="Recipe Name" type="text" fullWidth value={recipeName} />
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">
