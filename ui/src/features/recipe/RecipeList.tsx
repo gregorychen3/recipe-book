@@ -31,7 +31,7 @@ const ByCuisineList = ({ recipes }: { recipes: IRecipeModel[] }) => {
   return (
     <>
       {cuisines.map((cuisine) => (
-        <>
+        <React.Fragment key={cuisine}>
           <LabelDivider label={cuisine.toUpperCase()} />
           <List dense component="nav">
             {recipes
@@ -42,7 +42,7 @@ const ByCuisineList = ({ recipes }: { recipes: IRecipeModel[] }) => {
                 </ListItem>
               ))}
           </List>
-        </>
+        </React.Fragment>
       ))}
     </>
   );
@@ -54,7 +54,7 @@ const ByCourseList = ({ recipes }: { recipes: IRecipeModel[] }) => {
   return (
     <>
       {courses.map((course) => (
-        <>
+        <React.Fragment key={course}>
           <LabelDivider label={course.toUpperCase()} />
           <List dense component="nav" key={course}>
             {recipes
@@ -65,7 +65,7 @@ const ByCourseList = ({ recipes }: { recipes: IRecipeModel[] }) => {
                 </ListItem>
               ))}
           </List>
-        </>
+        </React.Fragment>
       ))}
     </>
   );
