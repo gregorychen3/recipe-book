@@ -107,7 +107,9 @@ export default function RecipeForm({ recipe, onSubmit }: Props) {
                 <InputLabel htmlFor="course">Course</InputLabel>
                 <Field component={Select} name="course" inputProps={{ id: "course" }}>
                   {courses.map((c) => (
-                    <MenuItem value={c}>{c}</MenuItem>
+                    <MenuItem value={c} key={c}>
+                      {c}
+                    </MenuItem>
                   ))}
                 </Field>
               </FormControl>
@@ -117,7 +119,9 @@ export default function RecipeForm({ recipe, onSubmit }: Props) {
                 <InputLabel htmlFor="cuisine">Cuisine</InputLabel>
                 <Field component={Select} name="cuisine" inputProps={{ id: "cuisine" }}>
                   {cuisines.map((c) => (
-                    <MenuItem value={c}>{c}</MenuItem>
+                    <MenuItem value={c} key={c}>
+                      {c}
+                    </MenuItem>
                   ))}
                 </Field>
               </FormControl>
