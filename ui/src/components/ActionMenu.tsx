@@ -1,5 +1,4 @@
-import { ButtonGroup, ButtonGroupProps, makeStyles } from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
+import { Button, ButtonGroup, ButtonGroupProps, makeStyles } from "@material-ui/core";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import EditIcon from "@material-ui/icons/Edit";
 import SaveIcon from "@material-ui/icons/Save";
@@ -19,15 +18,15 @@ export default function ActionMenu(props: Props & ButtonGroupProps) {
   const classes = useStyles();
   return (
     <ButtonGroup variant="text" color="primary" {...buttonGroupProps}>
-      <IconButton size="small" onClick={onDelete}>
+      <Button size="small" onClick={onDelete}>
         <DeleteOutlineIcon fontSize="small" color="error" />
-      </IconButton>
-      <IconButton size="small" onClick={onEdit} disabled={!onEdit}>
+      </Button>
+      <Button size="small" onClick={onEdit} disabled={!onEdit}>
         <EditIcon fontSize="small" />
-      </IconButton>
-      <IconButton type="submit" form="recipe-form" size="small" disabled={disableSave} className={classes.success}>
+      </Button>
+      <Button type="submit" form="recipe-form" size="small" disabled={disableSave} className={classes.success}>
         <SaveIcon fontSize="small" />
-      </IconButton>
+      </Button>
     </ButtonGroup>
   );
 }
