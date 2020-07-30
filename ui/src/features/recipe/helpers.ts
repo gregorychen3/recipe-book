@@ -1,4 +1,4 @@
-import { IIngredient } from "../../../../src/types";
+import { IIngredient, IRecipe } from "../../../../src/types";
 
 export const formatIngredient = (i: IIngredient) => {
   let ret = "";
@@ -7,3 +7,6 @@ export const formatIngredient = (i: IIngredient) => {
   ret += i.name;
   return ret;
 };
+
+export const getCourses = (recipes: IRecipe[]) => [...new Set<string>(recipes.map((r) => r.course))];
+export const getCuisines = (recipes: IRecipe[]) => [...new Set<string>(recipes.map((r) => r.cuisine))];
