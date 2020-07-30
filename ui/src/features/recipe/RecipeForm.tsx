@@ -1,9 +1,15 @@
 import { Grid } from "@material-ui/core";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
 import { Field, Form, Formik } from "formik";
-import { TextField } from "formik-material-ui";
+import { Select, TextField } from "formik-material-ui";
 import React from "react";
+import { useSelector } from "react-redux";
 import { ICourse, ICuisine, IIngredient, IRecipe } from "../../../../src/types";
 import LabelDivider from "../../components/LabelDivider";
+import { getCourses, getCuisines } from "./helpers";
+import { selectRecipes } from "./RecipeSlice";
 
 const defaultIngredient = (): IngredientValues => ({ qty: "", unit: "", name: "" });
 
@@ -70,6 +76,10 @@ interface Props {
   onSubmit: (recipe: IRecipe) => void;
 }
 export default function RecipeForm({ recipe, onSubmit }: Props) {
+  const recipes = useSelector(selectRecipes);
+  const courses = getCourses(recipes);
+  const cuisines = getCuisines(recipes);
+
   return (
     <Formik
       initialValues={valuesFromRecipe(recipe)}
@@ -88,14 +98,29 @@ export default function RecipeForm({ recipe, onSubmit }: Props) {
             <Grid item xs={12}>
               <Field component={TextField} name="name" type="text" label="Recipe Name" fullWidth />
             </Grid>
+
             <Grid item xs={4}>
               <Field component={TextField} name="servings" type="number" label="Servings" fullWidth />
             </Grid>
             <Grid item xs={4}>
-              <Field component={TextField} name="course" type="string" label="Course" fullWidth />
+              <FormControl fullWidth>
+                <InputLabel htmlFor="course">Course</InputLabel>
+                <Field component={Select} name="course" inputProps={{ id: "course" }}>
+                  {courses.map((c) => (
+                    <MenuItem value={c}>{c}</MenuItem>
+                  ))}
+                </Field>
+              </FormControl>
             </Grid>
             <Grid item xs={4}>
-              <Field component={TextField} name="cuisine" type="string" label="Cuisine" fullWidth />
+              <FormControl fullWidth>
+                <InputLabel htmlFor="cuisine">Cuisine</InputLabel>
+                <Field component={Select} name="cuisine" inputProps={{ id: "cuisine" }}>
+                  {cuisines.map((c) => (
+                    <MenuItem value={c}>{c}</MenuItem>
+                  ))}
+                </Field>
+              </FormControl>
             </Grid>
 
             <Grid item xs={12}>
