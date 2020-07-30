@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import { IRecipeModel } from "../../../../src/db/recipe";
 import LabelDivider from "../../components/LabelDivider";
 import { GroupBy } from "../../pages/RecipesPage";
+import { getCourses, getCuisines } from "./helpers";
 import { selectRecipes } from "./RecipeSlice";
 
 const AlphabeticalList = ({ recipes }: { recipes: IRecipeModel[] }) => {
@@ -26,7 +27,7 @@ const AlphabeticalList = ({ recipes }: { recipes: IRecipeModel[] }) => {
 
 const ByCuisineList = ({ recipes }: { recipes: IRecipeModel[] }) => {
   const history = useHistory();
-  const cuisines = [...new Set<string>(recipes.map((r) => r.cuisine))];
+  const cuisines = getCuisines(recipes);
   return (
     <>
       {cuisines.map((cuisine) => (
@@ -49,7 +50,7 @@ const ByCuisineList = ({ recipes }: { recipes: IRecipeModel[] }) => {
 
 const ByCourseList = ({ recipes }: { recipes: IRecipeModel[] }) => {
   const history = useHistory();
-  const courses = [...new Set<string>(recipes.map((r) => r.course))];
+  const courses = getCourses(recipes);
   return (
     <>
       {courses.map((course) => (
