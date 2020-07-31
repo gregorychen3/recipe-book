@@ -6,6 +6,7 @@ import { Field, Form, Formik } from "formik";
 import { Select, TextField } from "formik-material-ui";
 import React from "react";
 import { useSelector } from "react-redux";
+import { IRecipeModel } from "../../../../src/db/recipe";
 import { ICourse, ICuisine, IIngredient, IRecipe } from "../../../../src/types";
 import LabelDivider from "../../components/LabelDivider";
 import { getCourses, getCuisines } from "./helpers";
@@ -72,7 +73,7 @@ interface Values {
 }
 
 interface Props {
-  recipe: IRecipe;
+  recipe: IRecipeModel;
   onSubmit: (recipe: IRecipe) => void;
 }
 export default function RecipeForm({ recipe, onSubmit }: Props) {
