@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { IRecipeModel } from "../../../../src/db/recipe";
+import { IRecipe } from "../../../../src/types";
 import apiClient from "../../apiClient";
 import { RootState } from "../../app/store";
 
@@ -12,10 +13,13 @@ export const fetchRecipes = createAsyncThunk("users/fetchRecipes", async () => {
   return resp.data;
 });
 
-export const updateRecipe = createAsyncThunk("users/updateRecipe", async (recipe: IRecipeModel) => {
-  const resp = await apiClient.updateRecipe(recipe._id, recipe);
-  return resp.data;
-});
+export const updateRecipe = createAsyncThunk(
+  "users/updateRecipe",
+  async (data: { recipeId: string; recipe: IRecipe }) => {
+    const resp = await apiClient.updateRecipe(data.recipeId, data.recipe);
+    return resp.data;
+  }
+);
 
 //
 // SLICE
