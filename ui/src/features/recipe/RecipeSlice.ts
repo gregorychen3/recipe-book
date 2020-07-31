@@ -12,6 +12,11 @@ export const fetchRecipes = createAsyncThunk("users/fetchRecipes", async () => {
   return recipes.data;
 });
 
+export const updateRecipe = createAsyncThunk("users/updateRecipe", async (recipe: IRecipeModel) => {
+  const resp = await apiClient.updateRecipe(recipe._id, recipe);
+  return resp.data;
+});
+
 //
 // SLICE
 // -----
@@ -27,6 +32,10 @@ export const recipeSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchRecipes.fulfilled, (state, action) => {
       state.recipes = action.payload;
+    });
+    builder.addCase(updateRecipe.fulfilled, (state, action) => {
+      const updatedRecipe = action.payload;
+      state.recipes = [...state.recipes.filter((r) => r._id !== updatedRecipe._id), updatedRecipe];
     });
   },
 });
