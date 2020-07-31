@@ -8,8 +8,8 @@ import { RootState } from "../../app/store";
 // ------
 
 export const fetchRecipes = createAsyncThunk("users/fetchRecipes", async () => {
-  const recipes = await apiClient.fetchRecipes();
-  return recipes.data;
+  const resp = await apiClient.fetchRecipes();
+  return resp.data;
 });
 
 export const updateRecipe = createAsyncThunk("users/updateRecipe", async (recipe: IRecipeModel) => {
