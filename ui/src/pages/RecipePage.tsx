@@ -35,7 +35,7 @@ export default function RecipePage() {
     return <Redirect to="/recipes" />;
   }
 
-  const handleShowDeleteDialog = () => setDeleteDialogData(recipe._id);
+  const handleShowDeleteDialog = () => setDeleteDialogData(recipe.id);
   const handleCloseDeleteDialog = () => setDeleteDialogData(undefined);
 
   const handleEditClicked = () => {

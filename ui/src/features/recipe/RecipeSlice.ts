@@ -39,7 +39,7 @@ export const recipeSlice = createSlice({
     });
     builder.addCase(updateRecipe.fulfilled, (state, action) => {
       const updatedRecipe = action.payload;
-      state.recipes = [...state.recipes.filter((r) => r._id !== updatedRecipe._id), updatedRecipe];
+      state.recipes = [...state.recipes.filter((r) => r.id !== updatedRecipe.id), updatedRecipe];
     });
   },
 });
@@ -52,4 +52,4 @@ export default recipeSlice.reducer;
 
 export const selectRecipes = (state: RootState) => state.recipe.recipes;
 export const selectRecipe = (recipeId: string) => (state: RootState) =>
-  state.recipe.recipes.find((r) => r._id === recipeId);
+  state.recipe.recipes.find((r) => r.id === recipeId);
