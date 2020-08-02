@@ -44,13 +44,24 @@ export const recipeSlice = createSlice({
     builder.addCase(fetchRecipes.fulfilled, (state, action) => {
       state.recipes = action.payload;
     });
+    builder.addCase(fetchRecipes.rejected, () => {
+      toast.error("Failed to fetch recipes");
+    });
+
     builder.addCase(updateRecipe.fulfilled, (state, action) => {
       const updatedRecipe = action.payload;
       state.recipes = [...state.recipes.filter((r) => r.id !== updatedRecipe.id), updatedRecipe];
     });
+    builder.addCase(updateRecipe.rejected, () => {
+      toast.error("Failed to update recipe");
+    });
+
     builder.addCase(deleteRecipe.fulfilled, (state, action) => {
       const deletedRecipeId = action.payload;
       state.recipes = [...state.recipes.filter((r) => r.id !== deletedRecipeId)];
+    });
+    builder.addCase(deleteRecipe.rejected, () => {
+      toast.error("Failed to delete recipe");
     });
   },
 });
