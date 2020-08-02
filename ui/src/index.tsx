@@ -2,17 +2,18 @@ import { ThemeProvider } from "@material-ui/core";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { BrowserRouter as Router } from "react-router-dom";
+import { Router } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import App from "./App";
 import store from "./app/store";
+import history from "./history";
 import * as serviceWorker from "./serviceWorker";
 import theme from "./theme";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router>
+      <Router history={history}>
         <ThemeProvider theme={theme}>
           <App />
         </ThemeProvider>

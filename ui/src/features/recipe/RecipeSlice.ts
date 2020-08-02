@@ -4,6 +4,7 @@ import { IRecipeModel } from "../../../../src/db/recipe";
 import { IRecipe } from "../../../../src/types";
 import apiClient from "../../apiClient";
 import { RootState } from "../../app/store";
+import history from "../../history";
 
 //
 // THUNKS
@@ -24,6 +25,7 @@ export const updateRecipe = createAsyncThunk(
 
 export const deleteRecipe = createAsyncThunk("users/deleteRecipe", async (recipeId: string) => {
   const resp = await apiClient.deleteRecipe(recipeId);
+  history.push("/recipes");
   return resp.data;
 });
 
