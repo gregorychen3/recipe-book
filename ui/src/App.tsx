@@ -2,9 +2,9 @@ import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import React, { useEffect } from "react";
+import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import AppHeader from "./components/AppHeader";
 import AboutPage from "./pages/AboutPage";
 import RecipePage from "./pages/RecipePage";
@@ -30,13 +30,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function App() {
   const classes = useStyles();
-  useEffect(() => {
-    toast("hi");
-    toast.info("hi");
-    toast.success("hi");
-    toast.warning("hi");
-    toast.error("hi");
-  }, []);
 
   return (
     <>
