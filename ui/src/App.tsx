@@ -9,40 +9,13 @@ import AppHeader from "./components/AppHeader";
 import AboutPage from "./pages/AboutPage";
 import RecipePage from "./pages/RecipePage";
 import RecipesPage from "./pages/RecipesPage";
+import { getThemedToastClass } from "./theme";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
   },
-  toast: {
-    "&.Toastify__toast--info": {
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.primary.contrastText,
-      "& .Toastify__close-button--info": { color: theme.palette.primary.contrastText },
-    },
-    "&.Toastify__toast--success": {
-      backgroundColor: theme.palette.success.main,
-      color: theme.palette.success.contrastText,
-      "& .Toastify__close-button--info": { color: theme.palette.success.contrastText },
-    },
-    "&.Toastify__toast--warning": {
-      backgroundColor: theme.palette.warning.main,
-      color: theme.palette.warning.contrastText,
-      "& .Toastify__close-button--info": { color: theme.palette.warning.contrastText },
-    },
-    "&.Toastify__toast--error": {
-      backgroundColor: theme.palette.error.main,
-      color: theme.palette.error.contrastText,
-      "& .Toastify__close-button--info": { color: theme.palette.error.contrastText },
-    },
-    "&.Toastify__toast--default": {
-      backgroundColor: theme.palette.background.paper,
-      color: theme.palette.getContrastText(theme.palette.background.paper),
-      "& .Toastify__close-button--default": {
-        color: theme.palette.getContrastText(theme.palette.background.paper),
-      },
-    },
-  },
+  toast: getThemedToastClass(theme),
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
