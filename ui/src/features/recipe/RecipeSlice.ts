@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import { IRecipeModel } from "../../../../src/db/recipe";
-import { ToastContainer, toast } from "react-toastify";
-
 import { IRecipe } from "../../../../src/types";
 import apiClient from "../../apiClient";
 import { RootState } from "../../app/store";

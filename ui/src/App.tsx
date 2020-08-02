@@ -2,9 +2,9 @@ import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import React from "react";
+import React, { useEffect } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import AppHeader from "./components/AppHeader";
 import AboutPage from "./pages/AboutPage";
 import RecipePage from "./pages/RecipePage";
@@ -13,6 +13,35 @@ import RecipesPage from "./pages/RecipesPage";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+  },
+  toast: {
+    "&.Toastify__toast--info": {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.primary.contrastText,
+      "& .Toastify__close-button--info": { color: theme.palette.primary.contrastText },
+    },
+    "&.Toastify__toast--success": {
+      backgroundColor: theme.palette.success.main,
+      color: theme.palette.success.contrastText,
+      "& .Toastify__close-button--info": { color: theme.palette.success.contrastText },
+    },
+    "&.Toastify__toast--warning": {
+      backgroundColor: theme.palette.warning.main,
+      color: theme.palette.warning.contrastText,
+      "& .Toastify__close-button--info": { color: theme.palette.warning.contrastText },
+    },
+    "&.Toastify__toast--error": {
+      backgroundColor: theme.palette.error.main,
+      color: theme.palette.error.contrastText,
+      "& .Toastify__close-button--info": { color: theme.palette.error.contrastText },
+    },
+    "&.Toastify__toast--default": {
+      backgroundColor: theme.palette.background.paper,
+      color: theme.palette.getContrastText(theme.palette.background.paper),
+      "& .Toastify__close-button--default": {
+        color: theme.palette.getContrastText(theme.palette.background.paper),
+      },
+    },
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
@@ -28,10 +57,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function App() {
   const classes = useStyles();
+  useEffect(() => {
+    toast("hi");
+    toast.info("hi");
+    toast.success("hi");
+    toast.warning("hi");
+    toast.error("hi");
+  }, []);
 
   return (
     <>
-      <ToastContainer />
+      <ToastContainer toastClassName={classes.toast} />
       <div className={classes.root}>
         <CssBaseline />
         <AppHeader />
