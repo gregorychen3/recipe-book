@@ -83,7 +83,6 @@ export default function RecipeForm({ recipe, onSubmit }: Props) {
 
   return (
     <Formik
-      enableReinitialize
       initialValues={valuesFromRecipe(recipe)}
       validate={(values) => {
         return {};

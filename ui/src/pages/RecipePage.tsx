@@ -1,5 +1,5 @@
 import { makeStyles, Typography } from "@material-ui/core";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useParams } from "react-router-dom";
 import { IRecipe } from "../../../src/types";
