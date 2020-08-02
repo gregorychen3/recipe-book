@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import AppHeader from "./components/AppHeader";
 import AboutPage from "./pages/AboutPage";
 import RecipePage from "./pages/RecipePage";
@@ -29,29 +30,32 @@ export default function App() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppHeader />
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="md" className={classes.container}>
-          <Switch>
-            <Route path="/recipes/:recipeId">
-              <RecipePage />
-            </Route>
-            <Route path="/recipes">
-              <RecipesPage />
-            </Route>
-            <Route path="/about">
-              <AboutPage />
-            </Route>
-            <Route path="/">
-              <Redirect to="/recipes" />
-            </Route>
-          </Switch>
-          <Grid container spacing={3}></Grid>
-        </Container>
-      </main>
-    </div>
+    <>
+      <ToastContainer />
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppHeader />
+        <main className={classes.content}>
+          <div className={classes.appBarSpacer} />
+          <Container maxWidth="md" className={classes.container}>
+            <Switch>
+              <Route path="/recipes/:recipeId">
+                <RecipePage />
+              </Route>
+              <Route path="/recipes">
+                <RecipesPage />
+              </Route>
+              <Route path="/about">
+                <AboutPage />
+              </Route>
+              <Route path="/">
+                <Redirect to="/recipes" />
+              </Route>
+            </Switch>
+            <Grid container spacing={3}></Grid>
+          </Container>
+        </main>
+      </div>
+    </>
   );
 }
