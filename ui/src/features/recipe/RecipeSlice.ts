@@ -18,14 +18,14 @@ export const updateRecipe = createAsyncThunk(
   "users/updateRecipe",
   async (data: { recipeId: string; recipe: IRecipe }) => {
     const resp = await apiClient.updateRecipe(data.recipeId, data.recipe);
-    toast("Recipe successfully updated", { type: "success" });
+    toast.success("Recipe successfully updated");
     return resp.data;
   }
 );
 
 export const deleteRecipe = createAsyncThunk("users/deleteRecipe", async (recipeId: string) => {
   const resp = await apiClient.deleteRecipe(recipeId);
-  toast("Recipe successfully deleted", { type: "success" });
+  toast.success("Recipe successfully deleted");
   return resp.data;
 });
 //
