@@ -2,7 +2,7 @@ import { Grid } from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import { Field, Form, Formik } from "formik";
+import { Field, Form, Formik, FieldArray } from "formik";
 import { Select, TextField } from "formik-material-ui";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -167,12 +167,15 @@ export default function RecipeForm({ recipe, onSubmit }: Props) {
             <Grid item xs={12}>
               <LabelDivider label="INSTRUCTIONS" />
             </Grid>
-            {values.instructions.map((i, idx) => (
-              <Grid item xs={12} key={idx}>
-                <Field component={TextField} name={`instructions.${idx}`} type="string" fullWidth />
-              </Grid>
-            ))}
-
+            <FieldArray name="instructions">
+              {(arrHelpers) =>
+                values.instructions.map((i, idx) => (
+                  <Grid item xs={12} key={idx}>
+                    <Field component={TextField} name={`instructions.${idx}`} type="string" fullWidth />
+                  </Grid>
+                ))
+              }
+            </FieldArray>
             <Grid item xs={12}>
               <LabelDivider label="SOURCES" />
             </Grid>
