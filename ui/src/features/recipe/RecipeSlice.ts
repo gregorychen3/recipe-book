@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { IRecipeModel } from "../../../../src/db/recipe";
+import { ToastContainer, toast } from "react-toastify";
+
 import { IRecipe } from "../../../../src/types";
 import apiClient from "../../apiClient";
 import { RootState } from "../../app/store";
@@ -17,12 +19,14 @@ export const updateRecipe = createAsyncThunk(
   "users/updateRecipe",
   async (data: { recipeId: string; recipe: IRecipe }) => {
     const resp = await apiClient.updateRecipe(data.recipeId, data.recipe);
+    toast("Recipe successfully updated", { type: "success" });
     return resp.data;
   }
 );
 
 export const deleteRecipe = createAsyncThunk("users/deleteRecipe", async (recipeId: string) => {
   const resp = await apiClient.deleteRecipe(recipeId);
+  toast("Recipe successfully deleted", { type: "success" });
   return resp.data;
 });
 //
