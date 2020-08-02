@@ -1,13 +1,13 @@
 import { makeStyles, Typography } from "@material-ui/core";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useParams } from "react-router-dom";
 import { IRecipe } from "../../../src/types";
 import ActionMenu from "../components/ActionMenu";
 import DeleteRecipeDialog from "../features/recipe/DeleteRecipeDialog";
 import Recipe from "../features/recipe/Recipe";
 import RecipeForm from "../features/recipe/RecipeForm";
-import { selectRecipe } from "../features/recipe/RecipeSlice";
+import { selectRecipe, updateRecipe } from "../features/recipe/RecipeSlice";
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RecipePage() {
   const classes = useStyles();
+  const d = useDispatch();
 
   const [deleteDialogData, setDeleteDialogData] = useState<string | undefined>(undefined);
 
@@ -45,7 +46,8 @@ export default function RecipePage() {
   };
 
   const handleSubmit = (recipe: IRecipe) => {
-    console.log(recipe);
+    d(updateRecipe({ recipeId, recipe }));
+
     setIsEditing(false);
   };
 
