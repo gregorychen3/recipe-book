@@ -21,6 +21,10 @@ export const updateRecipe = createAsyncThunk(
   }
 );
 
+export const deleteRecipe = createAsyncThunk("users/deleteRecipe", async (recipeId: string) => {
+  const resp = await apiClient.deleteRecipe(recipeId);
+  return resp.data;
+});
 //
 // SLICE
 // -----
@@ -40,6 +44,10 @@ export const recipeSlice = createSlice({
     builder.addCase(updateRecipe.fulfilled, (state, action) => {
       const updatedRecipe = action.payload;
       state.recipes = [...state.recipes.filter((r) => r.id !== updatedRecipe.id), updatedRecipe];
+    });
+    builder.addCase(deleteRecipe.fulfilled, (state, action) => {
+      const deletedRecipeId = action.payload;
+      state.recipes = [...state.recipes.filter((r) => r.id !== deletedRecipeId)];
     });
   },
 });
