@@ -3,6 +3,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import App from "./App";
 import store from "./app/store";
 import * as serviceWorker from "./serviceWorker";
@@ -13,6 +15,7 @@ ReactDOM.render(
     <Provider store={store}>
       <Router>
         <ThemeProvider theme={theme}>
+          <ToastContainer />
           <App />
         </ThemeProvider>
       </Router>
