@@ -7,8 +7,9 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
-import { useSelector } from "react-redux";
-import { selectRecipe } from "./RecipeSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { deleteRecipe, selectRecipe } from "./RecipeSlice";
 
 export interface DeleteRecipeDialogProps {
   recipeId?: string;
@@ -17,6 +18,17 @@ export interface DeleteRecipeDialogProps {
 export default function DeleteRecipeDialog({ recipeId, onClose }: DeleteRecipeDialogProps) {
   const recipe = useSelector(selectRecipe(recipeId ?? ""));
   const recipeName = recipe ? recipe.name : "";
+
+  const history = useHistory();
+  const d = useDispatch();
+  const handleDelete = () => {
+    if (!recipeId) {
+      return;
+    }
+    d(deleteRecipe(recipeId));
+    onClose();
+    history.push("/recipes");
+  };
 
   return (
     <Dialog open={!!recipeId} onClose={onClose}>
@@ -29,7 +41,7 @@ export default function DeleteRecipeDialog({ recipeId, onClose }: DeleteRecipeDi
         <Button onClick={onClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={onClose} color="primary">
+        <Button onClick={handleDelete} color="primary">
           <Box color="error.main">Delete</Box>
         </Button>
       </DialogActions>

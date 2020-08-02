@@ -36,7 +36,7 @@ export default function RecipePage() {
   }
 
   const handleShowDeleteDialog = () => setDeleteDialogData(recipe.id);
-  const handleCloseDeleteDialog = (recipeId: string) => {
+  const handleCloseDeleteDialog = () => {
     setDeleteDialogData(undefined);
   };
 
