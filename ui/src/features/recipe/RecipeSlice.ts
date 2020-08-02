@@ -18,14 +18,12 @@ export const updateRecipe = createAsyncThunk(
   "users/updateRecipe",
   async (data: { recipeId: string; recipe: IRecipe }) => {
     const resp = await apiClient.updateRecipe(data.recipeId, data.recipe);
-    toast.success("Recipe successfully updated");
     return resp.data;
   }
 );
 
 export const deleteRecipe = createAsyncThunk("users/deleteRecipe", async (recipeId: string) => {
   const resp = await apiClient.deleteRecipe(recipeId);
-  toast.success("Recipe successfully deleted");
   return resp.data;
 });
 //
@@ -51,6 +49,7 @@ export const recipeSlice = createSlice({
     builder.addCase(updateRecipe.fulfilled, (state, action) => {
       const updatedRecipe = action.payload;
       state.recipes = [...state.recipes.filter((r) => r.id !== updatedRecipe.id), updatedRecipe];
+      toast.success("Recipe successfully updated");
     });
     builder.addCase(updateRecipe.rejected, () => {
       toast.error("Failed to update recipe");
@@ -59,6 +58,7 @@ export const recipeSlice = createSlice({
     builder.addCase(deleteRecipe.fulfilled, (state, action) => {
       const deletedRecipeId = action.payload;
       state.recipes = [...state.recipes.filter((r) => r.id !== deletedRecipeId)];
+      toast.success("Recipe successfully deleted");
     });
     builder.addCase(deleteRecipe.rejected, () => {
       toast.error("Failed to delete recipe");
