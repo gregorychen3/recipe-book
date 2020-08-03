@@ -10,6 +10,11 @@ import history from "../../history";
 // THUNKS
 // ------
 
+export const createRecipe = createAsyncThunk("users/createRecipe", async (recipe: IRecipe) => {
+  const resp = await apiClient.createRecipe(recipe);
+  return resp.data;
+});
+
 export const fetchRecipes = createAsyncThunk("users/fetchRecipes", async () => {
   const resp = await apiClient.fetchRecipes();
   return resp.data;
@@ -42,6 +47,15 @@ export const recipeSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(createRecipe.fulfilled, (state, action) => {
+      const createdRecipe = action.payload;
+      state.recipes.push(createdRecipe);
+      toast.success("Recipe successfully created");
+    });
+    builder.addCase(createRecipe.rejected, () => {
+      toast.error("Failed to create recipe");
+    });
+
     builder.addCase(fetchRecipes.fulfilled, (state, action) => {
       state.recipes = action.payload;
     });
