@@ -81,33 +81,33 @@ export default function RecipeForm({ recipe, onSubmit }: Props) {
   const courses = getCourses(recipes);
   const cuisines = getCuisines(recipes);
 
-  const handleIngredientNameFieldChanged = (idx: number, arrHelpers: FieldArrayRenderProps) => (
+  const handleIngredientNameFieldChanged = (idx: number, { form, push }: FieldArrayRenderProps) => (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const { values, setFieldValue } = arrHelpers.form;
+    const { values, setFieldValue } = form;
     setFieldValue(`ingredients.${idx}.name`, e.target.value);
     if (idx === values.ingredients.length - 1) {
-      arrHelpers.push("");
+      push("");
     }
   };
 
-  const handleInstructionFieldChanged = (idx: number, arrHelpers: FieldArrayRenderProps) => (
+  const handleInstructionFieldChanged = (idx: number, { form, push }: FieldArrayRenderProps) => (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const { values, setFieldValue } = arrHelpers.form;
+    const { values, setFieldValue } = form;
     setFieldValue(`instructions.${idx}`, e.target.value);
     if (idx === values.instructions.length - 1) {
-      arrHelpers.push("");
+      push("");
     }
   };
 
-  const handleSourceFieldChanged = (idx: number, arrHelpers: FieldArrayRenderProps) => (
+  const handleSourceFieldChanged = (idx: number, { form, push }: FieldArrayRenderProps) => (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const { values, setFieldValue } = arrHelpers.form;
+    const { values, setFieldValue } = form;
     setFieldValue(`sources.${idx}`, e.target.value);
     if (idx === values.sources.length - 1) {
-      arrHelpers.push("");
+      push("");
     }
   };
 
@@ -165,7 +165,7 @@ export default function RecipeForm({ recipe, onSubmit }: Props) {
               </Grid>
               <FieldArray name="instructions">
                 {(arrHelpers) =>
-                  values.ingredients.map((i, idx) => (
+                  values.ingredients.map((_, idx) => (
                     <React.Fragment key={idx}>
                       <Grid item xs={4}>
                         <Field
@@ -206,7 +206,7 @@ export default function RecipeForm({ recipe, onSubmit }: Props) {
               </Grid>
               <FieldArray name="instructions">
                 {(arrHelpers) =>
-                  values.instructions.map((i, idx) => (
+                  values.instructions.map((_, idx) => (
                     <Grid item xs={12} key={idx}>
                       <Field
                         component={TextField}
@@ -224,7 +224,7 @@ export default function RecipeForm({ recipe, onSubmit }: Props) {
               </Grid>
               <FieldArray name="sources">
                 {(arrHelpers) =>
-                  values.sources.map((s, idx) => (
+                  values.sources.map((_, idx) => (
                     <Grid item xs={12} key={idx}>
                       <Field
                         component={TextField}
