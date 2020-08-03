@@ -36,8 +36,7 @@ export default function AppHeader() {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleMenu = (e: React.MouseEvent<HTMLElement>) =>
-    setAnchorEl(e.currentTarget);
+  const handleMenu = (e: React.MouseEvent<HTMLElement>) => setAnchorEl(e.currentTarget);
 
   const handleClose = () => setAnchorEl(null);
 
@@ -51,26 +50,14 @@ export default function AppHeader() {
   return (
     <AppBar position="absolute" color="inherit">
       <Toolbar>
-        <IconButton
-          edge="start"
-          color="inherit"
-          onClick={navToHome}
-          className={classes.menuButton}
-        >
+        <IconButton edge="start" color="inherit" onClick={navToHome} className={classes.menuButton}>
           <RestaurantIcon />
         </IconButton>
-        <Typography
-          component="h1"
-          variant="h6"
-          color="inherit"
-          noWrap
-          onClick={navToHome}
-          className={classes.title}
-        >
+        <Typography component="h1" variant="h6" color="inherit" noWrap onClick={navToHome} className={classes.title}>
           Greg and Ally's Recipe Book
         </Typography>
         <Button onClick={handleMenu} color="inherit">
-          Browse
+          Browse Recipes
           <ExpandMoreIcon fontSize="small" />
         </Button>
         <Menu
