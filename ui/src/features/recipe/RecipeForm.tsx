@@ -87,7 +87,7 @@ export default function RecipeForm({ recipe, onSubmit }: Props) {
     const { values, setFieldValue } = form;
     setFieldValue(`ingredients.${idx}.name`, e.target.value);
     if (idx === values.ingredients.length - 1) {
-      push("");
+      push(defaultIngredient());
     }
   };
 
