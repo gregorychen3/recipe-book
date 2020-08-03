@@ -2,7 +2,7 @@ import { Grid } from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import { Field, Form, Formik, FieldArray } from "formik";
+import { Field, FieldArray, FieldArrayRenderProps, Form, Formik, FormikProps } from "formik";
 import { Select, TextField } from "formik-material-ui";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -81,6 +81,18 @@ export default function RecipeForm({ recipe, onSubmit }: Props) {
   const courses = getCourses(recipes);
   const cuisines = getCuisines(recipes);
 
+  const handleInstructionsFieldChanged = (
+    idx: number,
+    formikProps: FormikProps<Values>,
+    arrHelpers: FieldArrayRenderProps
+  ) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { values, setFieldValue } = formikProps;
+    setFieldValue(`instructions.${idx}`, e.target.value);
+    if (idx === values.instructions.length - 1) {
+      arrHelpers.push("");
+    }
+  };
+
   return (
     <Formik
       initialValues={valuesFromRecipe(recipe)}
@@ -93,100 +105,109 @@ export default function RecipeForm({ recipe, onSubmit }: Props) {
         setSubmitting(false);
       }}
     >
-      {({ values, submitForm, isSubmitting }) => (
-        <Form id="recipe-form">
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Field component={TextField} name="name" type="text" label="Recipe Name" fullWidth />
-            </Grid>
-
-            <Grid item xs={4}>
-              <Field component={TextField} name="servings" type="number" label="Servings" fullWidth />
-            </Grid>
-            <Grid item xs={4}>
-              <FormControl fullWidth>
-                <InputLabel htmlFor="course">Course</InputLabel>
-                <Field component={Select} name="course" inputProps={{ id: "course" }}>
-                  {courses.map((c) => (
-                    <MenuItem value={c} key={c}>
-                      {c}
-                    </MenuItem>
-                  ))}
-                </Field>
-              </FormControl>
-            </Grid>
-            <Grid item xs={4}>
-              <FormControl fullWidth>
-                <InputLabel htmlFor="cuisine">Cuisine</InputLabel>
-                <Field component={Select} name="cuisine" inputProps={{ id: "cuisine" }}>
-                  {cuisines.map((c) => (
-                    <MenuItem value={c} key={c}>
-                      {c}
-                    </MenuItem>
-                  ))}
-                </Field>
-              </FormControl>
-            </Grid>
-
-            <Grid item xs={12}>
-              <LabelDivider label="INGREDIENTS" />
-            </Grid>
-            {values.ingredients.map((i, idx) => (
-              <React.Fragment key={idx}>
-                <Grid item xs={4}>
-                  <Field
-                    component={TextField}
-                    name={`ingredients.${idx}.qty`}
-                    label={idx === 0 ? "Quantity" : undefined}
-                    type="number"
-                    inputProps={{ step: "0.01" }}
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={4}>
-                  <Field
-                    component={TextField}
-                    name={`ingredients.${idx}.unit`}
-                    label={idx === 0 ? "Unit" : undefined}
-                    type="text"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={4}>
-                  <Field
-                    component={TextField}
-                    name={`ingredients.${idx}.name`}
-                    label={idx === 0 ? "Name" : undefined}
-                    type="text"
-                    fullWidth
-                  />
-                </Grid>
-              </React.Fragment>
-            ))}
-
-            <Grid item xs={12}>
-              <LabelDivider label="INSTRUCTIONS" />
-            </Grid>
-            <FieldArray name="instructions">
-              {(arrHelpers) =>
-                values.instructions.map((i, idx) => (
-                  <Grid item xs={12} key={idx}>
-                    <Field component={TextField} name={`instructions.${idx}`} type="string" fullWidth />
-                  </Grid>
-                ))
-              }
-            </FieldArray>
-            <Grid item xs={12}>
-              <LabelDivider label="SOURCES" />
-            </Grid>
-            {values.sources.map((s, idx) => (
-              <Grid item xs={12} key={idx}>
-                <Field component={TextField} name={`sources.${idx}`} type="string" fullWidth />
+      {(formikProps) => {
+        const { values } = formikProps;
+        return (
+          <Form id="recipe-form">
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Field component={TextField} name="name" type="text" label="Recipe Name" fullWidth />
               </Grid>
-            ))}
-          </Grid>
-        </Form>
-      )}
+
+              <Grid item xs={4}>
+                <Field component={TextField} name="servings" type="number" label="Servings" fullWidth />
+              </Grid>
+              <Grid item xs={4}>
+                <FormControl fullWidth>
+                  <InputLabel htmlFor="course">Course</InputLabel>
+                  <Field component={Select} name="course" inputProps={{ id: "course" }}>
+                    {courses.map((c) => (
+                      <MenuItem value={c} key={c}>
+                        {c}
+                      </MenuItem>
+                    ))}
+                  </Field>
+                </FormControl>
+              </Grid>
+              <Grid item xs={4}>
+                <FormControl fullWidth>
+                  <InputLabel htmlFor="cuisine">Cuisine</InputLabel>
+                  <Field component={Select} name="cuisine" inputProps={{ id: "cuisine" }}>
+                    {cuisines.map((c) => (
+                      <MenuItem value={c} key={c}>
+                        {c}
+                      </MenuItem>
+                    ))}
+                  </Field>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={12}>
+                <LabelDivider label="INGREDIENTS" />
+              </Grid>
+              {values.ingredients.map((i, idx) => (
+                <React.Fragment key={idx}>
+                  <Grid item xs={4}>
+                    <Field
+                      component={TextField}
+                      name={`ingredients.${idx}.qty`}
+                      label={idx === 0 ? "Quantity" : undefined}
+                      type="number"
+                      inputProps={{ step: "0.01" }}
+                      fullWidth
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Field
+                      component={TextField}
+                      name={`ingredients.${idx}.unit`}
+                      label={idx === 0 ? "Unit" : undefined}
+                      type="text"
+                      fullWidth
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Field
+                      component={TextField}
+                      name={`ingredients.${idx}.name`}
+                      label={idx === 0 ? "Name" : undefined}
+                      type="text"
+                      fullWidth
+                    />
+                  </Grid>
+                </React.Fragment>
+              ))}
+
+              <Grid item xs={12}>
+                <LabelDivider label="INSTRUCTIONS" />
+              </Grid>
+              <FieldArray name="instructions">
+                {(arrHelpers) =>
+                  values.instructions.map((i, idx) => (
+                    <Grid item xs={12} key={idx}>
+                      <Field
+                        component={TextField}
+                        name={`instructions.${idx}`}
+                        type="string"
+                        fullWidth
+                        onChange={handleInstructionsFieldChanged(idx, formikProps, arrHelpers)}
+                      />
+                    </Grid>
+                  ))
+                }
+              </FieldArray>
+              <Grid item xs={12}>
+                <LabelDivider label="SOURCES" />
+              </Grid>
+              {values.sources.map((s, idx) => (
+                <Grid item xs={12} key={idx}>
+                  <Field component={TextField} name={`sources.${idx}`} type="string" fullWidth />
+                </Grid>
+              ))}
+            </Grid>
+          </Form>
+        );
+      }}
     </Formik>
   );
 }
