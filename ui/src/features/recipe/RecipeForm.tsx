@@ -81,6 +81,18 @@ export default function RecipeForm({ recipe, onSubmit }: Props) {
   const courses = getCourses(recipes);
   const cuisines = getCuisines(recipes);
 
+  const handleIngredientNameFieldChanged = (
+    idx: number,
+    formikProps: FormikProps<Values>,
+    arrHelpers: FieldArrayRenderProps
+  ) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { values, setFieldValue } = formikProps;
+    setFieldValue(`ingredients.${idx}.name`, e.target.value);
+    if (idx === values.ingredients.length - 1) {
+      arrHelpers.push("");
+    }
+  };
+
   const handleInstructionFieldChanged = (
     idx: number,
     formikProps: FormikProps<Values>,
@@ -157,38 +169,43 @@ export default function RecipeForm({ recipe, onSubmit }: Props) {
               <Grid item xs={12}>
                 <LabelDivider label="INGREDIENTS" />
               </Grid>
-              {values.ingredients.map((i, idx) => (
-                <React.Fragment key={idx}>
-                  <Grid item xs={4}>
-                    <Field
-                      component={TextField}
-                      name={`ingredients.${idx}.qty`}
-                      label={idx === 0 ? "Quantity" : undefined}
-                      type="number"
-                      inputProps={{ step: "0.01" }}
-                      fullWidth
-                    />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Field
-                      component={TextField}
-                      name={`ingredients.${idx}.unit`}
-                      label={idx === 0 ? "Unit" : undefined}
-                      type="text"
-                      fullWidth
-                    />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Field
-                      component={TextField}
-                      name={`ingredients.${idx}.name`}
-                      label={idx === 0 ? "Name" : undefined}
-                      type="text"
-                      fullWidth
-                    />
-                  </Grid>
-                </React.Fragment>
-              ))}
+              <FieldArray name="instructions">
+                {(arrHelpers) =>
+                  values.ingredients.map((i, idx) => (
+                    <React.Fragment key={idx}>
+                      <Grid item xs={4}>
+                        <Field
+                          component={TextField}
+                          name={`ingredients.${idx}.qty`}
+                          label={idx === 0 ? "Quantity" : undefined}
+                          type="number"
+                          inputProps={{ step: "0.01" }}
+                          fullWidth
+                        />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Field
+                          component={TextField}
+                          name={`ingredients.${idx}.unit`}
+                          label={idx === 0 ? "Unit" : undefined}
+                          type="text"
+                          fullWidth
+                        />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Field
+                          component={TextField}
+                          name={`ingredients.${idx}.name`}
+                          label={idx === 0 ? "Name" : undefined}
+                          type="text"
+                          fullWidth
+                          onChange={handleIngredientNameFieldChanged(idx, formikProps, arrHelpers)}
+                        />
+                      </Grid>
+                    </React.Fragment>
+                  ))
+                }
+              </FieldArray>
 
               <Grid item xs={12}>
                 <LabelDivider label="INSTRUCTIONS" />
