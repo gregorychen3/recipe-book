@@ -81,7 +81,7 @@ export default function RecipeForm({ recipe, onSubmit }: Props) {
   const courses = getCourses(recipes);
   const cuisines = getCuisines(recipes);
 
-  const handleInstructionsFieldChanged = (
+  const handleInstructionFieldChanged = (
     idx: number,
     formikProps: FormikProps<Values>,
     arrHelpers: FieldArrayRenderProps
@@ -190,7 +190,7 @@ export default function RecipeForm({ recipe, onSubmit }: Props) {
                         name={`instructions.${idx}`}
                         type="string"
                         fullWidth
-                        onChange={handleInstructionsFieldChanged(idx, formikProps, arrHelpers)}
+                        onChange={handleInstructionFieldChanged(idx, formikProps, arrHelpers)}
                       />
                     </Grid>
                   ))
