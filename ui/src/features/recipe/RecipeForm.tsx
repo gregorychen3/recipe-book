@@ -2,7 +2,7 @@ import { Grid } from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import { Field, FieldArray, FieldArrayRenderProps, Form, Formik, FormikProps } from "formik";
+import { Field, FieldArray, FieldArrayRenderProps, Form, Formik } from "formik";
 import { Select, TextField } from "formik-material-ui";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -81,36 +81,30 @@ export default function RecipeForm({ recipe, onSubmit }: Props) {
   const courses = getCourses(recipes);
   const cuisines = getCuisines(recipes);
 
-  const handleIngredientNameFieldChanged = (
-    idx: number,
-    formikProps: FormikProps<Values>,
-    arrHelpers: FieldArrayRenderProps
-  ) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { values, setFieldValue } = formikProps;
+  const handleIngredientNameFieldChanged = (idx: number, arrHelpers: FieldArrayRenderProps) => (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { values, setFieldValue } = arrHelpers.form;
     setFieldValue(`ingredients.${idx}.name`, e.target.value);
     if (idx === values.ingredients.length - 1) {
       arrHelpers.push("");
     }
   };
 
-  const handleInstructionFieldChanged = (
-    idx: number,
-    formikProps: FormikProps<Values>,
-    arrHelpers: FieldArrayRenderProps
-  ) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { values, setFieldValue } = formikProps;
+  const handleInstructionFieldChanged = (idx: number, arrHelpers: FieldArrayRenderProps) => (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { values, setFieldValue } = arrHelpers.form;
     setFieldValue(`instructions.${idx}`, e.target.value);
     if (idx === values.instructions.length - 1) {
       arrHelpers.push("");
     }
   };
 
-  const handleSourceFieldChanged = (
-    idx: number,
-    formikProps: FormikProps<Values>,
-    arrHelpers: FieldArrayRenderProps
-  ) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { values, setFieldValue } = formikProps;
+  const handleSourceFieldChanged = (idx: number, arrHelpers: FieldArrayRenderProps) => (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { values, setFieldValue } = arrHelpers.form;
     setFieldValue(`sources.${idx}`, e.target.value);
     if (idx === values.sources.length - 1) {
       arrHelpers.push("");
@@ -199,7 +193,7 @@ export default function RecipeForm({ recipe, onSubmit }: Props) {
                           label={idx === 0 ? "Name" : undefined}
                           type="text"
                           fullWidth
-                          onChange={handleIngredientNameFieldChanged(idx, formikProps, arrHelpers)}
+                          onChange={handleIngredientNameFieldChanged(idx, arrHelpers)}
                         />
                       </Grid>
                     </React.Fragment>
@@ -219,7 +213,7 @@ export default function RecipeForm({ recipe, onSubmit }: Props) {
                         name={`instructions.${idx}`}
                         type="string"
                         fullWidth
-                        onChange={handleInstructionFieldChanged(idx, formikProps, arrHelpers)}
+                        onChange={handleInstructionFieldChanged(idx, arrHelpers)}
                       />
                     </Grid>
                   ))
@@ -237,7 +231,7 @@ export default function RecipeForm({ recipe, onSubmit }: Props) {
                         name={`sources.${idx}`}
                         type="string"
                         fullWidth
-                        onChange={handleSourceFieldChanged(idx, formikProps, arrHelpers)}
+                        onChange={handleSourceFieldChanged(idx, arrHelpers)}
                       />
                     </Grid>
                   ))
