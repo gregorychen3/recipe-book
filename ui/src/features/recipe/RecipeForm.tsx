@@ -93,6 +93,18 @@ export default function RecipeForm({ recipe, onSubmit }: Props) {
     }
   };
 
+  const handleSourceFieldChanged = (
+    idx: number,
+    formikProps: FormikProps<Values>,
+    arrHelpers: FieldArrayRenderProps
+  ) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { values, setFieldValue } = formikProps;
+    setFieldValue(`sources.${idx}`, e.target.value);
+    if (idx === values.sources.length - 1) {
+      arrHelpers.push("");
+    }
+  };
+
   return (
     <Formik
       initialValues={valuesFromRecipe(recipe)}
@@ -199,11 +211,21 @@ export default function RecipeForm({ recipe, onSubmit }: Props) {
               <Grid item xs={12}>
                 <LabelDivider label="SOURCES" />
               </Grid>
-              {values.sources.map((s, idx) => (
-                <Grid item xs={12} key={idx}>
-                  <Field component={TextField} name={`sources.${idx}`} type="string" fullWidth />
-                </Grid>
-              ))}
+              <FieldArray name="sources">
+                {(arrHelpers) =>
+                  values.sources.map((s, idx) => (
+                    <Grid item xs={12} key={idx}>
+                      <Field
+                        component={TextField}
+                        name={`sources.${idx}`}
+                        type="string"
+                        fullWidth
+                        onChange={handleSourceFieldChanged(idx, formikProps, arrHelpers)}
+                      />
+                    </Grid>
+                  ))
+                }
+              </FieldArray>
             </Grid>
           </Form>
         );
