@@ -163,7 +163,7 @@ export default function RecipeForm({ recipe, onSubmit }: Props) {
               <Grid item xs={12}>
                 <LabelDivider label="INGREDIENTS" />
               </Grid>
-              <FieldArray name="instructions">
+              <FieldArray name="ingredients">
                 {(arrHelpers) =>
                   values.ingredients.map((_, idx) => (
                     <React.Fragment key={idx}>
