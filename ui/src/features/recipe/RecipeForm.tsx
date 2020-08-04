@@ -19,9 +19,9 @@ const defaultValues: Values = {
   course: "primi",
   cuisine: "italian",
   servings: 2,
-  ingredients: [],
-  instructions: [],
-  sources: [],
+  ingredients: [defaultIngredient()],
+  instructions: [""],
+  sources: [""],
 };
 
 const valuesFromRecipe = (r: IRecipe): Values => {
