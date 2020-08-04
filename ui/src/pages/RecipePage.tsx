@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { IRecipe } from "../../../src/types";
 import DeleteRecipeDialog from "../features/recipe/DeleteRecipeDialog";
 import Recipe from "../features/recipe/Recipe";
 import RecipeForm from "../features/recipe/RecipeForm";
 import RecipeHeader from "../features/recipe/RecipeHeader";
-import { selectRecipe, updateRecipe, fetchRecipe } from "../features/recipe/RecipeSlice";
+import { fetchRecipe, selectRecipe, updateRecipe } from "../features/recipe/RecipeSlice";
 
 export default function RecipePage() {
   const d = useDispatch();
