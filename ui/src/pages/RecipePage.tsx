@@ -6,7 +6,7 @@ import DeleteRecipeDialog from "../features/recipe/DeleteRecipeDialog";
 import Recipe from "../features/recipe/Recipe";
 import RecipeForm from "../features/recipe/RecipeForm";
 import RecipeHeader from "../features/recipe/RecipeHeader";
-import { selectRecipe, updateRecipe } from "../features/recipe/RecipeSlice";
+import { selectRecipe, updateRecipe, fetchRecipe } from "../features/recipe/RecipeSlice";
 
 export default function RecipePage() {
   const d = useDispatch();
@@ -20,11 +20,15 @@ export default function RecipePage() {
   const recipe = useSelector(selectRecipe(recipeId));
 
   useEffect(() => {
+    !recipe && d(fetchRecipe(recipeId));
+  }, [recipe, recipeId, d]);
+
+  useEffect(() => {
     setHeaderText(recipe?.name.toUpperCase() ?? "");
   }, [recipe]);
 
   if (!recipe) {
-    return <Redirect to="/recipes" />;
+    return null;
   }
 
   const handleShowDeleteDialog = () => setDeleteDialogData(recipe.id);
