@@ -12,7 +12,7 @@ const server = express();
 server.use(morgan("dev"));
 server.use(express.json());
 
-// Serve static files from the React app
+// serve ui static files
 const uiStaticAssetsPath = path.join(__dirname, "/../ui/build");
 server.use(express.static(uiStaticAssetsPath));
 logger.info(`Serving UI static assets from ${uiStaticAssetsPath}`);
@@ -20,8 +20,7 @@ logger.info(`Serving UI static assets from ${uiStaticAssetsPath}`);
 server.use("/test/", testController);
 server.use("/api/recipes", recipeController);
 
-// the "catchall" handler: for any request that doesn't
-// match one above, send back React's index.html file.
+// catchall: send UI index.html file.
 server.get("*", (req, res) => {
   const file = path.join(__dirname + "/../ui/build/index.html");
   res.sendFile(file);
