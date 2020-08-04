@@ -21,6 +21,11 @@ export const fetchRecipes = createAsyncThunk("users/fetchRecipes", async () => {
   return resp.data;
 });
 
+export const fetchRecipe = createAsyncThunk("users/fetchRecipe", async (recipeId: string) => {
+  const resp = await apiClient.fetchRecipe(recipeId);
+  return resp.data;
+});
+
 export const updateRecipe = createAsyncThunk(
   "users/updateRecipe",
   async (data: { recipeId: string; recipe: IRecipe }) => {
@@ -62,6 +67,14 @@ export const recipeSlice = createSlice({
     });
     builder.addCase(fetchRecipes.rejected, () => {
       toast.error("Failed to fetch recipes");
+    });
+
+    builder.addCase(fetchRecipe.fulfilled, (state, action) => {
+      const recipe = action.payload;
+      state.recipes = [...state.recipes.filter((r) => r.id !== recipe.id), recipe];
+    });
+    builder.addCase(fetchRecipe.rejected, () => {
+      toast.error("Failed to fetch recipe");
     });
 
     builder.addCase(updateRecipe.fulfilled, (state, action) => {
