@@ -10,31 +10,31 @@ import history from "../../history";
 // THUNKS
 // ------
 
-export const createRecipe = createAsyncThunk("users/createRecipe", async (recipe: IRecipe) => {
+export const createRecipe = createAsyncThunk("recipe/createRecipe", async (recipe: IRecipe) => {
   const resp = await apiClient.createRecipe(recipe);
   history.push("/recipes");
   return resp.data;
 });
 
-export const fetchRecipes = createAsyncThunk("users/fetchRecipes", async () => {
+export const fetchRecipes = createAsyncThunk("recipe/fetchRecipes", async () => {
   const resp = await apiClient.fetchRecipes();
   return resp.data;
 });
 
-export const fetchRecipe = createAsyncThunk("users/fetchRecipe", async (recipeId: string) => {
+export const fetchRecipe = createAsyncThunk("recipe/fetchRecipe", async (recipeId: string) => {
   const resp = await apiClient.fetchRecipe(recipeId);
   return resp.data;
 });
 
 export const updateRecipe = createAsyncThunk(
-  "users/updateRecipe",
+  "recipe/updateRecipe",
   async (data: { recipeId: string; recipe: IRecipe }) => {
     const resp = await apiClient.updateRecipe(data.recipeId, data.recipe);
     return resp.data;
   }
 );
 
-export const deleteRecipe = createAsyncThunk("users/deleteRecipe", async (recipeId: string) => {
+export const deleteRecipe = createAsyncThunk("recipe/deleteRecipe", async (recipeId: string) => {
   const resp = await apiClient.deleteRecipe(recipeId);
   history.push("/recipes");
   return resp.data;
