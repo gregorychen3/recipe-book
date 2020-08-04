@@ -7,6 +7,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import AppHeader from "./components/AppHeader";
 import AboutPage from "./pages/AboutPage";
+import CreateRecipePage from "./pages/CreateRecipePage";
 import RecipePage from "./pages/RecipePage";
 import RecipesPage from "./pages/RecipesPage";
 import { getThemedToastClass } from "./theme";
@@ -41,6 +42,9 @@ export default function App() {
           <div className={classes.appBarSpacer} />
           <Container maxWidth="md" className={classes.container}>
             <Switch>
+              <Route path="/recipes/create">
+                <CreateRecipePage />
+              </Route>
               <Route path="/recipes/:recipeId">
                 <RecipePage />
               </Route>

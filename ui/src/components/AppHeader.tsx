@@ -8,7 +8,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link as RouterLink, useHistory } from "react-router-dom";
 import { GroupBy } from "../pages/RecipesPage";
 
 const browseMenuOpts: { label: string; value: GroupBy }[] = [
@@ -74,7 +74,9 @@ export default function AppHeader() {
             </MenuItem>
           ))}
         </Menu>
-        <Button color="inherit">Add Recipe</Button>
+        <Button color="inherit" component={RouterLink} to="/recipes/create">
+          Add Recipe
+        </Button>
         <IconButton color="inherit">
           <GitHubIcon />
         </IconButton>
