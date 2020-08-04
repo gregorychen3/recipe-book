@@ -80,7 +80,7 @@ interface Values {
   sources: string[];
 }
 interface Props {
-  recipe?: IRecipeModel;
+  recipe?: IRecipe;
   onSubmit: (recipe: IRecipe) => void;
   onChange?: (recipe: IRecipe) => void;
 }
