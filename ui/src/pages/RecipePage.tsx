@@ -1,5 +1,4 @@
-import { makeStyles } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useParams } from "react-router-dom";
 import { IRecipe } from "../../../src/types";
@@ -9,29 +8,21 @@ import RecipeForm from "../features/recipe/RecipeForm";
 import RecipeHeader from "../features/recipe/RecipeHeader";
 import { selectRecipe, updateRecipe } from "../features/recipe/RecipeSlice";
 
-const useStyles = makeStyles((theme) => ({
-  header: {
-    display: "flex",
-    justifyContent: "space-between",
-    margin: theme.spacing(2),
-  },
-  metadataRow: {
-    display: "flex",
-    justifyContent: "space-between",
-  },
-  hidden: { visibility: "hidden" },
-}));
-
 export default function RecipePage() {
-  const classes = useStyles();
   const d = useDispatch();
 
   const [deleteDialogData, setDeleteDialogData] = useState<string | undefined>(undefined);
 
   const [isEditing, setIsEditing] = useState(false);
+  const [headerText, setHeaderText] = useState("");
 
   const { recipeId } = useParams();
   const recipe = useSelector(selectRecipe(recipeId));
+
+  useEffect(() => {
+    setHeaderText(recipe?.name.toUpperCase() ?? "");
+  }, [recipe]);
+
   if (!recipe) {
     return <Redirect to="/recipes" />;
   }
@@ -51,16 +42,22 @@ export default function RecipePage() {
     setIsEditing(false);
   };
 
+  const handleRecipeEdited = (recipe: IRecipe) => setHeaderText(recipe.name);
+
   return (
     <>
       <DeleteRecipeDialog recipeId={deleteDialogData} onClose={handleCloseDeleteDialog} />
       <RecipeHeader
-        title={recipe.name.toUpperCase()}
+        title={headerText}
         onDelete={handleShowDeleteDialog}
         onEdit={handleEditClicked}
         disableSave={!isEditing}
       />
-      {isEditing ? <RecipeForm recipe={recipe} onSubmit={handleSubmit} /> : <Recipe recipe={recipe} />}
+      {isEditing ? (
+        <RecipeForm recipe={recipe} onChange={handleRecipeEdited} onSubmit={handleSubmit} />
+      ) : (
+        <Recipe recipe={recipe} />
+      )}
     </>
   );
 }

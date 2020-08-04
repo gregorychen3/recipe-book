@@ -4,7 +4,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import { Field, FieldArray, FieldArrayRenderProps, Form, Formik, FormikProps } from "formik";
 import { Select, TextField } from "formik-material-ui";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { IRecipeModel } from "../../../../src/db/recipe";
 import { ICourse, ICuisine, IIngredient, IRecipe } from "../../../../src/types";
@@ -74,7 +74,7 @@ interface Props {
   onSubmit: (recipe: IRecipe) => void;
   onChange?: (recipe: IRecipe) => void;
 }
-export default function RecipeForm({ recipe, onSubmit }: Props) {
+export default function RecipeForm({ recipe, onSubmit, onChange }: Props) {
   return (
     <Formik
       initialValues={valuesFromRecipe(recipe)}
@@ -87,16 +87,20 @@ export default function RecipeForm({ recipe, onSubmit }: Props) {
         setSubmitting(false);
       }}
     >
-      {(formikProps) => <InnerForm {...formikProps} />}
+      {(formikProps) => <InnerForm onChange={onChange} {...formikProps} />}
     </Formik>
   );
 }
 
-const InnerForm = (props: FormikProps<Values>) => {
-  const { values } = props;
+const InnerForm = (props: { onChange?: (recipe: IRecipe) => void } & FormikProps<Values>) => {
+  const { onChange, values } = props;
   const recipes = useSelector(selectRecipes);
   const courses = getCourses(recipes);
   const cuisines = getCuisines(recipes);
+
+  useEffect(() => {
+    onChange && onChange(recipeFromValues(values));
+  }, [onChange, values]);
 
   const handleIngredientNameFieldChanged = (idx: number, { form, push }: FieldArrayRenderProps) => (
     e: React.ChangeEvent<HTMLInputElement>
