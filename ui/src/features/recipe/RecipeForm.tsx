@@ -15,8 +15,8 @@ const defaultIngredient = (): IngredientValues => ({ qty: "", unit: "", name: ""
 
 const defaultValues: Values = {
   name: "",
-  course: "primi",
-  cuisine: "italian",
+  course: "Primi",
+  cuisine: "Italian",
   servings: 2,
   ingredients: [defaultIngredient()],
   instructions: [""],
