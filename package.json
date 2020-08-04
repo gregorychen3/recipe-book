@@ -24,6 +24,7 @@
   },
   "devDependencies": {},
   "scripts": {
+    "start": "node dist/server.js",
     "start:dev": "nodemon",
     "build-ui": "cd ui && npm i && npm run build",
     "build": "tsc",
