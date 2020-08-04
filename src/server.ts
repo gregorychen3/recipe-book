@@ -13,7 +13,9 @@ server.use(morgan("dev"));
 server.use(express.json());
 
 // Serve static files from the React app
-server.use(express.static(path.join(__dirname, "/../ui/build")));
+const uiStaticAssetsPath = path.join(__dirname, "/../ui/build");
+server.use(express.static(uiStaticAssetsPath));
+logger.info(`Serving UI static assets from ${uiStaticAssetsPath}`);
 
 server.use("/test/", testController);
 server.use("/api/recipes", recipeController);
