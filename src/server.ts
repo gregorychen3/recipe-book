@@ -21,8 +21,8 @@ server.use("/test/", testController);
 server.use("/api/recipes", recipeController);
 
 // catchall: send UI index.html file.
-server.get("*", (req, res) => {
-  const file = path.join(__dirname + "/../ui/build/index.html");
+server.get("/*", (req, res) => {
+  const file = path.join(__dirname, "/../ui/build/", "index.html");
   res.sendFile(file);
 });
 
