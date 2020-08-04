@@ -48,7 +48,7 @@ export default function Recipe({ recipe }: Props) {
             <List component="ul" dense>
               {recipe.ingredients.map((i, idx) => (
                 <ListItem key={idx}>
-                  <ListItemText primary={`• ${formatIngredient(i)}`} />
+                  <ListItemText primary={`• ${formatIngredient(i, recipe.servings, servings)}`} />
                 </ListItem>
               ))}
             </List>
