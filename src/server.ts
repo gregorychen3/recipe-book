@@ -22,7 +22,6 @@ server.use("/api/recipes", recipeController);
 // match one above, send back React's index.html file.
 server.get("*", (req, res) => {
   const file = path.join(__dirname + "/../ui/build/index.html");
-  console.log(__dirname);
   res.sendFile(file);
 });
 
