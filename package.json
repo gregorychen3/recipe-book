@@ -30,16 +30,6 @@
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/gregorychen3/recipe-book.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/gregorychen3/recipe-book/issues"
-  },
-  "homepage": "https://github.com/gregorychen3/recipe-book#readme",
   "nodemonConfig": {
     "ignore": [
       "**/*.test.ts",
@@ -53,6 +43,16 @@
     "exec": "npm start",
     "ext": "ts"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gregorychen3/recipe-book.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gregorychen3/recipe-book/issues"
+  },
+  "homepage": "https://github.com/gregorychen3/recipe-book#readme",
   "prettier": {
     "printWidth": 120
   }
