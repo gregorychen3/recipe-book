@@ -12,6 +12,7 @@ import history from "../../history";
 
 export const createRecipe = createAsyncThunk("users/createRecipe", async (recipe: IRecipe) => {
   const resp = await apiClient.createRecipe(recipe);
+  history.push("/recipes");
   return resp.data;
 });
 
