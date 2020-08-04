@@ -14,6 +14,16 @@ import { selectRecipes } from "./RecipeSlice";
 
 const defaultIngredient = (): IngredientValues => ({ qty: "", unit: "", name: "" });
 
+const defaultValues: Values = {
+  name: "",
+  course: "primi",
+  cuisine: "italian",
+  servings: 2,
+  ingredients: [],
+  instructions: [],
+  sources: [],
+};
+
 const valuesFromRecipe = (r: IRecipe): Values => {
   const { name, course, cuisine, servings, ingredients, instructions, sources } = r;
   const ret: Values = {
@@ -70,14 +80,14 @@ interface Values {
   sources: string[];
 }
 interface Props {
-  recipe: IRecipeModel;
+  recipe?: IRecipeModel;
   onSubmit: (recipe: IRecipe) => void;
   onChange?: (recipe: IRecipe) => void;
 }
 export default function RecipeForm({ recipe, onSubmit, onChange }: Props) {
   return (
     <Formik
-      initialValues={valuesFromRecipe(recipe)}
+      initialValues={recipe ? valuesFromRecipe(recipe) : defaultValues}
       validate={(values) => {
         return {};
       }}
