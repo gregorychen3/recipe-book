@@ -1,12 +1,12 @@
-import { makeStyles, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useParams } from "react-router-dom";
 import { IRecipe } from "../../../src/types";
-import ActionMenu from "../components/ActionMenu";
 import DeleteRecipeDialog from "../features/recipe/DeleteRecipeDialog";
 import Recipe from "../features/recipe/Recipe";
 import RecipeForm from "../features/recipe/RecipeForm";
+import RecipeHeader from "../features/recipe/RecipeHeader";
 import { selectRecipe, updateRecipe } from "../features/recipe/RecipeSlice";
 
 const useStyles = makeStyles((theme) => ({
@@ -54,15 +54,12 @@ export default function RecipePage() {
   return (
     <>
       <DeleteRecipeDialog recipeId={deleteDialogData} onClose={handleCloseDeleteDialog} />
-      <div className={classes.header}>
-        <ActionMenu onDelete={() => {}} onEdit={() => {}} disableSave={false} className={classes.hidden} />
-        <Typography variant="h4">{recipe.name.toUpperCase()}</Typography>
-        <ActionMenu
-          onDelete={handleShowDeleteDialog}
-          onEdit={isEditing ? undefined : handleEditClicked}
-          disableSave={!isEditing}
-        />
-      </div>
+      <RecipeHeader
+        title={recipe.name.toUpperCase()}
+        onDelete={handleShowDeleteDialog}
+        onEdit={handleEditClicked}
+        disableSave={!isEditing}
+      />
       {isEditing ? <RecipeForm recipe={recipe} onSubmit={handleSubmit} /> : <Recipe recipe={recipe} />}
     </>
   );
