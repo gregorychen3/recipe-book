@@ -28,17 +28,12 @@ export default function RecipePage() {
   }
 
   const handleShowDeleteDialog = () => setDeleteDialogData(recipe.id);
-  const handleCloseDeleteDialog = () => {
-    setDeleteDialogData(undefined);
-  };
+  const handleCloseDeleteDialog = () => setDeleteDialogData(undefined);
 
-  const handleEditClicked = () => {
-    setIsEditing(true);
-  };
+  const handleEditClicked = () => setIsEditing(true);
 
   const handleSubmit = (recipe: IRecipe) => {
     d(updateRecipe({ recipeId, recipe }));
-
     setIsEditing(false);
   };
 
