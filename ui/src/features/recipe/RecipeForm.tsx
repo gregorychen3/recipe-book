@@ -6,7 +6,6 @@ import { Field, FieldArray, FieldArrayRenderProps, Form, Formik, FormikProps } f
 import { Select, TextField } from "formik-material-ui";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { IRecipeModel } from "../../../../src/db/recipe";
 import { ICourse, ICuisine, IIngredient, IRecipe } from "../../../../src/types";
 import LabelDivider from "../../components/LabelDivider";
 import { getCourses, getCuisines } from "./helpers";
