@@ -1,4 +1,4 @@
-import { Button, Menu, MenuItem } from "@material-ui/core";
+import { Button, LinearProgress, Menu, MenuItem } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
@@ -8,7 +8,9 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link as RouterLink, useHistory } from "react-router-dom";
+import { selectShowLoading } from "../app/apiSlice";
 import { GroupBy } from "../pages/RecipesPage";
 
 const browseMenuOpts: { label: string; value: GroupBy }[] = [
@@ -36,10 +38,10 @@ export default function AppHeader() {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
+  const showLoading = useSelector(selectShowLoading);
+
   const handleMenu = (e: React.MouseEvent<HTMLElement>) => setAnchorEl(e.currentTarget);
-
   const handleClose = () => setAnchorEl(null);
-
   const navToHome = () => history.push("/");
 
   const handleGroupByChanged = (groupBy: GroupBy) => {
@@ -81,6 +83,7 @@ export default function AppHeader() {
           <GitHubIcon />
         </IconButton>
       </Toolbar>
+      <LinearProgress hidden={!showLoading} />
     </AppBar>
   );
 }

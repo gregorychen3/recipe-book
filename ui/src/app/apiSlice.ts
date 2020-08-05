@@ -74,4 +74,4 @@ export default apiSlice.reducer;
 // SELECTORS
 // ---------
 
-const selectShowLoading = (state: RootState) => !_.isEmpty(state.api.inFlightRequests);
+export const selectShowLoading = (state: RootState) => !_.isEmpty(state.api.inFlightRequests);
