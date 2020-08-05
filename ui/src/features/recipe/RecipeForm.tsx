@@ -227,6 +227,7 @@ const InnerForm = (props: { onChange?: (recipe: IRecipe) => void } & FormikProps
                 <Field
                   component={TextField}
                   name={`instructions.${idx}`}
+                  label={idx === 0 ? "Enter step instructions" : undefined}
                   type="string"
                   fullWidth
                   onChange={handleInstructionFieldChanged(idx, arrHelpers)}
@@ -245,6 +246,7 @@ const InnerForm = (props: { onChange?: (recipe: IRecipe) => void } & FormikProps
                 <Field
                   component={TextField}
                   name={`sources.${idx}`}
+                  label={idx === 0 ? "Enter source" : undefined}
                   type="string"
                   fullWidth
                   onChange={handleSourceFieldChanged(idx, arrHelpers)}
