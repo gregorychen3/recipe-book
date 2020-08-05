@@ -34,7 +34,7 @@ export default function DeleteRecipeDialog({ recipeId, onClose }: DeleteRecipeDi
     <Dialog open={!!recipeId} onClose={onClose}>
       <DialogTitle>Confirm Delete Recipe</DialogTitle>
       <DialogContent>
-        <DialogContentText>This will permanently delete the recipe.</DialogContentText>
+        <DialogContentText>The recipe will be permanently deleted.</DialogContentText>
         <TextField disabled margin="dense" label="Recipe Name" type="text" fullWidth value={recipeName} />
       </DialogContent>
       <DialogActions>

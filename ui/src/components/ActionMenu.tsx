@@ -19,7 +19,7 @@ export default function ActionMenu(props: Props & ButtonGroupProps) {
   return (
     <ButtonGroup variant="text" color="primary" {...buttonGroupProps}>
       <Button size="small" onClick={onDelete} disabled={!onDelete}>
-        <DeleteOutlineIcon fontSize="small" color="error" />
+        <DeleteOutlineIcon fontSize="small" color={onDelete ? "error" : undefined} />
       </Button>
       <Button size="small" onClick={onEdit} disabled={!onEdit}>
         <EditIcon fontSize="small" />

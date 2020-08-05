@@ -21,7 +21,7 @@ export default function RecipeHeader({ title, onDelete, onEdit, disableSave }: P
   const classes = useStyles();
   return (
     <div className={classes.header}>
-      <ActionMenu disableSave={true} className={classes.hidden} />
+      <ActionMenu disableSave className={classes.hidden} />
       <Typography variant="h4">{title}</Typography>
       <ActionMenu onDelete={onDelete} onEdit={onEdit} disableSave={!!disableSave} />
     </div>
