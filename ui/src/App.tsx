@@ -14,9 +14,7 @@ import RecipesPage from "./pages/RecipesPage";
 import { getThemedToastClass } from "./theme";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
+  root: { display: "flex" },
   toast: getThemedToastClass(theme),
   appBarSpacer: theme.mixins.toolbar,
   content: {
