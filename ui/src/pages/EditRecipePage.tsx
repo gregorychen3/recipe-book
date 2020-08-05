@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { IRecipe } from "../../../src/types";
 import RecipeForm from "../features/recipe/RecipeForm";
 import RecipeHeader from "../features/recipe/RecipeHeader";
@@ -8,6 +8,7 @@ import { fetchRecipe, selectRecipe, updateRecipe } from "../features/recipe/Reci
 
 export default function EditRecipePage() {
   const d = useDispatch();
+  const history = useHistory();
 
   const [headerText, setHeaderText] = useState("");
 
@@ -26,13 +27,13 @@ export default function EditRecipePage() {
     return null;
   }
 
-  const handleSubmit = (recipe: IRecipe) => d(updateRecipe({ recipeId, recipe }));
+  const handleRecipeSaved = (recipe: IRecipe) => d(updateRecipe({ recipeId, recipe, history }));
   const handleRecipeEdited = (recipe: IRecipe) => setHeaderText(recipe.name);
 
   return (
     <>
       <RecipeHeader title={headerText} />
-      <RecipeForm recipe={recipe} onChange={handleRecipeEdited} onSubmit={handleSubmit} />
+      <RecipeForm recipe={recipe} onChange={handleRecipeEdited} onSubmit={handleRecipeSaved} />
     </>
   );
 }

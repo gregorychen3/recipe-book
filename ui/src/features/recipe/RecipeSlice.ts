@@ -32,8 +32,10 @@ export const fetchRecipe = createAsyncThunk("recipe/fetchRecipe", async (recipeI
 
 export const updateRecipe = createAsyncThunk(
   "recipe/updateRecipe",
-  async (data: { recipeId: string; recipe: IRecipe }) => {
-    const resp = await apiClient.updateRecipe(data.recipeId, data.recipe);
+  async (data: { recipeId: string; recipe: IRecipe; history: History }) => {
+    const { recipeId, recipe, history } = data;
+    const resp = await apiClient.updateRecipe(recipeId, recipe);
+    history.push(`/recipes/${recipeId}`);
     return resp.data;
   }
 );
