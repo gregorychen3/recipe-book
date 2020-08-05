@@ -15,7 +15,7 @@ export const createRecipe = createAsyncThunk(
   async (data: { recipe: IRecipe; history: History }) => {
     const { recipe, history } = data;
     const resp = await apiClient.createRecipe(recipe);
-    history.push("/recipes");
+    history.push(`/recipes/${resp.data.id}`);
     return resp.data;
   }
 );
