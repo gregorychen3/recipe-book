@@ -1,20 +1,24 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { History } from "history";
 import { toast } from "react-toastify";
 import { IRecipeModel } from "../../../../src/db/recipe";
 import { IRecipe } from "../../../../src/types";
 import apiClient from "../../apiClient";
 import { RootState } from "../../app/store";
-import history from "../../history";
 
 //
 // THUNKS
 // ------
 
-export const createRecipe = createAsyncThunk("recipe/createRecipe", async (recipe: IRecipe) => {
-  const resp = await apiClient.createRecipe(recipe);
-  history.push("/recipes");
-  return resp.data;
-});
+export const createRecipe = createAsyncThunk(
+  "recipe/createRecipe",
+  async (data: { recipe: IRecipe; history: History }) => {
+    const { recipe, history } = data;
+    const resp = await apiClient.createRecipe(recipe);
+    history.push("/recipes");
+    return resp.data;
+  }
+);
 
 export const fetchRecipes = createAsyncThunk("recipe/fetchRecipes", async () => {
   const resp = await apiClient.fetchRecipes();
@@ -34,11 +38,15 @@ export const updateRecipe = createAsyncThunk(
   }
 );
 
-export const deleteRecipe = createAsyncThunk("recipe/deleteRecipe", async (recipeId: string) => {
-  const resp = await apiClient.deleteRecipe(recipeId);
-  history.push("/recipes");
-  return resp.data;
-});
+export const deleteRecipe = createAsyncThunk(
+  "recipe/deleteRecipe",
+  async (data: { recipeId: string; history: History }) => {
+    const { recipeId, history } = data;
+    const resp = await apiClient.deleteRecipe(recipeId);
+    history.push("/recipes");
+    return resp.data;
+  }
+);
 
 //
 // SLICE

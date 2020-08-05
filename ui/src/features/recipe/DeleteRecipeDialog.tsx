@@ -16,16 +16,16 @@ export interface DeleteRecipeDialogProps {
   onClose: () => void;
 }
 export default function DeleteRecipeDialog({ recipeId, onClose }: DeleteRecipeDialogProps) {
+  const history = useHistory();
   const recipe = useSelector(selectRecipe(recipeId ?? ""));
   const recipeName = recipe ? recipe.name : "";
 
-  const history = useHistory();
   const d = useDispatch();
   const handleDelete = () => {
     if (!recipeId) {
       return;
     }
-    d(deleteRecipe(recipeId));
+    d(deleteRecipe({ recipeId, history }));
     onClose();
     history.push("/recipes");
   };
