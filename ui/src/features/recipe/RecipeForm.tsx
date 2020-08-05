@@ -6,6 +6,7 @@ import { Field, FieldArray, FieldArrayRenderProps, Form, Formik, FormikProps } f
 import { Select, TextField } from "formik-material-ui";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
+import * as Yup from "yup";
 import { ICourse, ICuisine, IIngredient, IRecipe } from "../../../../src/types";
 import LabelDivider from "../../components/LabelDivider";
 import { getCourses, getCuisines } from "./helpers";
@@ -64,6 +65,15 @@ const recipeFromValues = ({
   sources: sources.filter((s) => s),
 });
 
+/*
+const schema = Yup.object().shape({
+  name: Yup.string().required("Required"),
+  course: Yup.mixed().oneOf(CourseValues),
+  cuisine: Yup.mixed().oneOf(CuisineValues),
+  servings: Yup.number().integer("Must be an integer").moreThan(0, "Must be greater than 0"),
+});
+*/
+
 interface IngredientValues {
   qty: number | "";
   unit: string;
@@ -87,9 +97,7 @@ export default function RecipeForm({ recipe, onSubmit, onChange }: Props) {
   return (
     <Formik
       initialValues={recipe ? valuesFromRecipe(recipe) : defaultValues}
-      validate={(values) => {
-        return {};
-      }}
+      //validationSchema={schema}
       onSubmit={(values, { setSubmitting }) => {
         const recipe = recipeFromValues(values);
         onSubmit(recipe);
