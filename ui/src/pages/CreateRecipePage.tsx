@@ -17,7 +17,7 @@ export default function RecipePage() {
 
   return (
     <>
-      <RecipeHeader title={headerText} onDelete={() => {}} onEdit={() => {}} disableSave={false} />
+      <RecipeHeader title={headerText} />
       <RecipeForm onChange={handleRecipeEdited} onSubmit={handleRecipeSaved} />
     </>
   );
