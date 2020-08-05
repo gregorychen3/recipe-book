@@ -13,9 +13,9 @@ const useStyles = makeStyles((theme) => ({
 
 interface Props {
   title: string;
-  onDelete: () => void;
-  onEdit: () => void;
-  disableSave: boolean;
+  onDelete?: () => void;
+  onEdit?: () => void;
+  disableSave?: boolean;
 }
 export default function RecipeHeader({ title, onDelete, onEdit, disableSave }: Props) {
   const classes = useStyles();
@@ -23,7 +23,7 @@ export default function RecipeHeader({ title, onDelete, onEdit, disableSave }: P
     <div className={classes.header}>
       <ActionMenu disableSave={true} className={classes.hidden} />
       <Typography variant="h4">{title}</Typography>
-      <ActionMenu onDelete={onDelete} onEdit={onEdit} disableSave={disableSave} />
+      <ActionMenu onDelete={onDelete} onEdit={onEdit} disableSave={!!disableSave} />
     </div>
   );
 }

@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 import AppHeader from "./components/AppHeader";
 import AboutPage from "./pages/AboutPage";
 import CreateRecipePage from "./pages/CreateRecipePage";
+import EditRecipePage from "./pages/EditRecipePage";
 import RecipePage from "./pages/RecipePage";
 import RecipesPage from "./pages/RecipesPage";
 import { getThemedToastClass } from "./theme";
@@ -44,6 +45,9 @@ export default function App() {
             <Switch>
               <Route path="/recipes/create">
                 <CreateRecipePage />
+              </Route>
+              <Route path="/recipes/:recipeId/edit">
+                <EditRecipePage />
               </Route>
               <Route path="/recipes/:recipeId">
                 <RecipePage />
