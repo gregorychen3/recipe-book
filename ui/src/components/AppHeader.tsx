@@ -5,7 +5,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import GitHubIcon from "@material-ui/icons/GitHub";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
@@ -59,7 +58,7 @@ export default function AppHeader() {
           Greg and Ally's Recipe Book
         </Typography>
         <Button onClick={handleMenu} color="inherit">
-          Browse Recipes
+          Browse
           <ExpandMoreIcon fontSize="small" />
         </Button>
         <Menu
@@ -79,9 +78,9 @@ export default function AppHeader() {
         <Button color="inherit" component={RouterLink} to="/recipes/create">
           Add Recipe
         </Button>
-        <IconButton color="inherit">
-          <GitHubIcon />
-        </IconButton>
+        <Button color="inherit" component={RouterLink} to="/about">
+          About
+        </Button>
       </Toolbar>
       <LinearProgress hidden={!showLoading} />
     </AppBar>
