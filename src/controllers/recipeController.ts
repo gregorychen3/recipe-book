@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { IRecipeModel, Recipe } from "../db/recipe";
-import { recipeValidation } from "../middlewares/validation";
+import { recipeValidation } from "../middlewares/recipeValidation";
 
 const recipeController = express.Router();
 
