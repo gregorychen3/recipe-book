@@ -1,4 +1,4 @@
-import { Grid, Link, List, ListItem, ListItemIcon, ListItemText, ListSubheader, TextField } from "@material-ui/core";
+import { Grid, InputAdornment, Link, List, ListItem, ListItemText, ListSubheader, TextField } from "@material-ui/core";
 import LanguageIcon from "@material-ui/icons/Language";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
 import React, { useEffect, useState } from "react";
@@ -49,29 +49,45 @@ export default function Recipe({ recipe }: Props) {
           </List>
         </Grid>
 
-        <Grid item sm={12} md={6}>
-          <LabelDivider label="METADATA" />
-          <List dense component="nav" subheader={<ListSubheader component="div">Cuisine</ListSubheader>}>
-            <ListItem>
-              <ListItemIcon>
-                <LanguageIcon />
-              </ListItemIcon>
-              <ListItemText primary={recipe.cuisine} />
-            </ListItem>
-          </List>
-          <List dense component="nav" subheader={<ListSubheader component="div">Course</ListSubheader>}>
-            <ListItem>
-              <ListItemIcon>
-                <RestaurantIcon />
-              </ListItemIcon>
-              <ListItemText primary={recipe.course} />
-            </ListItem>
-          </List>
+        <Grid container item sm={12} md={6} spacing={2}>
+          <Grid item xs={12}>
+            <LabelDivider label="METADATA" />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              label="Cuisine"
+              value={recipe.cuisine}
+              disabled
+              fullWidth
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <LanguageIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              label="Course"
+              value={recipe.course}
+              disabled
+              fullWidth
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <RestaurantIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
         </Grid>
 
         <Grid item sm={12} md={6}>
           <LabelDivider label="SOURCES" />
-          <List dense component="nav" subheader={<ListSubheader component="div">Sources</ListSubheader>}>
+          <List dense component="nav">
             {recipe.sources.map((s, idx) => (
               <ListItem key={idx}>
                 {isValidURL(s) ? (
