@@ -18,7 +18,7 @@ export default function RecipeHeader({ title, onDelete, onEdit, disableSave }: P
         </Typography>
       </Grid>
       <Grid item xs={12} sm={12} md={2}>
-        <Typography align="center">
+        <Typography align="center" component="span">
           <ActionMenu onDelete={onDelete} onEdit={onEdit} disableSave={!!disableSave} />
         </Typography>
       </Grid>

@@ -38,7 +38,7 @@ export default function Recipe({ recipe }: Props) {
             </List>
           </Grid>
         </Grid>
-        <Grid item sm={12} md={6} spacing={2}>
+        <Grid item sm={12} md={6}>
           <LabelDivider label="INSTRUCTIONS" />
           <List component="ol" dense>
             {recipe.instructions.map((i, idx) => (
