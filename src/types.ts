@@ -10,14 +10,7 @@ export const CourseValues = [
 ] as const;
 export type ICourse = typeof CourseValues[number];
 
-export const CuisineValues = [
-  "Italian",
-  "Anglophone",
-  "Mediterranean",
-  "French",
-  "Asian",
-  "Other",
-] as const;
+export const CuisineValues = ["Italian", "Anglophone", "Mediterranean", "French", "Asian", "Other"] as const;
 export type ICuisine = typeof CuisineValues[number];
 
 export interface IIngredient {

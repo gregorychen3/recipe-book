@@ -22,7 +22,4 @@ export const RecipeSchema = new Schema({
   sources: { type: [String], required: true },
 }).set("toJSON", { getters: true });
 
-export const Recipe: Model<IRecipeModel> = model<IRecipeModel>(
-  "Recipe",
-  RecipeSchema
-);
+export const Recipe: Model<IRecipeModel> = model<IRecipeModel>("Recipe", RecipeSchema);
