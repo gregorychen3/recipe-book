@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import LanguageIcon from "@material-ui/icons/Language";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { IRecipe } from "../../../../src/types";
 import LabelDivider from "../../components/LabelDivider";
 import { formatIngredient } from "../../features/recipe/helpers";
@@ -64,14 +64,9 @@ export default function Recipe({ recipe }: Props) {
             ))}
           </List>
         </Grid>
-      </Grid>
 
-      <Grid container direction="row">
-        <Grid item xs={12}>
-          <LabelDivider label="INFORMATION" />
-        </Grid>
-
-        <Grid item xs={6}>
+        <Grid item sm={12} md={6} className={classes.gridItem}>
+          <LabelDivider label="METADATA" />
           <List dense component="nav" subheader={<ListSubheader component="div">Cuisine</ListSubheader>}>
             <ListItem>
               <ListItemIcon>
@@ -89,7 +84,9 @@ export default function Recipe({ recipe }: Props) {
             </ListItem>
           </List>
         </Grid>
-        <Grid item xs={6}>
+
+        <Grid item sm={12} md={6} className={classes.gridItem}>
+          <LabelDivider label="SOURCES" />
           <List dense component="nav" subheader={<ListSubheader component="div">Sources</ListSubheader>}>
             {recipe.sources.map((s, idx) => (
               <ListItem key={idx}>
