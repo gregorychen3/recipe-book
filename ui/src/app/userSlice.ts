@@ -1,13 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 import _ from "lodash";
+import { GoogleLoginResponse, GoogleLoginResponseOffline } from "react-google-login";
 import { RootState } from "./store";
 
 //
 // SLICE
 // -----
 
-interface State {}
-const initialState: State = {};
+interface State {
+  user?: GoogleLoginResponse | GoogleLoginResponseOffline;
+}
+const initialState: State = { user: undefined };
 export const userSlice = createSlice({
   name: "user",
   initialState,
