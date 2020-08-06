@@ -94,6 +94,7 @@ export default function AppHeader() {
           buttonText="Login"
           onSuccess={handleLoginSuccess}
           onFailure={handleLoginFailure}
+          isSignedIn
           cookiePolicy="single_host_origin"
           render={(renderProps) => (
             <IconButton onClick={renderProps.onClick} disabled={renderProps.disabled}>
