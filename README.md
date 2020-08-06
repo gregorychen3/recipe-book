@@ -29,13 +29,13 @@
 
   Comment/uncomment lines in `OauthAvatar.tsx` to use the clientId intended for local development
 
-  In another terminal, start the ui:
+  In one terminal, start the ui:
 
   ```console
   $ npm start
   ```
 
-  In one terminal, start the backend server with hot reloading using nodemon:
+  In another terminal, start the backend server with hot reloading using nodemon:
 
   ```console
   $ ADMIN_EMAILS='["<your@email.here>"]' MONGODB_URI=<mongo_conn_string> npm run start:dev
