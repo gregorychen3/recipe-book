@@ -23,16 +23,9 @@ const browseMenuOpts: { label: string; value: GroupBy }[] = [
 ];
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-    cursor: "pointer",
-  },
+  root: { flexGrow: 1 },
+  menuButton: { marginRight: theme.spacing(2) },
+  title: { flexGrow: 1, cursor: "pointer" },
   avatar: { width: theme.spacing(3), height: theme.spacing(3) },
   avatarActive: { backgroundColor: theme.palette.primary.main },
 }));
