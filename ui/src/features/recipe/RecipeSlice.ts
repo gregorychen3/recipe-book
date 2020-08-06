@@ -68,23 +68,23 @@ export const recipeSlice = createSlice({
       state.recipes.push(createdRecipe);
       toast.success("Recipe successfully created");
     });
-    builder.addCase(createRecipe.rejected, () => {
-      toast.error("Failed to create recipe");
+    builder.addCase(createRecipe.rejected, (_, action) => {
+      toast.error(`Failed to create recipe: ${action.error.message}`);
     });
 
     builder.addCase(fetchRecipes.fulfilled, (state, action) => {
       state.recipes = action.payload;
     });
-    builder.addCase(fetchRecipes.rejected, () => {
-      toast.error("Failed to fetch recipes");
+    builder.addCase(fetchRecipes.rejected, (_, action) => {
+      toast.error(`Failed to fetch recipes: ${action.error.message}`);
     });
 
     builder.addCase(fetchRecipe.fulfilled, (state, action) => {
       const recipe = action.payload;
       state.recipes = [...state.recipes.filter((r) => r.id !== recipe.id), recipe];
     });
-    builder.addCase(fetchRecipe.rejected, () => {
-      toast.error("Failed to fetch recipe");
+    builder.addCase(fetchRecipe.rejected, (_, action) => {
+      toast.error(`Failed to fetch recipe: ${action.error.message}`);
     });
 
     builder.addCase(updateRecipe.fulfilled, (state, action) => {
@@ -92,8 +92,8 @@ export const recipeSlice = createSlice({
       state.recipes = [...state.recipes.filter((r) => r.id !== updatedRecipe.id), updatedRecipe];
       toast.success("Recipe successfully updated");
     });
-    builder.addCase(updateRecipe.rejected, () => {
-      toast.error("Failed to update recipe");
+    builder.addCase(updateRecipe.rejected, (_, action) => {
+      toast.error(`Failed to update recipe: ${action.error.message}`);
     });
 
     builder.addCase(deleteRecipe.fulfilled, (state, action) => {
@@ -101,8 +101,8 @@ export const recipeSlice = createSlice({
       state.recipes = [...state.recipes.filter((r) => r.id !== deletedRecipeId)];
       toast.success("Recipe successfully deleted");
     });
-    builder.addCase(deleteRecipe.rejected, () => {
-      toast.error("Failed to delete recipe");
+    builder.addCase(deleteRecipe.rejected, (_, action) => {
+      toast.error(`Failed to delete recipe: ${action.error.message}`);
     });
   },
 });
