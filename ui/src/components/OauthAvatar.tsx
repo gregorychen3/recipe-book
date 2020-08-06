@@ -1,4 +1,4 @@
-import { Avatar } from "@material-ui/core";
+import { Avatar, Tooltip } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import { clearUserTokenId, loadUserTokenId, selectUserTokenId } from "../app/userSlice";
 
 // client id for local development
-// const clientId = "733241561721-4u35j8dtjmkisfs479m9an9f6p6tep1s.apps.googleusercontent.com";
+//const clientId = "733241561721-4u35j8dtjmkisfs479m9an9f6p6tep1s.apps.googleusercontent.com";
 
 // client id for prod
 const clientId = "733241561721-n27hobb24p9hak87q92kq90fmuobidhj.apps.googleusercontent.com";
@@ -49,9 +49,11 @@ export default function OauthAvatar() {
       onLogoutSuccess={handleLogoutSuccess}
       onFailure={handleLogoutFailure}
       render={(renderProps) => (
-        <IconButton onClick={renderProps.onClick} disabled={renderProps.disabled}>
-          <Avatar className={clsx(classes.avatar, classes.avatarActive)} />
-        </IconButton>
+        <Tooltip title="Click to logout">
+          <IconButton onClick={renderProps.onClick} disabled={renderProps.disabled}>
+            <Avatar className={clsx(classes.avatar, classes.avatarActive)} />
+          </IconButton>
+        </Tooltip>
       )}
     />
   ) : (
@@ -63,9 +65,11 @@ export default function OauthAvatar() {
       isSignedIn
       cookiePolicy="single_host_origin"
       render={(renderProps) => (
-        <IconButton onClick={renderProps.onClick} disabled={renderProps.disabled}>
-          <Avatar className={classes.avatar} />
-        </IconButton>
+        <Tooltip title="Log in to edit recipes">
+          <IconButton onClick={renderProps.onClick} disabled={renderProps.disabled}>
+            <Avatar className={classes.avatar} />
+          </IconButton>
+        </Tooltip>
       )}
     />
   );
