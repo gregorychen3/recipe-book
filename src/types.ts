@@ -1,22 +1,22 @@
 export const CourseValues = [
-  "antipasti",
-  "primi",
-  "secondi",
-  "dolci",
-  "contorni",
-  "sauces",
-  "beverages",
-  "other",
+  "Antipasti",
+  "Primi",
+  "Secondi",
+  "Dolci",
+  "Contorni",
+  "Sauces",
+  "Beverages",
+  "Other",
 ] as const;
 export type ICourse = typeof CourseValues[number];
 
 export const CuisineValues = [
-  "italian",
-  "anglophone",
-  "mediterranean",
-  "french",
-  "asian",
-  "other",
+  "Italian",
+  "Anglophone",
+  "Mediterranean",
+  "French",
+  "Asian",
+  "Other",
 ] as const;
 export type ICuisine = typeof CuisineValues[number];
 

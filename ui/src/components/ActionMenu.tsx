@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-  onDelete: () => void;
+  onDelete?: () => void;
   onEdit?: () => void;
   disableSave: boolean;
 }
@@ -18,8 +18,8 @@ export default function ActionMenu(props: Props & ButtonGroupProps) {
   const classes = useStyles();
   return (
     <ButtonGroup variant="text" color="primary" {...buttonGroupProps}>
-      <Button size="small" onClick={onDelete}>
-        <DeleteOutlineIcon fontSize="small" color="error" />
+      <Button size="small" onClick={onDelete} disabled={!onDelete}>
+        <DeleteOutlineIcon fontSize="small" color={onDelete ? "error" : undefined} />
       </Button>
       <Button size="small" onClick={onEdit} disabled={!onEdit}>
         <EditIcon fontSize="small" />

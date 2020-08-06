@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
+import apiReducer from "../app/apiSlice";
 import recipeReducer from "../features/recipe/RecipeSlice";
 
 const store = configureStore({
   reducer: {
     recipe: recipeReducer,
+    api: apiReducer,
   },
 });
 

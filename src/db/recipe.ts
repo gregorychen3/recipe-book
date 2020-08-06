@@ -20,7 +20,7 @@ export const RecipeSchema = new Schema({
   },
   instructions: { type: [String], required: true },
   sources: { type: [String], required: true },
-});
+}).set("toJSON", { getters: true });
 
 export const Recipe: Model<IRecipeModel> = model<IRecipeModel>(
   "Recipe",

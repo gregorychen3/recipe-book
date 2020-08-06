@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import LanguageIcon from "@material-ui/icons/Language";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IRecipe } from "../../../../src/types";
 import LabelDivider from "../../components/LabelDivider";
 import { formatIngredient } from "../../features/recipe/helpers";
@@ -28,6 +28,9 @@ export default function Recipe({ recipe }: Props) {
   const classes = useStyles();
 
   const [servings, setServings] = useState(recipe.servings);
+  useEffect(() => {
+    setServings(recipe.servings);
+  }, [recipe.servings]);
 
   const handleServingsChanged = (e: React.ChangeEvent<HTMLInputElement>) => setServings(parseInt(e.target.value));
 
@@ -45,7 +48,7 @@ export default function Recipe({ recipe }: Props) {
             <List component="ul" dense>
               {recipe.ingredients.map((i, idx) => (
                 <ListItem key={idx}>
-                  <ListItemText primary={`• ${formatIngredient(i)}`} />
+                  <ListItemText primary={`• ${formatIngredient(i, recipe.servings, servings)}`} />
                 </ListItem>
               ))}
             </List>

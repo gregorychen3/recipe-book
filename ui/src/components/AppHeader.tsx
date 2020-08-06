@@ -1,4 +1,4 @@
-import { Button, Menu, MenuItem } from "@material-ui/core";
+import { Button, LinearProgress, Menu, MenuItem } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
@@ -8,7 +8,9 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link as RouterLink, useHistory } from "react-router-dom";
+import { selectShowLoading } from "../app/apiSlice";
 import { GroupBy } from "../pages/RecipesPage";
 
 const browseMenuOpts: { label: string; value: GroupBy }[] = [
@@ -36,11 +38,10 @@ export default function AppHeader() {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleMenu = (e: React.MouseEvent<HTMLElement>) =>
-    setAnchorEl(e.currentTarget);
+  const showLoading = useSelector(selectShowLoading);
 
+  const handleMenu = (e: React.MouseEvent<HTMLElement>) => setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
-
   const navToHome = () => history.push("/");
 
   const handleGroupByChanged = (groupBy: GroupBy) => {
@@ -51,26 +52,14 @@ export default function AppHeader() {
   return (
     <AppBar position="absolute" color="inherit">
       <Toolbar>
-        <IconButton
-          edge="start"
-          color="inherit"
-          onClick={navToHome}
-          className={classes.menuButton}
-        >
+        <IconButton edge="start" color="inherit" onClick={navToHome} className={classes.menuButton}>
           <RestaurantIcon />
         </IconButton>
-        <Typography
-          component="h1"
-          variant="h6"
-          color="inherit"
-          noWrap
-          onClick={navToHome}
-          className={classes.title}
-        >
+        <Typography component="h1" variant="h6" color="inherit" noWrap onClick={navToHome} className={classes.title}>
           Greg and Ally's Recipe Book
         </Typography>
         <Button onClick={handleMenu} color="inherit">
-          Browse
+          Browse Recipes
           <ExpandMoreIcon fontSize="small" />
         </Button>
         <Menu
@@ -87,11 +76,14 @@ export default function AppHeader() {
             </MenuItem>
           ))}
         </Menu>
-        <Button color="inherit">Add Recipe</Button>
+        <Button color="inherit" component={RouterLink} to="/recipes/create">
+          Add Recipe
+        </Button>
         <IconButton color="inherit">
           <GitHubIcon />
         </IconButton>
       </Toolbar>
+      <LinearProgress hidden={!showLoading} />
     </AppBar>
   );
 }

@@ -2,7 +2,7 @@ import { check } from "express-validator";
 import { CourseValues, CuisineValues } from "../types";
 
 export const recipeValidation = [
-  check("name").exists().isString(),
+  check("name").exists().isString().notEmpty(),
   check("course").exists().isIn(Array.from(CourseValues)),
   check("cuisine").exists().isIn(Array.from(CuisineValues)),
   check("servings").exists().isNumeric(),

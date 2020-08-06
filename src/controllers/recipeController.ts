@@ -118,7 +118,7 @@ recipeController.delete("/:id", async (req, res) => {
   }
 
   const deleted = await recipe.remove();
-  return res.send({ _id: deleted._id });
+  return res.send({ id: deleted.id });
 });
 
 export default recipeController;

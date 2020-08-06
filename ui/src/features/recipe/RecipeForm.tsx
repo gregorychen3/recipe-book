@@ -2,16 +2,27 @@ import { Grid } from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import { Field, Form, Formik } from "formik";
+import { Field, FieldArray, FieldArrayRenderProps, Form, Formik, FormikProps } from "formik";
 import { Select, TextField } from "formik-material-ui";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
+import * as Yup from "yup";
 import { ICourse, ICuisine, IIngredient, IRecipe } from "../../../../src/types";
 import LabelDivider from "../../components/LabelDivider";
 import { getCourses, getCuisines } from "./helpers";
 import { selectRecipes } from "./RecipeSlice";
 
 const defaultIngredient = (): IngredientValues => ({ qty: "", unit: "", name: "" });
+
+const defaultValues: Values = {
+  name: "",
+  course: "Primi",
+  cuisine: "Italian",
+  servings: 2,
+  ingredients: [defaultIngredient()],
+  instructions: [""],
+  sources: [""],
+};
 
 const valuesFromRecipe = (r: IRecipe): Values => {
   const { name, course, cuisine, servings, ingredients, instructions, sources } = r;
@@ -34,27 +45,34 @@ const valuesFromRecipe = (r: IRecipe): Values => {
   return ret;
 };
 
-const recipeFromValues = (values: Values): IRecipe => {
-  const { name, course, cuisine, servings, ingredients, instructions, sources } = values;
-  const ret: IRecipe = {
-    name,
-    course,
-    cuisine,
-    servings,
-    ingredients: ingredients
-      .filter((i) => i.qty && i.unit && i.name)
-      .map(
-        (i): IIngredient => ({
-          qty: i.qty === "" ? undefined : i.qty,
-          unit: i.unit === "" ? undefined : i.unit,
-          name: i.name,
-        })
-      ),
-    instructions: instructions.filter((i) => i),
-    sources: sources.filter((s) => s),
-  };
-  return ret;
-};
+const recipeFromValues = ({
+  name,
+  course,
+  cuisine,
+  servings,
+  ingredients,
+  instructions,
+  sources,
+}: Values): IRecipe => ({
+  name,
+  course,
+  cuisine,
+  servings,
+  ingredients: ingredients
+    .filter((i) => i.name)
+    .map((i): IIngredient => ({ qty: i.qty || undefined, unit: i.unit || undefined, name: i.name })),
+  instructions: instructions.filter((i) => i),
+  sources: sources.filter((s) => s),
+});
+
+/*
+const schema = Yup.object().shape({
+  name: Yup.string().required("Required"),
+  course: Yup.mixed().oneOf(CourseValues),
+  cuisine: Yup.mixed().oneOf(CuisineValues),
+  servings: Yup.number().integer("Must be an integer").moreThan(0, "Must be greater than 0"),
+});
+*/
 
 interface IngredientValues {
   qty: number | "";
@@ -70,67 +88,108 @@ interface Values {
   instructions: string[];
   sources: string[];
 }
-
 interface Props {
-  recipe: IRecipe;
+  recipe?: IRecipe;
   onSubmit: (recipe: IRecipe) => void;
+  onChange?: (recipe: IRecipe) => void;
 }
-export default function RecipeForm({ recipe, onSubmit }: Props) {
-  const recipes = useSelector(selectRecipes);
-  const courses = getCourses(recipes);
-  const cuisines = getCuisines(recipes);
-
+export default function RecipeForm({ recipe, onSubmit, onChange }: Props) {
   return (
     <Formik
-      initialValues={valuesFromRecipe(recipe)}
-      validate={(values) => {
-        return {};
-      }}
+      initialValues={recipe ? valuesFromRecipe(recipe) : defaultValues}
+      //validationSchema={schema}
       onSubmit={(values, { setSubmitting }) => {
         const recipe = recipeFromValues(values);
         onSubmit(recipe);
         setSubmitting(false);
       }}
     >
-      {({ values, submitForm, isSubmitting }) => (
-        <Form id="recipe-form">
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Field component={TextField} name="name" type="text" label="Recipe Name" fullWidth />
-            </Grid>
+      {(formikProps) => <InnerForm onChange={onChange} {...formikProps} />}
+    </Formik>
+  );
+}
 
-            <Grid item xs={4}>
-              <Field component={TextField} name="servings" type="number" label="Servings" fullWidth />
-            </Grid>
-            <Grid item xs={4}>
-              <FormControl fullWidth>
-                <InputLabel htmlFor="course">Course</InputLabel>
-                <Field component={Select} name="course" inputProps={{ id: "course" }}>
-                  {courses.map((c) => (
-                    <MenuItem value={c} key={c}>
-                      {c}
-                    </MenuItem>
-                  ))}
-                </Field>
-              </FormControl>
-            </Grid>
-            <Grid item xs={4}>
-              <FormControl fullWidth>
-                <InputLabel htmlFor="cuisine">Cuisine</InputLabel>
-                <Field component={Select} name="cuisine" inputProps={{ id: "cuisine" }}>
-                  {cuisines.map((c) => (
-                    <MenuItem value={c} key={c}>
-                      {c}
-                    </MenuItem>
-                  ))}
-                </Field>
-              </FormControl>
-            </Grid>
+const InnerForm = (props: { onChange?: (recipe: IRecipe) => void } & FormikProps<Values>) => {
+  const { onChange, values } = props;
+  const recipes = useSelector(selectRecipes);
+  const courses = getCourses(recipes);
+  const cuisines = getCuisines(recipes);
 
-            <Grid item xs={12}>
-              <LabelDivider label="INGREDIENTS" />
-            </Grid>
-            {values.ingredients.map((i, idx) => (
+  useEffect(() => {
+    onChange && onChange(recipeFromValues(values));
+  }, [onChange, values]);
+
+  const handleIngredientNameFieldChanged = (idx: number, { form, push }: FieldArrayRenderProps) => (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { values, setFieldValue } = form;
+    setFieldValue(`ingredients.${idx}.name`, e.target.value);
+    if (idx === values.ingredients.length - 1) {
+      push(defaultIngredient());
+    }
+  };
+
+  const handleInstructionFieldChanged = (idx: number, { form, push }: FieldArrayRenderProps) => (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { values, setFieldValue } = form;
+    setFieldValue(`instructions.${idx}`, e.target.value);
+    if (idx === values.instructions.length - 1) {
+      push("");
+    }
+  };
+
+  const handleSourceFieldChanged = (idx: number, { form, push }: FieldArrayRenderProps) => (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { values, setFieldValue } = form;
+    setFieldValue(`sources.${idx}`, e.target.value);
+    if (idx === values.sources.length - 1) {
+      push("");
+    }
+  };
+
+  return (
+    <Form id="recipe-form">
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Field component={TextField} name="name" type="text" label="Recipe Name" fullWidth />
+        </Grid>
+
+        <Grid item xs={4}>
+          <Field component={TextField} name="servings" type="number" label="Servings" fullWidth />
+        </Grid>
+        <Grid item xs={4}>
+          <FormControl fullWidth>
+            <InputLabel htmlFor="course">Course</InputLabel>
+            <Field component={Select} name="course" inputProps={{ id: "course" }}>
+              {courses.map((c) => (
+                <MenuItem value={c} key={c}>
+                  {c}
+                </MenuItem>
+              ))}
+            </Field>
+          </FormControl>
+        </Grid>
+        <Grid item xs={4}>
+          <FormControl fullWidth>
+            <InputLabel htmlFor="cuisine">Cuisine</InputLabel>
+            <Field component={Select} name="cuisine" inputProps={{ id: "cuisine" }}>
+              {cuisines.map((c) => (
+                <MenuItem value={c} key={c}>
+                  {c}
+                </MenuItem>
+              ))}
+            </Field>
+          </FormControl>
+        </Grid>
+
+        <Grid item xs={12}>
+          <LabelDivider label="INGREDIENTS" />
+        </Grid>
+        <FieldArray name="ingredients">
+          {(arrHelpers) =>
+            values.ingredients.map((_, idx) => (
               <React.Fragment key={idx}>
                 <Grid item xs={4}>
                   <Field
@@ -158,31 +217,53 @@ export default function RecipeForm({ recipe, onSubmit }: Props) {
                     label={idx === 0 ? "Name" : undefined}
                     type="text"
                     fullWidth
+                    onChange={handleIngredientNameFieldChanged(idx, arrHelpers)}
                   />
                 </Grid>
               </React.Fragment>
-            ))}
+            ))
+          }
+        </FieldArray>
 
-            <Grid item xs={12}>
-              <LabelDivider label="INSTRUCTIONS" />
-            </Grid>
-            {values.instructions.map((i, idx) => (
+        <Grid item xs={12}>
+          <LabelDivider label="INSTRUCTIONS" />
+        </Grid>
+        <FieldArray name="instructions">
+          {(arrHelpers) =>
+            values.instructions.map((_, idx) => (
               <Grid item xs={12} key={idx}>
-                <Field component={TextField} name={`instructions.${idx}`} type="string" fullWidth />
+                <Field
+                  component={TextField}
+                  name={`instructions.${idx}`}
+                  label={idx === 0 ? "Enter step instructions" : undefined}
+                  type="string"
+                  fullWidth
+                  onChange={handleInstructionFieldChanged(idx, arrHelpers)}
+                />
               </Grid>
-            ))}
-
-            <Grid item xs={12}>
-              <LabelDivider label="SOURCES" />
-            </Grid>
-            {values.sources.map((s, idx) => (
+            ))
+          }
+        </FieldArray>
+        <Grid item xs={12}>
+          <LabelDivider label="SOURCES" />
+        </Grid>
+        <FieldArray name="sources">
+          {(arrHelpers) =>
+            values.sources.map((_, idx) => (
               <Grid item xs={12} key={idx}>
-                <Field component={TextField} name={`sources.${idx}`} type="string" fullWidth />
+                <Field
+                  component={TextField}
+                  name={`sources.${idx}`}
+                  label={idx === 0 ? "Enter source" : undefined}
+                  type="string"
+                  fullWidth
+                  onChange={handleSourceFieldChanged(idx, arrHelpers)}
+                />
               </Grid>
-            ))}
-          </Grid>
-        </Form>
-      )}
-    </Formik>
+            ))
+          }
+        </FieldArray>
+      </Grid>
+    </Form>
   );
-}
+};
