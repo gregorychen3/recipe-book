@@ -66,9 +66,11 @@ export default function OauthAvatar() {
       cookiePolicy="single_host_origin"
       render={(renderProps) => (
         <Tooltip title="Log in to edit recipes">
-          <IconButton onClick={renderProps.onClick} disabled={renderProps.disabled}>
-            <Avatar className={classes.avatar} />
-          </IconButton>
+          <span>
+            <IconButton onClick={renderProps.onClick} disabled={renderProps.disabled}>
+              <Avatar className={classes.avatar} />
+            </IconButton>
+          </span>
         </Tooltip>
       )}
     />
