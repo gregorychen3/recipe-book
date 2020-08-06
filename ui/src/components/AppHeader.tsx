@@ -1,4 +1,5 @@
 import { Avatar, Button, LinearProgress, Menu, MenuItem } from "@material-ui/core";
+import clsx from "clsx";
 import AppBar from "@material-ui/core/AppBar";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
@@ -12,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { selectShowLoading } from "../app/apiSlice";
-import { loadUser } from "../app/userSlice";
+import { loadUser, selectUser } from "../app/userSlice";
 import { GroupBy } from "../pages/RecipesPage";
 
 const browseMenuOpts: { label: string; value: GroupBy }[] = [
@@ -33,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
   },
   avatar: { width: theme.spacing(3), height: theme.spacing(3) },
+  avatarActive: { backgroundColor: theme.palette.primary.main },
 }));
 
 export default function AppHeader() {
@@ -48,8 +50,9 @@ export default function AppHeader() {
   const handleClose = () => setAnchorEl(null);
   const navToHome = () => history.push("/");
 
+  const user = useSelector(selectUser);
   const handleLoginSuccess = (resp: GoogleLoginResponse | GoogleLoginResponseOffline) => d(loadUser(resp));
-  const handleLoginFailure = (err: any) => toast.error(`Failed to login: ${JSON.stringify(err)}`);
+  const handleLoginFailure = (err: any) => toast.error(`Failed to login: ${err.error}`);
 
   const handleGroupByChanged = (groupBy: GroupBy) => {
     history.push(`/recipes?groupBy=${groupBy}`);
@@ -98,7 +101,7 @@ export default function AppHeader() {
           cookiePolicy="single_host_origin"
           render={(renderProps) => (
             <IconButton onClick={renderProps.onClick} disabled={renderProps.disabled}>
-              <Avatar className={classes.avatar} />
+              <Avatar className={clsx(classes.avatar, { [classes.avatarActive]: user })} />
             </IconButton>
           )}
         />
