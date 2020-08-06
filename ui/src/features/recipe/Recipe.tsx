@@ -21,7 +21,7 @@ export default function Recipe({ recipe }: Props) {
   return (
     <>
       <Grid container spacing={2} alignItems="flex-start">
-        <Grid container item sm={12} md={6}>
+        <Grid container item sm={12} md={6} spacing={2}>
           <Grid item xs={12}>
             <LabelDivider label="INGREDIENTS" />
           </Grid>
@@ -38,7 +38,7 @@ export default function Recipe({ recipe }: Props) {
             </List>
           </Grid>
         </Grid>
-        <Grid item sm={12} md={6}>
+        <Grid item sm={12} md={6} spacing={2}>
           <LabelDivider label="INSTRUCTIONS" />
           <List component="ol" dense>
             {recipe.instructions.map((i, idx) => (
