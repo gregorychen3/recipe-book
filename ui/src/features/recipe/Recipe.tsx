@@ -92,7 +92,7 @@ export default function Recipe({ recipe }: Props) {
               <ListItem key={idx}>
                 {isValidURL(s) ? (
                   <ListItemText>
-                    • <Link href={s}>{s}</Link>
+                    <Link href={s}>{s}</Link>
                   </ListItemText>
                 ) : (
                   <ListItemText primary={s} />
