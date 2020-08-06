@@ -1,4 +1,5 @@
-import { Link, Typography } from "@material-ui/core";
+import { IconButton, Link, Typography } from "@material-ui/core";
+import GitHubIcon from "@material-ui/icons/GitHub";
 import React from "react";
 
 const imagePath = "./gregandally.jpg";
@@ -17,6 +18,9 @@ export default function AboutPage() {
         </ul>
       </Typography>
       <Typography variant="h6">Tech Stack</Typography>
+      <IconButton component={Link} href="https://github.com/gregorychen3/recipe-book" target="_blank" rel="noopener">
+        <GitHubIcon />
+      </IconButton>
       <Typography variant="body1" component={"span"}>
         <ul>
           <li>
@@ -80,7 +84,10 @@ export default function AboutPage() {
       <Typography variant="h6">Contact</Typography>
       <Typography variant="body1">
         Kindly direct all inquiries to
-        <Link href="mailto:cenaacasaperdue@gmail.com"> cenaacasaperdue@gmail.com</Link>, thank you.
+        <Link href="mailto:cenaacasaperdue@gmail.com" target="_blank" rel="noopener">
+          cenaacasaperdue@gmail.com
+        </Link>
+        , thank you.
       </Typography>
     </>
   );
