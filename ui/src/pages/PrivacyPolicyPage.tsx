@@ -14,7 +14,7 @@ export default function PrivacyPolicyPage() {
           We use Your Personal data to provide and improve the Service. By using the Service, You agree to the
           collection and use of information in accordance with this Privacy Policy. This Privacy Policy has been created
           with the help of the{" "}
-          <a href="https://www.termsfeed.com/privacy-policy-generator/" target="_blank">
+          <a href="https://www.termsfeed.com/privacy-policy-generator/" target="_blank" rel="noopener noreferrer">
             Privacy Policy Generator
           </a>
           .
@@ -91,7 +91,11 @@ export default function PrivacyPolicyPage() {
           <li>
             <p>
               <strong>Website</strong> refers to Greg and Ally's Recipe Book, accessible from{" "}
-              <a href="https://ga-recipe-book.herokuapp.com" rel="external nofollow noopener" target="_blank">
+              <a
+                href="https://ga-recipe-book.herokuapp.com"
+                rel="external nofollow noopener noreferrer"
+                target="_blank"
+              >
                 https://ga-recipe-book.herokuapp.com
               </a>
             </p>
@@ -153,7 +157,7 @@ export default function PrivacyPolicyPage() {
           Cookies can be &quot;Persistent&quot; or &quot;Session&quot; Cookies. Persistent Cookies remain on your
           personal computer or mobile device when You go offline, while Session Cookies are deleted as soon as You close
           your web browser. Learn more about cookies:{" "}
-          <a href="https://www.termsfeed.com/blog/cookies/" target="_blank">
+          <a href="https://www.termsfeed.com/blog/cookies/" target="_blank" rel="noopener noreferrer">
             All About Cookies
           </a>
           .
