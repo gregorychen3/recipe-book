@@ -16,7 +16,7 @@ export default function Recipe({ recipe }: Props) {
     setServings(recipe.servings);
   }, [recipe.servings]);
 
-  const handleServingsChanged = (e: React.ChangeEvent<HTMLInputElement>) => setServings(parseInt(e.target.value));
+  const handleServingsChanged = (e: React.ChangeEvent<HTMLInputElement>) => setServings(parseFloat(e.target.value));
 
   return (
     <>
