@@ -1,6 +1,7 @@
 import { IconButton, Link, Typography } from "@material-ui/core";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import React from "react";
+import IconWithText from "../components/IconWithText";
 
 const imagePath = "./gregandally.jpg";
 
@@ -11,17 +12,29 @@ export default function AboutPage() {
       <Typography variant="h4">Greg and Ally's Recipe Book (v4)</Typography>
       <br />
       <Typography variant="h6">Project Purpose</Typography>
-      <Typography variant="body1" component={"span"}>
+      <Typography variant="body1" component="span">
         <ul>
           <li>assist everyday cooking</li>
           <li>learn web-dev tech</li>
         </ul>
       </Typography>
-      <Typography variant="h6">Tech Stack</Typography>
-      <IconButton component={Link} href="https://github.com/gregorychen3/recipe-book" target="_blank" rel="noopener">
-        <GitHubIcon />
-      </IconButton>
-      <Typography variant="body1" component={"span"}>
+      <IconWithText
+        text="Tech Stack"
+        variant="h6"
+        icon={
+          <IconButton
+            component={Link}
+            href="https://github.com/gregorychen3/recipe-book"
+            target="_blank"
+            rel="noopener"
+            size="small"
+          >
+            <GitHubIcon />
+          </IconButton>
+        }
+        iconPosition="after"
+      />
+      <Typography variant="body1" component="span">
         <ul>
           <li>
             v1
