@@ -20,6 +20,8 @@ export const userSlice = createSlice({
   },
 });
 
+export const { loadUser } = userSlice.actions;
+
 export default userSlice.reducer;
 
 //

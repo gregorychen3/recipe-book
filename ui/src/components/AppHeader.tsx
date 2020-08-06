@@ -7,10 +7,12 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
 import React, { useState } from "react";
-import GoogleLogin from "react-google-login";
-import { useSelector } from "react-redux";
+import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from "react-google-login";
+import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink, useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import { selectShowLoading } from "../app/apiSlice";
+import { loadUser } from "../app/userSlice";
 import { GroupBy } from "../pages/RecipesPage";
 
 const browseMenuOpts: { label: string; value: GroupBy }[] = [
@@ -35,7 +37,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AppHeader() {
   const classes = useStyles();
-  let history = useHistory();
+  const history = useHistory();
+  const d = useDispatch();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -44,6 +47,9 @@ export default function AppHeader() {
   const handleMenu = (e: React.MouseEvent<HTMLElement>) => setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
   const navToHome = () => history.push("/");
+
+  const handleLoginSuccess = (resp: GoogleLoginResponse | GoogleLoginResponseOffline) => d(loadUser(resp));
+  const handleLoginFailure = (err: any) => toast.error(`Failed to login: ${JSON.stringify(err)}`);
 
   const handleGroupByChanged = (groupBy: GroupBy) => {
     history.push(`/recipes?groupBy=${groupBy}`);
@@ -85,21 +91,15 @@ export default function AppHeader() {
         </Button>
         <GoogleLogin
           clientId="733241561721-4u35j8dtjmkisfs479m9an9f6p6tep1s.apps.googleusercontent.com"
+          buttonText="Login"
+          onSuccess={handleLoginSuccess}
+          onFailure={handleLoginFailure}
+          cookiePolicy="single_host_origin"
           render={(renderProps) => (
             <IconButton onClick={renderProps.onClick} disabled={renderProps.disabled}>
               <Avatar className={classes.avatar} />
             </IconButton>
           )}
-          buttonText="Login"
-          onSuccess={(resp) => {
-            console.log("succ");
-            console.log(resp);
-          }}
-          onFailure={(resp) => {
-            console.log("succ");
-            console.log(resp);
-          }}
-          cookiePolicy="single_host_origin"
         />
       </Toolbar>
       <LinearProgress hidden={!showLoading} />
