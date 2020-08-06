@@ -83,7 +83,7 @@ export default function AboutPage() {
       </Typography>
       <Typography variant="h6">Contact</Typography>
       <Typography variant="body1">
-        Kindly direct all inquiries to
+        Kindly direct all inquiries to{" "}
         <Link href="mailto:cenaacasaperdue@gmail.com" target="_blank" rel="noopener">
           cenaacasaperdue@gmail.com
         </Link>
