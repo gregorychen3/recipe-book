@@ -32,7 +32,7 @@ export default function Recipe({ recipe }: Props) {
             <List component="ul" dense>
               {recipe.ingredients.map((i, idx) => (
                 <ListItem key={idx}>
-                  <ListItemText primary={`• ${formatIngredient(i, recipe.servings, servings)}`} />
+                  <ListItemText primary={formatIngredient(i, recipe.servings, servings)} />
                 </ListItem>
               ))}
             </List>
@@ -43,7 +43,7 @@ export default function Recipe({ recipe }: Props) {
           <List component="ol" dense>
             {recipe.instructions.map((i, idx) => (
               <ListItem key={idx}>
-                <ListItemText primary={`${idx + 1}. ${i}`} />
+                <ListItemText primary={i} />
               </ListItem>
             ))}
           </List>
@@ -95,7 +95,7 @@ export default function Recipe({ recipe }: Props) {
                     • <Link href={s}>{s}</Link>
                   </ListItemText>
                 ) : (
-                  <ListItemText primary={`• ${s}`} />
+                  <ListItemText primary={s} />
                 )}
               </ListItem>
             ))}
