@@ -1,11 +1,17 @@
-import { IconButton, Link, Typography } from "@material-ui/core";
+import { IconButton, Link, makeStyles, Typography } from "@material-ui/core";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import React from "react";
 import IconWithText from "../components/IconWithText";
 
 const imagePath = "./gregandally.jpg";
 
+const useStyles = makeStyles((theme) => ({
+  disabledText: { color: theme.palette.text.secondary },
+}));
+
 export default function AboutPage() {
+  const classes = useStyles();
+
   return (
     <>
       <img src={imagePath} alt="gregandally" style={{ height: "100%", width: "100%" }} />
@@ -36,60 +42,36 @@ export default function AboutPage() {
       />
       <Typography variant="body1" component="span">
         <ul>
-          <li>
+          <li className={classes.disabledText}>
             v1
             <ul>
-              <li>
-                <b>UI</b>: Jinja Template HTML, CSS, jQuery
-              </li>
-              <li>
-                <b>Backend</b>: Python Flask, PostgreSQL
-              </li>
-              <li>
-                <b>Deployment</b>: AWS EC2
-              </li>
+              <li>UI: Jinja Template HTML, CSS, jQuery</li>
+              <li>Backend: Python Flask, PostgreSQL</li>
+              <li>Deployment: AWS EC2</li>
             </ul>
           </li>
-          <li>
+          <li className={classes.disabledText}>
             v2
             <ul>
-              <li>
-                <b>UI</b>: React, Semantic UI
-              </li>
-              <li>
-                <b>Backend</b>: Express.js, PostgreSQL
-              </li>
-              <li>
-                <b>Deployment</b>: AWS EC2, Docker
-              </li>
+              <li>UI: React, Semantic UI</li>
+              <li>Backend: Express.js, PostgreSQL</li>
+              <li>Deployment: AWS EC2, Docker</li>
             </ul>
           </li>
-          <li>
+          <li className={classes.disabledText}>
             v3
             <ul>
-              <li>
-                <b>UI</b>: React Hooks, Redux, Bulma
-              </li>
-              <li>
-                <b>Backend</b>: TypeScript, Express.js, MongoDB
-              </li>
-              <li>
-                <b>Deployment</b>: Heroku
-              </li>
+              <li>UI: React Hooks, Redux, Bulma</li>
+              <li>Backend: TypeScript, Express.js, MongoDB</li>
+              <li>Deployment: Heroku</li>
             </ul>
           </li>
           <li>
             v4
             <ul>
-              <li>
-                <b>UI</b>: React Hooks, Redux Toolkit, Material UI, Google Sign-in
-              </li>
-              <li>
-                <b>Backend</b>: TypeScript, Express.js, MongoDB
-              </li>
-              <li>
-                <b>Deployment</b>: Heroku
-              </li>
+              <li>UI: React Hooks, Redux Toolkit, Material UI, Google Sign-in</li>
+              <li>Backend: TypeScript, Express.js, MongoDB</li>
+              <li>Deployment: Heroku</li>
             </ul>
           </li>
         </ul>
