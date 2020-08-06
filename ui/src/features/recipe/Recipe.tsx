@@ -1,9 +1,9 @@
-import { Grid, InputAdornment, Link, List, ListItem, ListItemText, ListSubheader, TextField } from "@material-ui/core";
+import { Grid, InputAdornment, Link, List, ListItem, ListItemText, TextField } from "@material-ui/core";
 import LanguageIcon from "@material-ui/icons/Language";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
+import { LabelDivider } from "mui-label-divider";
 import React, { useEffect, useState } from "react";
 import { IRecipe } from "../../../../src/types";
-import LabelDivider from "../../components/LabelDivider";
 import { formatIngredient } from "../../features/recipe/helpers";
 import { isValidURL } from "../../helpers";
 

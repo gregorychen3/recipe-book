@@ -1,10 +1,10 @@
 import { List, ListItem, ListItemText } from "@material-ui/core";
 import _ from "lodash";
+import { LabelDivider } from "mui-label-divider";
 import React from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { IRecipeModel } from "../../../../src/db/recipe";
-import LabelDivider from "../../components/LabelDivider";
 import { GroupBy } from "../../pages/RecipesPage";
 import { getCourses, getCuisines } from "./helpers";
 import { selectRecipes } from "./RecipeSlice";

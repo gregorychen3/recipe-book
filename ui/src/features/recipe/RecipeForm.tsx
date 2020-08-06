@@ -4,11 +4,10 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import { Field, FieldArray, FieldArrayRenderProps, Form, Formik, FormikProps } from "formik";
 import { Select, TextField } from "formik-material-ui";
+import { LabelDivider } from "mui-label-divider";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import * as Yup from "yup";
 import { ICourse, ICuisine, IIngredient, IRecipe } from "../../../../src/types";
-import LabelDivider from "../../components/LabelDivider";
 import { getCourses, getCuisines } from "./helpers";
 import { selectRecipes } from "./RecipeSlice";
 
