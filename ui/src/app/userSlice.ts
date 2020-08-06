@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GoogleLoginResponse, GoogleLoginResponseOffline } from "react-google-login";
 import { RootState } from "./store";
 
 //
@@ -7,20 +6,23 @@ import { RootState } from "./store";
 // -----
 
 interface State {
-  user?: GoogleLoginResponse | GoogleLoginResponseOffline;
+  userTokenId?: string;
 }
-const initialState: State = { user: undefined };
+const initialState: State = { userTokenId: undefined };
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    loadUser: (state, action: PayloadAction<GoogleLoginResponse | GoogleLoginResponseOffline>) => {
-      state.user = action.payload;
+    loadUserTokenId: (state, action: PayloadAction<string>) => {
+      state.userTokenId = action.payload;
+    },
+    clearUserTokenId: (state) => {
+      state.userTokenId = undefined;
     },
   },
 });
 
-export const { loadUser } = userSlice.actions;
+export const { loadUserTokenId, clearUserTokenId } = userSlice.actions;
 
 export default userSlice.reducer;
 
@@ -28,4 +30,4 @@ export default userSlice.reducer;
 // SELECTORS
 // ---------
 
-export const selectUser = (state: RootState) => state.user.user;
+export const selectUserTokenId = (state: RootState) => state.user.userTokenId;

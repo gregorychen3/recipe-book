@@ -1,5 +1,4 @@
 import { Avatar, Button, LinearProgress, Menu, MenuItem } from "@material-ui/core";
-import clsx from "clsx";
 import AppBar from "@material-ui/core/AppBar";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
@@ -7,13 +6,14 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
+import clsx from "clsx";
 import React, { useState } from "react";
-import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline } from "react-google-login";
+import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline, GoogleLogout } from "react-google-login";
 import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { selectShowLoading } from "../app/apiSlice";
-import { loadUser, selectUser } from "../app/userSlice";
+import { clearUserTokenId, loadUserTokenId, selectUserTokenId } from "../app/userSlice";
 import { GroupBy } from "../pages/RecipesPage";
 
 const browseMenuOpts: { label: string; value: GroupBy }[] = [
@@ -43,9 +43,25 @@ export default function AppHeader() {
   const handleClose = () => setAnchorEl(null);
   const navToHome = () => history.push("/");
 
-  const user = useSelector(selectUser);
-  const handleLoginSuccess = (resp: GoogleLoginResponse | GoogleLoginResponseOffline) => d(loadUser(resp));
-  const handleLoginFailure = (err: any) => toast.error(`Failed to login: ${err.error}`);
+  const user = useSelector(selectUserTokenId);
+  const handleLoginSuccess = (resp: GoogleLoginResponse | GoogleLoginResponseOffline) => {
+    if (resp.code) {
+      // TODO : if responseType is 'code', callback will return the authorization code that can be used to retrieve a refresh token from the server.
+      resp = resp as GoogleLoginResponseOffline;
+      return;
+    }
+    toast.success("Login succeeded");
+    d(loadUserTokenId((resp as GoogleLoginResponse).tokenId));
+  };
+  const handleLoginFailure = (err: any) => {
+    d(clearUserTokenId());
+    toast.error(`Failed to login: ${err.error}`);
+  };
+  const handleLogoutSuccess = () => {
+    d(clearUserTokenId());
+    toast.success("Logout succeeded");
+  };
+  const handleLogoutFailure = () => toast.error("Failed to logout");
 
   const handleGroupByChanged = (groupBy: GroupBy) => {
     history.push(`/recipes?groupBy=${groupBy}`);
@@ -85,19 +101,33 @@ export default function AppHeader() {
         <Button color="inherit" component={RouterLink} to="/about">
           About
         </Button>
-        <GoogleLogin
-          clientId="733241561721-4u35j8dtjmkisfs479m9an9f6p6tep1s.apps.googleusercontent.com"
-          buttonText="Login"
-          onSuccess={handleLoginSuccess}
-          onFailure={handleLoginFailure}
-          isSignedIn
-          cookiePolicy="single_host_origin"
-          render={(renderProps) => (
-            <IconButton onClick={renderProps.onClick} disabled={renderProps.disabled}>
-              <Avatar className={clsx(classes.avatar, { [classes.avatarActive]: user })} />
-            </IconButton>
-          )}
-        />
+        {user ? (
+          <GoogleLogout
+            clientId="733241561721-4u35j8dtjmkisfs479m9an9f6p6tep1s.apps.googleusercontent.com"
+            buttonText="Logout"
+            onLogoutSuccess={handleLogoutSuccess}
+            onFailure={handleLogoutFailure}
+            render={(renderProps) => (
+              <IconButton onClick={renderProps.onClick} disabled={renderProps.disabled}>
+                <Avatar className={clsx(classes.avatar, classes.avatarActive)} />
+              </IconButton>
+            )}
+          />
+        ) : (
+          <GoogleLogin
+            clientId="733241561721-4u35j8dtjmkisfs479m9an9f6p6tep1s.apps.googleusercontent.com"
+            buttonText="Login"
+            onSuccess={handleLoginSuccess}
+            onFailure={handleLoginFailure}
+            isSignedIn
+            cookiePolicy="single_host_origin"
+            render={(renderProps) => (
+              <IconButton onClick={renderProps.onClick} disabled={renderProps.disabled}>
+                <Avatar className={classes.avatar} />
+              </IconButton>
+            )}
+          />
+        )}
       </Toolbar>
       <LinearProgress hidden={!showLoading} />
     </AppBar>
