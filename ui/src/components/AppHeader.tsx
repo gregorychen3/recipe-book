@@ -1,4 +1,4 @@
-import { Button, LinearProgress, Menu, MenuItem, Avatar } from "@material-ui/core";
+import { Avatar, Button, LinearProgress, Menu, MenuItem } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
 import React, { useState } from "react";
+import GoogleLogin from "react-google-login";
 import { useSelector } from "react-redux";
 import { Link as RouterLink, useHistory } from "react-router-dom";
 import { selectShowLoading } from "../app/apiSlice";
@@ -82,9 +83,24 @@ export default function AppHeader() {
         <Button color="inherit" component={RouterLink} to="/about">
           About
         </Button>
-        <IconButton>
-          <Avatar className={classes.avatar} />
-        </IconButton>
+        <GoogleLogin
+          clientId="733241561721-4u35j8dtjmkisfs479m9an9f6p6tep1s.apps.googleusercontent.com"
+          render={(renderProps) => (
+            <IconButton onClick={renderProps.onClick} disabled={renderProps.disabled}>
+              <Avatar className={classes.avatar} />
+            </IconButton>
+          )}
+          buttonText="Login"
+          onSuccess={(resp) => {
+            console.log("succ");
+            console.log(resp);
+          }}
+          onFailure={(resp) => {
+            console.log("succ");
+            console.log(resp);
+          }}
+          cookiePolicy="single_host_origin"
+        />
       </Toolbar>
       <LinearProgress hidden={!showLoading} />
     </AppBar>
