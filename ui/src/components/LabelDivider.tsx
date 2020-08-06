@@ -1,6 +1,8 @@
 import { makeStyles, Typography } from "@material-ui/core";
 import React from "react";
 
+// Adapted from Puigcerber's answer on https://stackoverflow.com/questions/5214127/css-technique-for-a-horizontal-line-with-words-in-the-middle
+
 const useStyles = makeStyles((theme) => ({
   label: {
     overflow: "hidden",
