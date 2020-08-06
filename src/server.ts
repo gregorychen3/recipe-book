@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import createError, { HttpError } from "http-errors";
 import morgan from "morgan";
 import path from "path";
@@ -30,13 +30,13 @@ server.get("/*", (req, res) => {
 server.use((req, res, next) => next(createError(404)));
 
 // error handler
-server.use((err: HttpError, req: Request, res: Response) => {
+server.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
-  // render the error page
-  return res.sendStatus(err.status ? err.status : 500);
+  res.status(err.status ?? 500);
+  return res.send(err.message);
 });
 
 const PORT = process.env.PORT || 3000;
