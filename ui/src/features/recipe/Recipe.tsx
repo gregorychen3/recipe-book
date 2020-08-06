@@ -20,7 +20,7 @@ export default function Recipe({ recipe }: Props) {
 
   return (
     <>
-      <Grid container direction="row" spacing={2}>
+      <Grid container spacing={2} alignItems="flex-start">
         <Grid container item sm={12} md={6}>
           <Grid item xs={12}>
             <LabelDivider label="INGREDIENTS" />
