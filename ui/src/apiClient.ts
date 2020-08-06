@@ -27,4 +27,7 @@ const apiClient = {
   },
 };
 
+export const setAuthorizationHeader = (val: string) => (axios.defaults.headers.common["Authorization"] = val);
+export const clearAuthorizationHeader = () => delete axios.defaults.headers.common["Authorization"];
+
 export default apiClient;
