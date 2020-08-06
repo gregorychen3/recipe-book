@@ -1,4 +1,4 @@
-import { Button, LinearProgress, Menu, MenuItem } from "@material-ui/core";
+import { Button, LinearProgress, Menu, MenuItem, Avatar } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     cursor: "pointer",
   },
+  avatar: { width: theme.spacing(3), height: theme.spacing(3) },
 }));
 
 export default function AppHeader() {
@@ -81,6 +82,9 @@ export default function AppHeader() {
         <Button color="inherit" component={RouterLink} to="/about">
           About
         </Button>
+        <IconButton>
+          <Avatar className={classes.avatar} />
+        </IconButton>
       </Toolbar>
       <LinearProgress hidden={!showLoading} />
     </AppBar>
