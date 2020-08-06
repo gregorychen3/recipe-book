@@ -9,6 +9,7 @@ import AppHeader from "./components/AppHeader";
 import AboutPage from "./pages/AboutPage";
 import CreateRecipePage from "./pages/CreateRecipePage";
 import EditRecipePage from "./pages/EditRecipePage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import RecipePage from "./pages/RecipePage";
 import RecipesPage from "./pages/RecipesPage";
 import { getThemedToastClass } from "./theme";
@@ -55,6 +56,9 @@ export default function App() {
               </Route>
               <Route path="/about">
                 <AboutPage />
+              </Route>
+              <Route path="/privacy-policy">
+                <PrivacyPolicyPage />
               </Route>
               <Route path="/">
                 <Redirect to="/recipes" />
