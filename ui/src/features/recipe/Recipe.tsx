@@ -1,14 +1,4 @@
-import {
-  Grid,
-  Link,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  ListSubheader,
-  makeStyles,
-  TextField,
-} from "@material-ui/core";
+import { Grid, Link, List, ListItem, ListItemIcon, ListItemText, ListSubheader, TextField } from "@material-ui/core";
 import LanguageIcon from "@material-ui/icons/Language";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
 import React, { useEffect, useState } from "react";
@@ -17,16 +7,10 @@ import LabelDivider from "../../components/LabelDivider";
 import { formatIngredient } from "../../features/recipe/helpers";
 import { isValidURL } from "../../helpers";
 
-const useStyles = makeStyles((theme) => ({
-  gridItem: { padding: theme.spacing(2) },
-}));
-
 interface Props {
   recipe: IRecipe;
 }
 export default function Recipe({ recipe }: Props) {
-  const classes = useStyles();
-
   const [servings, setServings] = useState(recipe.servings);
   useEffect(() => {
     setServings(recipe.servings);
@@ -36,8 +20,8 @@ export default function Recipe({ recipe }: Props) {
 
   return (
     <>
-      <Grid container direction="row">
-        <Grid container item sm={12} md={6} className={classes.gridItem}>
+      <Grid container direction="row" spacing={2}>
+        <Grid container item sm={12} md={6}>
           <Grid item xs={12}>
             <LabelDivider label="INGREDIENTS" />
           </Grid>
@@ -54,7 +38,7 @@ export default function Recipe({ recipe }: Props) {
             </List>
           </Grid>
         </Grid>
-        <Grid item sm={12} md={6} className={classes.gridItem}>
+        <Grid item sm={12} md={6}>
           <LabelDivider label="INSTRUCTIONS" />
           <List component="ol" dense>
             {recipe.instructions.map((i, idx) => (
@@ -65,7 +49,7 @@ export default function Recipe({ recipe }: Props) {
           </List>
         </Grid>
 
-        <Grid item sm={12} md={6} className={classes.gridItem}>
+        <Grid item sm={12} md={6}>
           <LabelDivider label="METADATA" />
           <List dense component="nav" subheader={<ListSubheader component="div">Cuisine</ListSubheader>}>
             <ListItem>
@@ -85,7 +69,7 @@ export default function Recipe({ recipe }: Props) {
           </List>
         </Grid>
 
-        <Grid item sm={12} md={6} className={classes.gridItem}>
+        <Grid item sm={12} md={6}>
           <LabelDivider label="SOURCES" />
           <List dense component="nav" subheader={<ListSubheader component="div">Sources</ListSubheader>}>
             {recipe.sources.map((s, idx) => (
