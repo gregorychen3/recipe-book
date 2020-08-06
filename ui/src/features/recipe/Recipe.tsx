@@ -85,7 +85,7 @@ export default function Recipe({ recipe }: Props) {
           </Grid>
         </Grid>
 
-        <Grid item sm={12} md={6}>
+        <Grid item xs={12} sm={12} md={6}>
           <LabelDivider label="SOURCES" />
           <List dense component="nav">
             {recipe.sources.map((s, idx) => (
