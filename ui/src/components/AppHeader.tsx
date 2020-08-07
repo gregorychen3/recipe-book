@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
   root: { flexGrow: 1 },
   menuButton: { marginRight: theme.spacing(2) },
   title: { flexGrow: 1, cursor: "pointer" },
+  grow: { flexGrow: 1 },
 }));
 
 export default function AppHeader() {
@@ -54,6 +55,7 @@ export default function AppHeader() {
             Greg and Ally's Recipe Book
           </Typography>
         </Hidden>
+        <div className={classes.grow} />
         <Button onClick={handleMenu} color="inherit">
           Browse
           <ExpandMoreIcon fontSize="small" />
