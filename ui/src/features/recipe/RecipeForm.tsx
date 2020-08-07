@@ -1,4 +1,4 @@
-import { Grid } from "@material-ui/core";
+import { Grid, makeStyles } from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -12,6 +12,10 @@ import { ICourse, ICuisine, IIngredient, IRecipe } from "../../../../src/types";
 import { CourseValues, CuisineValues } from "../../types";
 import { getCourses, getCuisines } from "./helpers";
 import { selectRecipes } from "./RecipeSlice";
+
+const useStyles = makeStyles((theme) => ({
+  sectionHeader: { marginTop: theme.spacing(12) },
+}));
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Required"),
@@ -109,6 +113,7 @@ export default function RecipeForm({ recipe, onSubmit, onChange }: Props) {
 }
 
 const InnerForm = (props: { onChange?: (recipe: IRecipe) => void } & FormikProps<Values>) => {
+  const classes = useStyles();
   const { onChange, values } = props;
   const recipes = useSelector(selectRecipes);
   const courses = getCourses(recipes);
@@ -183,7 +188,7 @@ const InnerForm = (props: { onChange?: (recipe: IRecipe) => void } & FormikProps
           </FormControl>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} className={classes.sectionHeader}>
           <LabelDivider label="INGREDIENTS" />
         </Grid>
         <FieldArray name="ingredients">
@@ -224,7 +229,7 @@ const InnerForm = (props: { onChange?: (recipe: IRecipe) => void } & FormikProps
           }
         </FieldArray>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} className={classes.sectionHeader}>
           <LabelDivider label="INSTRUCTIONS" />
         </Grid>
         <FieldArray name="instructions">
@@ -234,7 +239,7 @@ const InnerForm = (props: { onChange?: (recipe: IRecipe) => void } & FormikProps
                 <Field
                   component={TextField}
                   name={`instructions.${idx}`}
-                  label={idx === 0 ? "Enter step instructions" : undefined}
+                  label={idx === 0 ? "Enter step" : undefined}
                   type="string"
                   fullWidth
                   onChange={handleInstructionFieldChanged(idx, arrHelpers)}
@@ -243,7 +248,7 @@ const InnerForm = (props: { onChange?: (recipe: IRecipe) => void } & FormikProps
             ))
           }
         </FieldArray>
-        <Grid item xs={12}>
+        <Grid item xs={12} className={classes.sectionHeader}>
           <LabelDivider label="SOURCES" />
         </Grid>
         <FieldArray name="sources">
