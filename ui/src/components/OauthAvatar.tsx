@@ -9,10 +9,10 @@ import { toast } from "react-toastify";
 import { clearUserTokenId, loadUserTokenId, selectUserTokenId } from "../app/userSlice";
 
 // client id for local development
-const clientId = "733241561721-4u35j8dtjmkisfs479m9an9f6p6tep1s.apps.googleusercontent.com";
+//const clientId = "733241561721-4u35j8dtjmkisfs479m9an9f6p6tep1s.apps.googleusercontent.com";
 
 // client id for prod
-//const clientId = "733241561721-n27hobb24p9hak87q92kq90fmuobidhj.apps.googleusercontent.com";
+const clientId = "733241561721-n27hobb24p9hak87q92kq90fmuobidhj.apps.googleusercontent.com";
 
 const useStyles = makeStyles((theme) => ({
   avatar: { width: theme.spacing(3), height: theme.spacing(3) },
