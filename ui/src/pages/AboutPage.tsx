@@ -1,6 +1,5 @@
 import { IconButton, Link, makeStyles, Typography } from "@material-ui/core";
 import GitHubIcon from "@material-ui/icons/GitHub";
-import React from "react";
 import IconWithText from "../components/IconWithText";
 
 const imagePath = "./gregandally.jpg";
