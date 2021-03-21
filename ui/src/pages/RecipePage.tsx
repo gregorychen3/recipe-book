@@ -12,7 +12,7 @@ export default function RecipePage() {
 
   const [deleteDialogData, setDeleteDialogData] = useState<string | undefined>(undefined);
 
-  const { recipeId } = useParams();
+  const { recipeId } = useParams<{ recipeId: string }>();
   const recipe = useSelector(selectRecipe(recipeId));
 
   useEffect(() => {

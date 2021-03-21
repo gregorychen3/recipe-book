@@ -12,7 +12,7 @@ export default function EditRecipePage() {
 
   const [headerText, setHeaderText] = useState("");
 
-  const { recipeId } = useParams();
+  const { recipeId } = useParams<{ recipeId: string }>();
   const recipe = useSelector(selectRecipe(recipeId));
 
   useEffect(() => {
