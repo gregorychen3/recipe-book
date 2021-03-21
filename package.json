@@ -29,7 +29,7 @@
     "@types/http-errors": "^1.8.0",
     "@types/morgan": "^1.9.2",
     "@types/node": "^14.14.35",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "express": "^4.17.1",
     "express-validator": "^6.10.0",
     "http-errors": "^1.8.0",
@@ -37,7 +37,7 @@
     "morgan": "^1.10.0",
     "nodemon": "^2.0.7",
     "prettier": "^2.2.1",
-    "ts-node": "^8.10.2",
+    "ts-node": "^9.1.1",
     "tslib": "^2.1.0",
     "typescript": "^4.2.3",
     "winston": "^3.3.3"
