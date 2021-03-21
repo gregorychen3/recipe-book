@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Required"),
-  course: Yup.mixed().oneOf(CourseValues),
-  cuisine: Yup.mixed().oneOf(CuisineValues),
+  course: Yup.mixed().oneOf([...CourseValues]),
+  cuisine: Yup.mixed().oneOf([...CuisineValues]),
   servings: Yup.number().integer("Must be an integer").moreThan(0, "Must be greater than 0"),
 });
 
