@@ -189,7 +189,7 @@ const InnerForm = (props: { onChange?: (recipe: IRecipe) => void } & FormikProps
         </Grid>
 
         <Grid item xs={12} className={classes.sectionHeader}>
-          <LabelDivider label="INGREDIENTS" />
+          <LabelDivider>INGREDIENTS</LabelDivider>
         </Grid>
         <FieldArray name="ingredients">
           {(arrHelpers) =>
@@ -230,7 +230,7 @@ const InnerForm = (props: { onChange?: (recipe: IRecipe) => void } & FormikProps
         </FieldArray>
 
         <Grid item xs={12} className={classes.sectionHeader}>
-          <LabelDivider label="INSTRUCTIONS" />
+          <LabelDivider>INSTRUCTIONS</LabelDivider>
         </Grid>
         <FieldArray name="instructions">
           {(arrHelpers) =>
@@ -249,7 +249,7 @@ const InnerForm = (props: { onChange?: (recipe: IRecipe) => void } & FormikProps
           }
         </FieldArray>
         <Grid item xs={12} className={classes.sectionHeader}>
-          <LabelDivider label="SOURCES" />
+          <LabelDivider>SOURCES</LabelDivider>
         </Grid>
         <FieldArray name="sources">
           {(arrHelpers) =>
