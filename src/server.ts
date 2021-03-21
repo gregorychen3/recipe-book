@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import createError, { HttpError } from "http-errors";
 import morgan from "morgan";
 import path from "path";

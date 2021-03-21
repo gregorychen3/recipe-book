@@ -1,5 +1,4 @@
 import { Button, Hidden, LinearProgress, Menu, MenuItem } from "@material-ui/core";
-import InfoIcon from "@material-ui/icons/Info";
 import AppBar from "@material-ui/core/AppBar";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
@@ -7,6 +6,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import AddIcon from "@material-ui/icons/Add";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import InfoIcon from "@material-ui/icons/Info";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";

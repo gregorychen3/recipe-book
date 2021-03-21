@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { clearAuthorizationHeader, setAuthorizationHeader } from "../apiClient";
 import { RootState } from "./store";
-import { setAuthorizationHeader, clearAuthorizationHeader } from "../apiClient";
 
 //
 // SLICE
