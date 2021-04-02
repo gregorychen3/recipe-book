@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { IRecipeModel } from "../../../../src/db/recipe";
 import { GroupBy } from "../../pages/RecipesPage";
-import { getCourses, getCuisines } from "./helpers";
+import { getCuisines } from "./helpers";
 import { selectRecipes } from "./RecipeSlice";
 
 const AlphabeticalList = ({ recipes }: { recipes: IRecipeModel[] }) => {
@@ -50,10 +50,9 @@ const ByCuisineList = ({ recipes }: { recipes: IRecipeModel[] }) => {
 
 const ByCourseList = ({ recipes }: { recipes: IRecipeModel[] }) => {
   const history = useHistory();
-  const courses = getCourses(recipes);
   return (
     <>
-      {courses.map((course) => (
+      {["Antipasti", "Primi", "Secondi", "Dolci", "Contorni", "Sauces", "Beverages", "Other"].map((course) => (
         <React.Fragment key={course}>
           <LabelDivider>{course.toUpperCase()}</LabelDivider>
           <List dense component="nav" key={course}>
