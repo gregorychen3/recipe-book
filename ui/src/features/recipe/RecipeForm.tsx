@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import * as Yup from "yup";
 import { ICourse, ICuisine, IIngredient, IRecipe } from "../../../../src/types";
 import { CourseValues, CuisineValues } from "../../types";
-import { getCourses, getCuisines } from "./helpers";
+import { getCuisines } from "./helpers";
 import { selectRecipes } from "./RecipeSlice";
 
 const useStyles = makeStyles((theme) => ({
@@ -116,7 +116,6 @@ const InnerForm = (props: { onChange?: (recipe: IRecipe) => void } & FormikProps
   const classes = useStyles();
   const { onChange, values } = props;
   const recipes = useSelector(selectRecipes);
-  const courses = getCourses(recipes);
   const cuisines = getCuisines(recipes);
 
   useEffect(() => {
@@ -167,7 +166,7 @@ const InnerForm = (props: { onChange?: (recipe: IRecipe) => void } & FormikProps
           <FormControl fullWidth>
             <InputLabel htmlFor="course">Course</InputLabel>
             <Field component={Select} name="course" inputProps={{ id: "course" }}>
-              {courses.map((c) => (
+              {CourseValues.map((c) => (
                 <MenuItem value={c} key={c}>
                   {c}
                 </MenuItem>

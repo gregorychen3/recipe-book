@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { IRecipeModel } from "../../../../src/db/recipe";
 import { GroupBy } from "../../pages/RecipesPage";
+import { CourseValues } from "../../types";
 import { getCuisines } from "./helpers";
 import { selectRecipes } from "./RecipeSlice";
 
@@ -52,7 +53,7 @@ const ByCourseList = ({ recipes }: { recipes: IRecipeModel[] }) => {
   const history = useHistory();
   return (
     <>
-      {["Antipasti", "Primi", "Secondi", "Dolci", "Contorni", "Sauces", "Beverages", "Other"].map((course) => (
+      {CourseValues.map((course) => (
         <React.Fragment key={course}>
           <LabelDivider>{course.toUpperCase()}</LabelDivider>
           <List dense component="nav" key={course}>
