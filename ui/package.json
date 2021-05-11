@@ -24,7 +24,7 @@
     "formik-material-ui": "^3.0.1",
     "history": "^5.0.0",
     "lodash": "^4.17.21",
-    "mui-label-divider": "^1.0.5",
+    "mui-label-divider": "^1.0.6",
     "prettier": "^2.2.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
