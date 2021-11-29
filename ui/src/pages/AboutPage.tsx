@@ -1,16 +1,15 @@
-import { IconButton, Link, makeStyles, Typography } from "@material-ui/core";
-import GitHubIcon from "@material-ui/icons/GitHub";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import { IconButton, Link, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import IconWithText from "../components/IconWithText";
 
 const imagePath = "./gregandally.jpg";
 
-const useStyles = makeStyles((theme) => ({
-  disabledText: { color: theme.palette.text.secondary },
+const DisabledListItem = styled("li")(({ theme }) => ({
+  color: theme.palette.text.secondary,
 }));
 
 export default function AboutPage() {
-  const classes = useStyles();
-
   return (
     <>
       <img src={imagePath} alt="gregandally" style={{ height: "100%", width: "100%" }} />
@@ -41,30 +40,30 @@ export default function AboutPage() {
       />
       <Typography variant="body1" component="span">
         <ul>
-          <li className={classes.disabledText}>
+          <DisabledListItem>
             v1
             <ul>
               <li>UI: Jinja Template HTML, CSS, jQuery</li>
               <li>Backend: Python Flask, PostgreSQL</li>
               <li>Deployment: AWS EC2</li>
             </ul>
-          </li>
-          <li className={classes.disabledText}>
+          </DisabledListItem>
+          <DisabledListItem>
             v2
             <ul>
               <li>UI: React, Semantic UI</li>
               <li>Backend: Express.js, PostgreSQL</li>
               <li>Deployment: AWS EC2, Docker</li>
             </ul>
-          </li>
-          <li className={classes.disabledText}>
+          </DisabledListItem>
+          <DisabledListItem>
             v3
             <ul>
               <li>UI: React Hooks, Redux, Bulma</li>
               <li>Backend: TypeScript, Express.js, MongoDB</li>
               <li>Deployment: Heroku</li>
             </ul>
-          </li>
+          </DisabledListItem>
           <li>
             v4
             <ul>
