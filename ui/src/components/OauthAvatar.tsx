@@ -42,7 +42,7 @@ export default function OauthAvatar() {
       render={(renderProps) => (
         <Tooltip title="Click to logout">
           <IconButton onClick={renderProps.onClick} disabled={renderProps.disabled} size="large">
-            <Avatar sx={{ width: 3, height: 3, backgroundColor: "primary" }} />
+            <Avatar sx={{ width: 24, height: 24, backgroundColor: "primary.main" }} />
           </IconButton>
         </Tooltip>
       )}
@@ -57,11 +57,9 @@ export default function OauthAvatar() {
       cookiePolicy="single_host_origin"
       render={(renderProps) => (
         <Tooltip title="Log in to edit recipes">
-          <span>
-            <IconButton onClick={renderProps.onClick} disabled={renderProps.disabled} size="large">
-              <Avatar sx={{ width: 3, height: 3, backgroundColor: "primary" }} />
-            </IconButton>
-          </span>
+          <IconButton onClick={renderProps.onClick} disabled={renderProps.disabled} size="large">
+            <Avatar sx={{ width: 24, height: 24 }} />
+          </IconButton>
         </Tooltip>
       )}
     />
