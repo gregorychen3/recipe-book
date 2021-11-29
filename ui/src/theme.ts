@@ -1,6 +1,6 @@
-import { createMuiTheme, Theme } from "@material-ui/core";
+import { createTheme, Theme } from "@mui/material";
 
-export default createMuiTheme({
+export default createTheme({
   palette: {
     primary: { main: "#009DDB" },
     secondary: { main: "#F09000" },
@@ -8,7 +8,7 @@ export default createMuiTheme({
     warning: { main: "#EBA300" },
     success: { main: "#00C78E" },
     background: { default: "#171717", paper: "#1E262E" },
-    type: "dark",
+    mode: "dark",
   },
 });
 
