@@ -1,4 +1,4 @@
-import { List, ListItem, ListItemText } from "@material-ui/core";
+import { List, ListItem, ListItemText } from "@mui/material";
 import _ from "lodash";
 import { LabelDivider } from "mui-label-divider";
 import React from "react";
