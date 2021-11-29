@@ -1,13 +1,13 @@
-import { Button, Hidden, LinearProgress, Menu, MenuItem } from "@material-ui/core";
-import AppBar from "@material-ui/core/AppBar";
-import IconButton from "@material-ui/core/IconButton";
-import { makeStyles } from "@material-ui/core/styles";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import AddIcon from "@material-ui/icons/Add";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import InfoIcon from "@material-ui/icons/Info";
-import RestaurantIcon from "@material-ui/icons/Restaurant";
+import AddIcon from "@mui/icons-material/Add";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import InfoIcon from "@mui/icons-material/Info";
+import RestaurantIcon from "@mui/icons-material/Restaurant";
+import { Button, Hidden, LinearProgress, Menu, MenuItem } from "@mui/material";
+import AppBar from "@mui/material/AppBar";
+import IconButton from "@mui/material/IconButton";
+import { styled } from "@mui/material/styles";
+import Toolbar from "@mui/material/Toolbar";
+import Typography, { TypographyProps } from "@mui/material/Typography";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link as RouterLink, useHistory } from "react-router-dom";
@@ -21,15 +21,12 @@ const browseMenuOpts: { label: string; value: GroupBy }[] = [
   { label: "A-Z", value: "alphabetical" },
 ];
 
-const useStyles = makeStyles((theme) => ({
-  root: { flexGrow: 1 },
-  menuButton: { marginRight: theme.spacing(2) },
-  title: { flexGrow: 1, cursor: "pointer" },
-  grow: { flexGrow: 1 },
+const AppTitle = styled(Typography)<TypographyProps>(() => ({
+  flexGrow: 1,
+  cursor: "pointer",
 }));
 
 export default function AppHeader() {
-  const classes = useStyles();
   const history = useHistory();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -47,15 +44,15 @@ export default function AppHeader() {
   return (
     <AppBar position="absolute" color="inherit">
       <Toolbar>
-        <IconButton edge="start" color="inherit" onClick={navToHome} className={classes.menuButton}>
+        <IconButton edge="start" color="inherit" onClick={navToHome} size="large" sx={{ mr: 2 }}>
           <RestaurantIcon />
         </IconButton>
-        <Hidden xsDown>
-          <Typography component="h1" variant="h6" color="inherit" noWrap onClick={navToHome} className={classes.title}>
+        <Hidden smDown>
+          <AppTitle variant="h6" color="inherit" noWrap onClick={navToHome}>
             Greg and Ally's Recipe Book
-          </Typography>
+          </AppTitle>
         </Hidden>
-        <div className={classes.grow} />
+        <div />
         <Button onClick={handleMenu} color="inherit">
           Browse
           <ExpandMoreIcon fontSize="small" />
@@ -74,23 +71,23 @@ export default function AppHeader() {
             </MenuItem>
           ))}
         </Menu>
-        <Hidden xsDown>
+        <Hidden smDown>
           <Button color="inherit" component={RouterLink} to="/recipes/create">
             Add Recipe
           </Button>
         </Hidden>
         <Hidden smUp>
-          <IconButton component={RouterLink} to="/recipes/create">
+          <IconButton component={RouterLink} to="/recipes/create" size="large">
             <AddIcon />
           </IconButton>
         </Hidden>
-        <Hidden xsDown>
+        <Hidden smDown>
           <Button color="inherit" component={RouterLink} to="/about">
             About
           </Button>
         </Hidden>
         <Hidden smUp>
-          <IconButton component={RouterLink} to="/about">
+          <IconButton component={RouterLink} to="/about" size="large">
             <InfoIcon />
           </IconButton>
         </Hidden>
