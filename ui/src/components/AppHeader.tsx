@@ -31,7 +31,7 @@ export default function AppHeader() {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const showLoading = useSelector(selectShowLoading);
+  const isLoading = useSelector(selectShowLoading);
 
   const handleMenu = (e: React.MouseEvent<HTMLElement>) => setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
@@ -93,7 +93,7 @@ export default function AppHeader() {
         </Hidden>
         <OauthAvatar />
       </Toolbar>
-      <LinearProgress hidden={!showLoading} />
+      {isLoading && <LinearProgress />}
     </AppBar>
   );
 }
