@@ -1,9 +1,9 @@
-import Container from "@material-ui/core/Container";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import CssBaseline from "@mui/material/CssBaseline";
+import Grid from "@mui/material/Grid";
+import Toolbar from "@mui/material/Toolbar";
 import { Redirect, Route, Switch } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 import AppHeader from "./components/AppHeader";
 import AboutPage from "./pages/AboutPage";
 import CreateRecipePage from "./pages/CreateRecipePage";
@@ -11,35 +11,23 @@ import EditRecipePage from "./pages/EditRecipePage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import RecipePage from "./pages/RecipePage";
 import RecipesPage from "./pages/RecipesPage";
-import { getThemedToastClass } from "./theme";
 
+/*
 const useStyles = makeStyles((theme) => ({
-  root: { display: "flex" },
-  toast: getThemedToastClass(theme),
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    height: "100vh",
-    overflow: "auto",
-  },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-  },
+  toast: getThemedToastClass(theme), // TODO
 }));
+*/
 
 export default function App() {
-  const classes = useStyles();
-
   return (
     <>
-      <ToastContainer toastClassName={classes.toast} />
-      <div className={classes.root}>
+      {/*<ToastContainer toastClassName={classes.toast} />*/}
+      <Box display="flex">
         <CssBaseline />
         <AppHeader />
-        <main className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <Container maxWidth="md" className={classes.container}>
+        <Box component="main" sx={{ flexGrow: 1, height: "100vh", overflow: "auto" }}>
+          <Toolbar />
+          <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
             <Switch>
               <Route path="/recipes/create">
                 <CreateRecipePage />
@@ -65,8 +53,8 @@ export default function App() {
             </Switch>
             <Grid container spacing={3}></Grid>
           </Container>
-        </main>
-      </div>
+        </Box>
+      </Box>
     </>
   );
 }
