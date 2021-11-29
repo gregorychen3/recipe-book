@@ -14,7 +14,7 @@ const AlphabeticalList = ({ recipes }: { recipes: IRecipeModel[] }) => {
   const history = useHistory();
   return (
     <>
-      <LabelDivider>A-Z</LabelDivider>
+      <LabelDivider label="A-Z" />
       <List dense component="ol">
         {_.sortBy(recipes, (r) => r.name).map((r) => (
           <ListItem button onClick={() => history.push(`recipes/${r.id}`)} key={r.id}>
@@ -33,7 +33,7 @@ const ByCuisineList = ({ recipes }: { recipes: IRecipeModel[] }) => {
     <>
       {cuisines.map((cuisine) => (
         <React.Fragment key={cuisine}>
-          <LabelDivider>{cuisine.toUpperCase()}</LabelDivider>
+          <LabelDivider label={cuisine.toUpperCase()} />
           <List dense component="nav">
             {recipes
               .filter((r) => r.cuisine === cuisine)
@@ -55,7 +55,7 @@ const ByCourseList = ({ recipes }: { recipes: IRecipeModel[] }) => {
     <>
       {CourseValues.map((course) => (
         <React.Fragment key={course}>
-          <LabelDivider>{course.toUpperCase()}</LabelDivider>
+          <LabelDivider label={course.toUpperCase()} />
           <List dense component="nav" key={course}>
             {recipes
               .filter((r) => r.course === course)
