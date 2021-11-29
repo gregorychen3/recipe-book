@@ -1,7 +1,5 @@
-import { Avatar, Tooltip } from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
-import { makeStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
+import { Avatar, Tooltip } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline, GoogleLogout } from "react-google-login";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -13,13 +11,7 @@ const clientId = "733241561721-4u35j8dtjmkisfs479m9an9f6p6tep1s.apps.googleuserc
 // client id for prod
 //const clientId = "733241561721-n27hobb24p9hak87q92kq90fmuobidhj.apps.googleusercontent.com";
 
-const useStyles = makeStyles((theme) => ({
-  avatar: { width: theme.spacing(3), height: theme.spacing(3) },
-  avatarActive: { backgroundColor: theme.palette.primary.main },
-}));
-
 export default function OauthAvatar() {
-  const classes = useStyles();
   const d = useDispatch();
 
   const user = useSelector(selectUserTokenId);
@@ -49,8 +41,8 @@ export default function OauthAvatar() {
       onFailure={handleLogoutFailure}
       render={(renderProps) => (
         <Tooltip title="Click to logout">
-          <IconButton onClick={renderProps.onClick} disabled={renderProps.disabled}>
-            <Avatar className={clsx(classes.avatar, classes.avatarActive)} />
+          <IconButton onClick={renderProps.onClick} disabled={renderProps.disabled} size="large">
+            <Avatar sx={{ width: 3, height: 3, backgroundColor: "primary" }} />
           </IconButton>
         </Tooltip>
       )}
@@ -66,8 +58,8 @@ export default function OauthAvatar() {
       render={(renderProps) => (
         <Tooltip title="Log in to edit recipes">
           <span>
-            <IconButton onClick={renderProps.onClick} disabled={renderProps.disabled}>
-              <Avatar className={classes.avatar} />
+            <IconButton onClick={renderProps.onClick} disabled={renderProps.disabled} size="large">
+              <Avatar sx={{ width: 3, height: 3, backgroundColor: "primary" }} />
             </IconButton>
           </span>
         </Tooltip>
