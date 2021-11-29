@@ -1,10 +1,5 @@
-import { makeStyles, Typography, TypographyProps } from "@material-ui/core";
-
-const useStyles = makeStyles((theme) => ({
-  container: { display: "flex", alignItems: "center" },
-  marginLeft: { marginLeft: theme.spacing(1) },
-  marginRight: { marginRight: theme.spacing(1) },
-}));
+import { Typography, TypographyProps } from "@mui/material";
+import Box from "@mui/material/Box";
 
 interface Props {
   text: string;
@@ -13,25 +8,24 @@ interface Props {
 }
 export default function IconWithText(props: Props & TypographyProps) {
   const { text, icon, iconPosition, ...typographyProps } = props;
-  const classes = useStyles();
 
   return (
-    <div className={classes.container}>
+    <Box display="flex" alignItems="center">
       {iconPosition === "before" ? (
         <>
           {icon}
-          <Typography {...typographyProps} className={classes.marginLeft}>
+          <Typography {...typographyProps} sx={{ ml: 1 }}>
             {text}
           </Typography>
         </>
       ) : (
         <>
-          <Typography {...typographyProps} className={classes.marginRight}>
+          <Typography {...typographyProps} sx={{ mr: 1 }}>
             {text}
           </Typography>
           {icon}
         </>
       )}
-    </div>
+    </Box>
   );
 }
