@@ -1,20 +1,17 @@
-import { Button, ButtonGroup, ButtonGroupProps, makeStyles } from "@material-ui/core";
-import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
-import EditIcon from "@material-ui/icons/Edit";
-import SaveIcon from "@material-ui/icons/Save";
-
-const useStyles = makeStyles((theme) => ({
-  success: { color: theme.palette.success.main },
-}));
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import EditIcon from "@mui/icons-material/Edit";
+import SaveIcon from "@mui/icons-material/Save";
+import { Button, ButtonGroup, ButtonGroupProps } from "@mui/material";
 
 interface Props {
   onDelete?: () => void;
   onEdit?: () => void;
   disableSave: boolean;
 }
+
 export default function ActionMenu(props: Props & ButtonGroupProps) {
   const { onDelete, onEdit, disableSave, ...buttonGroupProps } = props;
-  const classes = useStyles();
+
   return (
     <ButtonGroup variant="text" color="primary" {...buttonGroupProps}>
       <Button size="small" onClick={onDelete} disabled={!onDelete}>
@@ -23,7 +20,7 @@ export default function ActionMenu(props: Props & ButtonGroupProps) {
       <Button size="small" onClick={onEdit} disabled={!onEdit}>
         <EditIcon fontSize="small" />
       </Button>
-      <Button type="submit" form="recipe-form" size="small" disabled={disableSave} className={classes.success}>
+      <Button type="submit" form="recipe-form" size="small" color="success" disabled={disableSave}>
         <SaveIcon fontSize="small" />
       </Button>
     </ButtonGroup>
