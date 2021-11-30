@@ -57,13 +57,7 @@ export const useApi = <R>(
           return [Promise.reject(new Error(`Unsupported method ${method}`)), canceler.abort] as const;
       }
 
-      return [
-        promise.then((resp) => {
-          d(removeRequest({ id }));
-          return resp;
-        }),
-        canceler.abort,
-      ] as const;
+      return [promise.finally(() => d(removeRequest({ id }))), canceler.abort] as const;
     },
     [method, url, config]
   );
