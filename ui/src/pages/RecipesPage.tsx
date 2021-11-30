@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { IRecipeModel } from "../../../src/db/recipe";
-import { useApi } from "../apiClient";
+import { useApi } from "../hooks/useApi";
 import RecipeList from "../features/recipe/RecipeList";
 import { putRecipe } from "../features/recipe/RecipeSlice";
 

@@ -8,7 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { useApi } from "../../apiClient";
+import { useApi } from "../../hooks/useApi";
 import { removeRecipe, selectRecipe } from "../../features/recipe/RecipeSlice";
 
 export interface DeleteRecipeDialogProps {

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { IRecipeModel } from "../../../src/db/recipe";
-import { useApi } from "../apiClient";
+import { useApi } from "../hooks/useApi";
 import DeleteRecipeDialog from "../features/recipe/DeleteRecipeDialog";
 import Recipe from "../features/recipe/Recipe";
 import RecipeHeader from "../features/recipe/RecipeHeader";

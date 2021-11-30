@@ -3,8 +3,8 @@ import { useCallback } from "react";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-export const setAuthorizationHeader = (val: string) => (axios.defaults.headers.common["Authorization"] = val);
-export const clearAuthorizationHeader = () => delete axios.defaults.headers.common["Authorization"];
+export const setAuthHeader = (val: string) => (axios.defaults.headers.common["Authorization"] = val);
+export const clearAuthHeader = () => delete axios.defaults.headers.common["Authorization"];
 
 export const useApi = <R>(
   method: Method,
