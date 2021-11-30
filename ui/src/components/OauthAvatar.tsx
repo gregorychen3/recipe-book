@@ -1,8 +1,8 @@
 import { Avatar, Tooltip } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
+import { useSnackbar } from "notistack";
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline, GoogleLogout } from "react-google-login";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import { clearUserTokenId, loadUserTokenId, selectUserTokenId } from "../app/userSlice";
 
 // client id for local development
@@ -13,25 +13,32 @@ const clientId = "733241561721-4u35j8dtjmkisfs479m9an9f6p6tep1s.apps.googleuserc
 
 export default function OauthAvatar() {
   const d = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
 
   const user = useSelector(selectUserTokenId);
+
   const handleLoginSuccess = (resp: GoogleLoginResponse | GoogleLoginResponseOffline) => {
     if (resp.code) {
       // TODO : if responseType is 'code', callback will return the authorization code that can be used to retrieve a refresh token from the server.
       resp = resp as GoogleLoginResponseOffline;
       return;
     }
+
+    enqueueSnackbar("Successfully logged in", { variant: "success" });
     d(loadUserTokenId((resp as GoogleLoginResponse).tokenId));
   };
+
   const handleLoginFailure = (err: any) => {
+    enqueueSnackbar(`Failed to login: ${err.error}`, { variant: "error" });
     d(clearUserTokenId());
-    toast.error(`Failed to login: ${err.error}`);
   };
+
   const handleLogoutSuccess = () => {
     d(clearUserTokenId());
-    toast.success("Logout succeeded");
+    enqueueSnackbar("Successfully logged out", { variant: "success" });
   };
-  const handleLogoutFailure = () => toast.error("Failed to logout");
+
+  const handleLogoutFailure = () => enqueueSnackbar("Failed to logout", { variant: "error" });
 
   return user ? (
     <GoogleLogout
