@@ -10,7 +10,7 @@ import { putRecipe } from "../features/recipe/RecipeSlice";
 
 export default function RecipePage() {
   const d = useDispatch();
-  const history = useHistory();
+  const h = useHistory();
 
   const [headerText, setHeaderText] = useState("");
 
@@ -21,7 +21,7 @@ export default function RecipePage() {
     const [call] = createRecipe(recipe);
     call.then((resp) => {
       d(putRecipe(resp.data));
-      history.push(`/recipes/${resp.data.id}`);
+      h.push(`/recipes/${resp.data.id}`);
     });
   };
 

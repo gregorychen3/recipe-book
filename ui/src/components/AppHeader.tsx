@@ -27,7 +27,7 @@ const AppTitle = styled(Typography)<TypographyProps>(() => ({
 }));
 
 export default function AppHeader() {
-  const history = useHistory();
+  const h = useHistory();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -35,9 +35,9 @@ export default function AppHeader() {
 
   const handleMenu = (e: React.MouseEvent<HTMLElement>) => setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
-  const navToHome = () => history.push("/");
+  const navToHome = () => h.push("/");
   const handleGroupByChanged = (groupBy: GroupBy) => {
-    history.push(`/recipes?groupBy=${groupBy}`);
+    h.push(`/recipes?groupBy=${groupBy}`);
     handleClose();
   };
 

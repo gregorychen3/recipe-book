@@ -10,7 +10,7 @@ import { putRecipe, selectRecipe } from "../features/recipe/RecipeSlice";
 
 export default function RecipePage() {
   const d = useDispatch();
-  const history = useHistory();
+  const h = useHistory();
 
   const [deleteDialogData, setDeleteDialogData] = useState<string | undefined>(undefined);
 
@@ -31,7 +31,7 @@ export default function RecipePage() {
 
   const handleShowDeleteDialog = () => setDeleteDialogData(recipe.id);
   const handleCloseDeleteDialog = () => setDeleteDialogData(undefined);
-  const handleEditClicked = () => history.push(`/recipes/${recipeId}/edit`);
+  const handleEditClicked = () => h.push(`/recipes/${recipeId}/edit`);
 
   return (
     <>

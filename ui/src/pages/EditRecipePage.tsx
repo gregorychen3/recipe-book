@@ -10,7 +10,7 @@ import { putRecipe, selectRecipe } from "../features/recipe/RecipeSlice";
 
 export default function EditRecipePage() {
   const d = useDispatch();
-  const history = useHistory();
+  const h = useHistory();
 
   const [headerText, setHeaderText] = useState("");
 
@@ -39,7 +39,7 @@ export default function EditRecipePage() {
     const [call] = updateRecipe(recipe);
     call.then((resp) => {
       d(putRecipe(resp.data));
-      history.push(`/recipes/${recipeId}`);
+      h.push(`/recipes/${recipeId}`);
     });
   };
 

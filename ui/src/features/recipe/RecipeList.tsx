@@ -11,13 +11,13 @@ import { getCuisines } from "./helpers";
 import { selectRecipes } from "./RecipeSlice";
 
 const AlphabeticalList = ({ recipes }: { recipes: IRecipeModel[] }) => {
-  const history = useHistory();
+  const h = useHistory();
   return (
     <>
       <LabelDivider label="A-Z" />
       <List dense component="ol">
         {_.sortBy(recipes, (r) => r.name).map((r) => (
-          <ListItem button onClick={() => history.push(`recipes/${r.id}`)} key={r.id}>
+          <ListItem button onClick={() => h.push(`recipes/${r.id}`)} key={r.id}>
             <ListItemText primary={r.name} />
           </ListItem>
         ))}
@@ -27,7 +27,7 @@ const AlphabeticalList = ({ recipes }: { recipes: IRecipeModel[] }) => {
 };
 
 const ByCuisineList = ({ recipes }: { recipes: IRecipeModel[] }) => {
-  const history = useHistory();
+  const h = useHistory();
   const cuisines = getCuisines(recipes);
   return (
     <>
@@ -38,7 +38,7 @@ const ByCuisineList = ({ recipes }: { recipes: IRecipeModel[] }) => {
             {recipes
               .filter((r) => r.cuisine === cuisine)
               .map((r) => (
-                <ListItem button component="a" onClick={() => history.push(`recipes/${r.id}`)} key={r.id}>
+                <ListItem button component="a" onClick={() => h.push(`recipes/${r.id}`)} key={r.id}>
                   <ListItemText primary={r.name} />
                 </ListItem>
               ))}
@@ -50,7 +50,7 @@ const ByCuisineList = ({ recipes }: { recipes: IRecipeModel[] }) => {
 };
 
 const ByCourseList = ({ recipes }: { recipes: IRecipeModel[] }) => {
-  const history = useHistory();
+  const h = useHistory();
   return (
     <>
       {CourseValues.map((course) => (
@@ -60,7 +60,7 @@ const ByCourseList = ({ recipes }: { recipes: IRecipeModel[] }) => {
             {recipes
               .filter((r) => r.course === course)
               .map((r) => (
-                <ListItem button component="a" onClick={() => history.push(`recipes/${r.id}`)} key={r.id}>
+                <ListItem button component="a" onClick={() => h.push(`recipes/${r.id}`)} key={r.id}>
                   <ListItemText primary={r.name} />
                 </ListItem>
               ))}
