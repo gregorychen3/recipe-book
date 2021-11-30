@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { History } from "history";
 import { toast } from "react-toastify";
 import { IRecipeModel } from "../../../../src/db/recipe";
@@ -61,7 +61,11 @@ const initialState: State = { recipes: [] };
 export const recipeSlice = createSlice({
   name: "recipe",
   initialState,
-  reducers: {},
+  reducers: {
+    putRecipes: (state, { payload }: PayloadAction<IRecipeModel[]>) => {
+      state.recipes = payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(createRecipe.fulfilled, (state, action) => {
       const createdRecipe = action.payload;
@@ -107,6 +111,7 @@ export const recipeSlice = createSlice({
   },
 });
 
+export const { putRecipes } = recipeSlice.actions;
 export default recipeSlice.reducer;
 
 //
