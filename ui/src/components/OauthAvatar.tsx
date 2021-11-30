@@ -6,10 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearUserTokenId, loadUserTokenId, selectUserTokenId } from "../app/userSlice";
 
 // client id for local development
-const clientId = "733241561721-4u35j8dtjmkisfs479m9an9f6p6tep1s.apps.googleusercontent.com";
+// const clientId = "733241561721-4u35j8dtjmkisfs479m9an9f6p6tep1s.apps.googleusercontent.com";
 
 // client id for prod
-//const clientId = "733241561721-n27hobb24p9hak87q92kq90fmuobidhj.apps.googleusercontent.com";
+const clientId = "733241561721-n27hobb24p9hak87q92kq90fmuobidhj.apps.googleusercontent.com";
 
 export default function OauthAvatar() {
   const d = useDispatch();
