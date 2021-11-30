@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse, Method } from "axios";
+import { useSnackbar } from "notistack";
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { getNextRequestId, putRequest, removeRequest } from "../app/apiSlice";
@@ -14,6 +15,8 @@ export const useApi = <R>(
   config?: AxiosRequestConfig
 ): ((data?: any) => readonly [Promise<AxiosResponse<R>>, () => void]) => {
   const d = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
+
   return useCallback(
     (data?: any) => {
       const id = getNextRequestId();
@@ -60,13 +63,13 @@ export const useApi = <R>(
       return [
         promise
           .catch((e) => {
-            // toast
+            enqueueSnackbar(`${method} ${url} failed: ${e?.message ?? e}`, { variant: "error" });
             throw e;
           })
           .finally(() => d(removeRequest({ id }))),
         canceler.abort,
       ] as const;
     },
-    [method, url, config, d]
+    [method, url, config, enqueueSnackbar, d]
   );
 };
