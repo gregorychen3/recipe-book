@@ -20,9 +20,7 @@ export default function RecipePage() {
   const getRecipe = useApi<IRecipeModel>("GET", `/api/recipes/${recipeId}`);
   useEffect(() => {
     const [call] = getRecipe();
-    call.then((resp) => {
-      d(putRecipe(resp.data));
-    });
+    call.then((resp) => d(putRecipe(resp.data)));
   }, [getRecipe, d]);
 
   if (!recipe) {

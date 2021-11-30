@@ -24,9 +24,7 @@ export default function EditRecipePage() {
 
   useEffect(() => {
     const [call] = getRecipe();
-    call.then((resp) => {
-      d(putRecipe(resp.data));
-    });
+    call.then((resp) => d(putRecipe(resp.data)));
   }, [getRecipe, d]);
 
   useEffect(() => {
