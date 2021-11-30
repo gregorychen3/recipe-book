@@ -55,10 +55,10 @@ export const deleteRecipe = createAsyncThunk(
 // -----
 
 interface State {
-  recipes: { [id: string]: IRecipeModel };
+  recipesById: { [id: string]: IRecipeModel };
 }
 
-const initialState: State = { recipes: {} };
+const initialState: State = { recipesById: {} };
 
 export const recipeSlice = createSlice({
   name: "recipe",
@@ -66,14 +66,14 @@ export const recipeSlice = createSlice({
   reducers: {
     putRecipes: (state, { payload }: PayloadAction<IRecipeModel[]>) => {
       payload.forEach((r) => {
-        state.recipes[r.id] = r;
+        state.recipesById[r.id] = r;
       });
     },
   },
   extraReducers: (builder) => {
     builder.addCase(createRecipe.fulfilled, (state, action) => {
       const createdRecipe = action.payload;
-      state.recipes[createdRecipe.id] = createdRecipe;
+      state.recipesById[createdRecipe.id] = createdRecipe;
       toast.success("Recipe successfully created");
     });
     builder.addCase(createRecipe.rejected, (_, action) => {
@@ -82,7 +82,7 @@ export const recipeSlice = createSlice({
 
     builder.addCase(fetchRecipes.fulfilled, (state, action) => {
       action.payload.forEach((r) => {
-        state.recipes[r.id] = r;
+        state.recipesById[r.id] = r;
       });
     });
     builder.addCase(fetchRecipes.rejected, (_, action) => {
@@ -91,7 +91,7 @@ export const recipeSlice = createSlice({
 
     builder.addCase(fetchRecipe.fulfilled, (state, action) => {
       const recipe = action.payload;
-      state.recipes[recipe.id] = recipe;
+      state.recipesById[recipe.id] = recipe;
     });
     builder.addCase(fetchRecipe.rejected, (_, action) => {
       toast.error(`Failed to fetch recipe: ${action.error.message}`);
@@ -99,7 +99,7 @@ export const recipeSlice = createSlice({
 
     builder.addCase(updateRecipe.fulfilled, (state, action) => {
       const updatedRecipe = action.payload;
-      state.recipes[updatedRecipe.id] = updatedRecipe;
+      state.recipesById[updatedRecipe.id] = updatedRecipe;
       toast.success("Recipe successfully updated");
     });
     builder.addCase(updateRecipe.rejected, (_, action) => {
@@ -107,7 +107,7 @@ export const recipeSlice = createSlice({
     });
 
     builder.addCase(deleteRecipe.fulfilled, (state, action) => {
-      delete state.recipes[action.payload.id];
+      delete state.recipesById[action.payload.id];
       toast.success("Recipe successfully deleted");
     });
     builder.addCase(deleteRecipe.rejected, (_, action) => {
@@ -123,5 +123,5 @@ export default recipeSlice.reducer;
 // SELECTORS
 // ---------
 
-export const selectRecipes = (state: RootState) => state.recipe.recipes;
-export const selectRecipe = (recipeId: string) => (state: RootState) => state.recipe.recipes[recipeId];
+export const selectRecipes = (state: RootState) => state.recipe.recipesById;
+export const selectRecipe = (recipeId: string) => (state: RootState) => state.recipe.recipesById[recipeId];
