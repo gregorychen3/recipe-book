@@ -36,37 +36,39 @@ export default apiClient;
 export const useApi = <R>(
   method: Method,
   url: string,
-  data?: any,
   config?: AxiosRequestConfig
-): (() => readonly [Promise<AxiosResponse<R>>, () => void]) => {
-  return useCallback(() => {
-    const canceler = new AbortController();
-    const configWithCancel = { ...config, signal: canceler.signal };
+): ((data?: any) => readonly [Promise<AxiosResponse<R>>, () => void]) => {
+  return useCallback(
+    (data?: any) => {
+      const canceler = new AbortController();
+      const configWithCancel = { ...config, signal: canceler.signal };
 
-    switch (method) {
-      case "get":
-      case "GET":
-        return [axios.get(url, configWithCancel), canceler.abort] as const;
-      case "delete":
-      case "DELETE":
-        return [axios.delete(url, configWithCancel), canceler.abort] as const;
-      case "head":
-      case "HEAD":
-        return [axios.head(url, configWithCancel), canceler.abort] as const;
-      case "options":
-      case "OPTIONS":
-        return [axios.options(url, configWithCancel), canceler.abort] as const;
-      case "post":
-      case "POST":
-        return [axios.post(url, data, configWithCancel), canceler.abort] as const;
-      case "put":
-      case "PUT":
-        return [axios.put(url, data, configWithCancel), canceler.abort] as const;
-      case "patch":
-      case "PATCH":
-        return [axios.patch(url, data, configWithCancel), canceler.abort] as const;
-      default:
-        return [Promise.reject(new Error(`Unsupported method ${method}`)), canceler.abort] as const;
-    }
-  }, [method, url, data, config]);
+      switch (method) {
+        case "get":
+        case "GET":
+          return [axios.get(url, configWithCancel), canceler.abort] as const;
+        case "delete":
+        case "DELETE":
+          return [axios.delete(url, configWithCancel), canceler.abort] as const;
+        case "head":
+        case "HEAD":
+          return [axios.head(url, configWithCancel), canceler.abort] as const;
+        case "options":
+        case "OPTIONS":
+          return [axios.options(url, configWithCancel), canceler.abort] as const;
+        case "post":
+        case "POST":
+          return [axios.post(url, data, configWithCancel), canceler.abort] as const;
+        case "put":
+        case "PUT":
+          return [axios.put(url, data, configWithCancel), canceler.abort] as const;
+        case "patch":
+        case "PATCH":
+          return [axios.patch(url, data, configWithCancel), canceler.abort] as const;
+        default:
+          return [Promise.reject(new Error(`Unsupported method ${method}`)), canceler.abort] as const;
+      }
+    },
+    [method, url, config]
+  );
 };
