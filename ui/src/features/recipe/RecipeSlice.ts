@@ -64,10 +64,8 @@ export const recipeSlice = createSlice({
   name: "recipe",
   initialState,
   reducers: {
-    putRecipes: (state, { payload }: PayloadAction<IRecipeModel[]>) => {
-      payload.forEach((r) => {
-        state.recipesById[r.id] = r;
-      });
+    putRecipe: (state, { payload }: PayloadAction<IRecipeModel>) => {
+      state.recipesById[payload.id] = payload;
     },
   },
   extraReducers: (builder) => {
@@ -116,7 +114,7 @@ export const recipeSlice = createSlice({
   },
 });
 
-export const { putRecipes } = recipeSlice.actions;
+export const { putRecipe } = recipeSlice.actions;
 export default recipeSlice.reducer;
 
 //
