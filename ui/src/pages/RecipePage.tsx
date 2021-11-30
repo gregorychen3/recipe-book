@@ -1,23 +1,27 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
+import { IRecipeModel } from "../../../src/db/recipe";
 import DeleteRecipeDialog from "../features/recipe/DeleteRecipeDialog";
 import Recipe from "../features/recipe/Recipe";
 import RecipeHeader from "../features/recipe/RecipeHeader";
-import { fetchRecipe, selectRecipe } from "../features/recipe/RecipeSlice";
+import { putRecipe, selectRecipe } from "../features/recipe/RecipeSlice";
+import { useApi } from "../hooks/useApi";
 
 export default function RecipePage() {
   const d = useDispatch();
-  const history = useHistory();
+  const h = useHistory();
 
   const [deleteDialogData, setDeleteDialogData] = useState<string | undefined>(undefined);
 
   const { recipeId } = useParams<{ recipeId: string }>();
   const recipe = useSelector(selectRecipe(recipeId));
 
+  const getRecipe = useApi<IRecipeModel>("GET", `/api/recipes/${recipeId}`);
   useEffect(() => {
-    !recipe && d(fetchRecipe(recipeId));
-  }, [recipe, recipeId, d]);
+    const [call] = getRecipe();
+    call.then((resp) => d(putRecipe(resp.data)));
+  }, [getRecipe, d]);
 
   if (!recipe) {
     return null;
@@ -25,7 +29,7 @@ export default function RecipePage() {
 
   const handleShowDeleteDialog = () => setDeleteDialogData(recipe.id);
   const handleCloseDeleteDialog = () => setDeleteDialogData(undefined);
-  const handleEditClicked = () => history.push(`/recipes/${recipeId}/edit`);
+  const handleEditClicked = () => h.push(`/recipes/${recipeId}/edit`);
 
   return (
     <>

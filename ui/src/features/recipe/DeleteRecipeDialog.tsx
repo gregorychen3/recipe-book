@@ -1,32 +1,42 @@
-import { Box } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import TextField from "@material-ui/core/TextField";
+import { Box } from "@mui/material";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import TextField from "@mui/material/TextField";
+import { useSnackbar } from "notistack";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { deleteRecipe, selectRecipe } from "./RecipeSlice";
+import { removeRecipe, selectRecipe } from "../../features/recipe/RecipeSlice";
+import { useApi } from "../../hooks/useApi";
 
 export interface DeleteRecipeDialogProps {
   recipeId?: string;
   onClose: () => void;
 }
 export default function DeleteRecipeDialog({ recipeId, onClose }: DeleteRecipeDialogProps) {
-  const history = useHistory();
+  const d = useDispatch();
+  const h = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
+
   const recipe = useSelector(selectRecipe(recipeId ?? ""));
   const recipeName = recipe ? recipe.name : "";
 
-  const d = useDispatch();
+  const deleteRecipe = useApi<{ id: string }>("DELETE", `/api/recipes/${recipeId}`);
   const handleDelete = () => {
     if (!recipeId) {
       return;
     }
-    d(deleteRecipe({ recipeId, history }));
-    onClose();
-    history.push("/recipes");
+
+    const [call] = deleteRecipe();
+    call.then((resp) => {
+      enqueueSnackbar(`Successfully deleted recipe ${resp.data.id}`, { variant: "success" });
+      d(removeRecipe(resp.data.id));
+      onClose();
+      h.push("/recipes");
+    });
   };
 
   return (

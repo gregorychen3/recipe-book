@@ -1,24 +1,37 @@
-import React, { useState } from "react";
+import { useSnackbar } from "notistack";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { IRecipeModel } from "../../../src/db/recipe";
 import { IRecipe } from "../../../src/types";
 import RecipeForm from "../features/recipe/RecipeForm";
 import RecipeHeader from "../features/recipe/RecipeHeader";
-import { createRecipe } from "../features/recipe/RecipeSlice";
+import { putRecipe } from "../features/recipe/RecipeSlice";
+import { useApi } from "../hooks/useApi";
 
 export default function RecipePage() {
   const d = useDispatch();
-  const history = useHistory();
+  const h = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
 
   const [headerText, setHeaderText] = useState("");
 
   const handleRecipeEdited = (recipe: IRecipe) => setHeaderText(recipe.name);
-  const handleRecipeSaved = (recipe: IRecipe) => d(createRecipe({ recipe, history }));
+
+  const createRecipe = useApi<IRecipeModel>("POST", `/api/recipes`);
+  const handleSubmit = (recipe: IRecipe) => {
+    const [call] = createRecipe(recipe);
+    call.then((resp) => {
+      enqueueSnackbar(`Successfully created recipe ${resp.data.name}`, { variant: "success" });
+      d(putRecipe(resp.data));
+      h.push(`/recipes/${resp.data.id}`);
+    });
+  };
 
   return (
     <>
       <RecipeHeader title={headerText} />
-      <RecipeForm onChange={handleRecipeEdited} onSubmit={handleRecipeSaved} />
+      <RecipeForm onChange={handleRecipeEdited} onSubmit={handleSubmit} />
     </>
   );
 }

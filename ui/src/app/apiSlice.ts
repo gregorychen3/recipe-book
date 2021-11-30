@@ -1,77 +1,45 @@
-import { createSlice } from "@reduxjs/toolkit";
-import _ from "lodash";
-import { createRecipe, deleteRecipe, fetchRecipe, fetchRecipes, updateRecipe } from "../features/recipe/RecipeSlice";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Method } from "axios";
 import { RootState } from "./store";
+
+let nextRequestId = 0;
+export const getNextRequestId = () => nextRequestId++;
 
 //
 // SLICE
 // -----
 
-interface State {
-  inFlightRequests: { [requestId: string]: {} };
+export interface ActiveRequest {
+  id: number;
+  method: Method;
+  url: string;
+  data?: any;
 }
-const initialState: State = { inFlightRequests: {} };
+
+interface State {
+  requestsById: { [key: number]: ActiveRequest };
+}
+
+const initialState: State = { requestsById: {} };
+
 export const apiSlice = createSlice({
   name: "api",
   initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(createRecipe.pending, (state, action) => {
-      state.inFlightRequests[action.meta.requestId] = {};
-    });
-    builder.addCase(createRecipe.fulfilled, (state, action) => {
-      delete state.inFlightRequests[action.meta.requestId];
-    });
-    builder.addCase(createRecipe.rejected, (state, action) => {
-      delete state.inFlightRequests[action.meta.requestId];
-    });
-
-    builder.addCase(fetchRecipes.pending, (state, action) => {
-      state.inFlightRequests[action.meta.requestId] = {};
-    });
-    builder.addCase(fetchRecipes.fulfilled, (state, action) => {
-      delete state.inFlightRequests[action.meta.requestId];
-    });
-    builder.addCase(fetchRecipes.rejected, (state, action) => {
-      delete state.inFlightRequests[action.meta.requestId];
-    });
-
-    builder.addCase(fetchRecipe.pending, (state, action) => {
-      state.inFlightRequests[action.meta.requestId] = {};
-    });
-    builder.addCase(fetchRecipe.fulfilled, (state, action) => {
-      delete state.inFlightRequests[action.meta.requestId];
-    });
-    builder.addCase(fetchRecipe.rejected, (state, action) => {
-      delete state.inFlightRequests[action.meta.requestId];
-    });
-
-    builder.addCase(updateRecipe.pending, (state, action) => {
-      state.inFlightRequests[action.meta.requestId] = {};
-    });
-    builder.addCase(updateRecipe.fulfilled, (state, action) => {
-      delete state.inFlightRequests[action.meta.requestId];
-    });
-    builder.addCase(updateRecipe.rejected, (state, action) => {
-      delete state.inFlightRequests[action.meta.requestId];
-    });
-
-    builder.addCase(deleteRecipe.pending, (state, action) => {
-      state.inFlightRequests[action.meta.requestId] = {};
-    });
-    builder.addCase(deleteRecipe.fulfilled, (state, action) => {
-      delete state.inFlightRequests[action.meta.requestId];
-    });
-    builder.addCase(deleteRecipe.rejected, (state, action) => {
-      delete state.inFlightRequests[action.meta.requestId];
-    });
+  reducers: {
+    putRequest: (state, { payload }: PayloadAction<ActiveRequest>) => {
+      state.requestsById[payload.id] = payload;
+    },
+    removeRequest: (state, { payload }: PayloadAction<{ id: number }>) => {
+      delete state.requestsById[payload.id];
+    },
   },
 });
 
+export const { putRequest, removeRequest } = apiSlice.actions;
 export default apiSlice.reducer;
 
 //
 // SELECTORS
 // ---------
 
-export const selectShowLoading = (state: RootState) => !_.isEmpty(state.api.inFlightRequests);
+export const selectActiveRequests = (state: RootState) => state.api.requestsById;

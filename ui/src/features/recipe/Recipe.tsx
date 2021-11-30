@@ -1,6 +1,6 @@
-import { Grid, InputAdornment, Link, List, ListItem, ListItemText, TextField } from "@material-ui/core";
-import LanguageIcon from "@material-ui/icons/Language";
-import RestaurantIcon from "@material-ui/icons/Restaurant";
+import LanguageIcon from "@mui/icons-material/Language";
+import RestaurantIcon from "@mui/icons-material/Restaurant";
+import { Grid, InputAdornment, Link, List, ListItem, ListItemText, TextField } from "@mui/material";
 import { LabelDivider } from "mui-label-divider";
 import React, { useEffect, useState } from "react";
 import { IRecipe } from "../../../../src/types";
@@ -23,7 +23,7 @@ export default function Recipe({ recipe }: Props) {
       <Grid container spacing={2} alignItems="flex-start">
         <Grid container item sm={12} md={6} spacing={2}>
           <Grid item xs={12}>
-            <LabelDivider>INGREDIENTS</LabelDivider>
+            <LabelDivider label="INGREDIENTS" />
           </Grid>
           <Grid item xs={6}>
             <TextField label="Servings" type="number" value={servings} onChange={handleServingsChanged} />
@@ -39,7 +39,7 @@ export default function Recipe({ recipe }: Props) {
           </Grid>
         </Grid>
         <Grid item sm={12} md={6}>
-          <LabelDivider>INSTRUCTIONS</LabelDivider>
+          <LabelDivider label="INSTRUCTIONS" />
           <List component="ol" dense>
             {recipe.instructions.map((i, idx) => (
               <ListItem key={idx}>
@@ -51,7 +51,7 @@ export default function Recipe({ recipe }: Props) {
 
         <Grid container item sm={12} md={6} spacing={2}>
           <Grid item xs={12}>
-            <LabelDivider>METADATA</LabelDivider>
+            <LabelDivider label="METADATA" />
           </Grid>
           <Grid item xs={6}>
             <TextField
@@ -86,7 +86,7 @@ export default function Recipe({ recipe }: Props) {
         </Grid>
 
         <Grid item xs={12} sm={12} md={6}>
-          <LabelDivider>SOURCES</LabelDivider>
+          <LabelDivider label="SOURCES" />
           <List dense component="nav">
             {recipe.sources.map((s, idx) => (
               <ListItem key={idx}>

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { clearAuthorizationHeader, setAuthorizationHeader } from "../apiClient";
+import { clearAuthHeader, setAuthHeader } from "../hooks/useApi";
 import { RootState } from "./store";
 
 //
@@ -16,11 +16,11 @@ export const userSlice = createSlice({
   reducers: {
     loadUserTokenId: (state, action: PayloadAction<string>) => {
       state.userTokenId = action.payload;
-      setAuthorizationHeader(action.payload);
+      setAuthHeader(action.payload);
     },
     clearUserTokenId: (state) => {
       state.userTokenId = undefined;
-      clearAuthorizationHeader();
+      clearAuthHeader();
     },
   },
 });

@@ -1,9 +1,9 @@
-import { ThemeProvider } from "@material-ui/core";
+import { ThemeProvider } from "@mui/material/styles";
+import { SnackbarProvider } from "notistack";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import "react-toastify/dist/ReactToastify.css";
 import App from "./App";
 import store from "./app/store";
 import * as serviceWorker from "./serviceWorker";
@@ -14,7 +14,9 @@ ReactDOM.render(
     <BrowserRouter>
       <Provider store={store}>
         <ThemeProvider theme={theme}>
-          <App />
+          <SnackbarProvider maxSnack={3} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
+            <App />
+          </SnackbarProvider>
         </ThemeProvider>
       </Provider>
     </BrowserRouter>
