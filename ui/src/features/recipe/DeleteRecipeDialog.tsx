@@ -6,10 +6,11 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
+import { useSnackbar } from "notistack";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { useApi } from "../../hooks/useApi";
 import { removeRecipe, selectRecipe } from "../../features/recipe/RecipeSlice";
+import { useApi } from "../../hooks/useApi";
 
 export interface DeleteRecipeDialogProps {
   recipeId?: string;
@@ -18,6 +19,8 @@ export interface DeleteRecipeDialogProps {
 export default function DeleteRecipeDialog({ recipeId, onClose }: DeleteRecipeDialogProps) {
   const d = useDispatch();
   const h = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
+
   const recipe = useSelector(selectRecipe(recipeId ?? ""));
   const recipeName = recipe ? recipe.name : "";
 
@@ -28,9 +31,12 @@ export default function DeleteRecipeDialog({ recipeId, onClose }: DeleteRecipeDi
     }
 
     const [call] = deleteRecipe();
-    call.then((resp) => d(removeRecipe(resp.data.id)));
-    onClose();
-    h.push("/recipes");
+    call.then((resp) => {
+      enqueueSnackbar(`Successfully deleted recipe ${resp.data.id}`, { variant: "success" });
+      d(removeRecipe(resp.data.id));
+      onClose();
+      h.push("/recipes");
+    });
   };
 
   return (

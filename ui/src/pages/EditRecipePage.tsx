@@ -1,16 +1,18 @@
+import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { IRecipeModel } from "../../../src/db/recipe";
 import { IRecipe } from "../../../src/types";
-import { useApi } from "../hooks/useApi";
 import RecipeForm from "../features/recipe/RecipeForm";
 import RecipeHeader from "../features/recipe/RecipeHeader";
 import { putRecipe, selectRecipe } from "../features/recipe/RecipeSlice";
+import { useApi } from "../hooks/useApi";
 
 export default function EditRecipePage() {
   const d = useDispatch();
   const h = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
 
   const [headerText, setHeaderText] = useState("");
 
@@ -35,9 +37,10 @@ export default function EditRecipePage() {
     return null;
   }
 
-  const handleRecipeSaved = (recipe: IRecipe) => {
+  const handleSubmit = (recipe: IRecipe) => {
     const [call] = updateRecipe(recipe);
     call.then((resp) => {
+      enqueueSnackbar(`Successfully updated recipe ${resp.data.name}`, { variant: "success" });
       d(putRecipe(resp.data));
       h.push(`/recipes/${recipeId}`);
     });
@@ -48,7 +51,7 @@ export default function EditRecipePage() {
   return (
     <>
       <RecipeHeader title={headerText} />
-      <RecipeForm recipe={recipe} onChange={handleRecipeEdited} onSubmit={handleRecipeSaved} />
+      <RecipeForm recipe={recipe} onChange={handleRecipeEdited} onSubmit={handleSubmit} />
     </>
   );
 }
