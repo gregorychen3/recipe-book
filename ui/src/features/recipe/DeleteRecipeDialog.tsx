@@ -8,23 +8,27 @@ import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { deleteRecipe, selectRecipe } from "./RecipeSlice";
+import { useApi } from "../../apiClient";
+import { removeRecipe, selectRecipe } from "../../features/recipe/RecipeSlice";
 
 export interface DeleteRecipeDialogProps {
   recipeId?: string;
   onClose: () => void;
 }
 export default function DeleteRecipeDialog({ recipeId, onClose }: DeleteRecipeDialogProps) {
+  const d = useDispatch();
   const history = useHistory();
   const recipe = useSelector(selectRecipe(recipeId ?? ""));
   const recipeName = recipe ? recipe.name : "";
 
-  const d = useDispatch();
+  const deleteRecipe = useApi<{ id: string }>("DELETE", `/api/recipes/${recipeId}`);
   const handleDelete = () => {
     if (!recipeId) {
       return;
     }
-    d(deleteRecipe({ recipeId, history }));
+
+    const [call] = deleteRecipe();
+    call.then((resp) => d(removeRecipe(resp.data.id)));
     onClose();
     history.push("/recipes");
   };

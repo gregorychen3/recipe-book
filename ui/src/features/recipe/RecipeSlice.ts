@@ -67,6 +67,9 @@ export const recipeSlice = createSlice({
     putRecipe: (state, { payload }: PayloadAction<IRecipeModel>) => {
       state.recipesById[payload.id] = payload;
     },
+    removeRecipe: (state, { payload }: PayloadAction<string>) => {
+      delete state.recipesById[payload];
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(createRecipe.fulfilled, (state, action) => {
@@ -114,7 +117,7 @@ export const recipeSlice = createSlice({
   },
 });
 
-export const { putRecipe } = recipeSlice.actions;
+export const { putRecipe, removeRecipe } = recipeSlice.actions;
 export default recipeSlice.reducer;
 
 //
