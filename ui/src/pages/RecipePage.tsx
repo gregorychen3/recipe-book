@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { IRecipeModel } from "../../../src/db/recipe";
-import { useApi } from "../hooks/useApi";
 import DeleteRecipeDialog from "../features/recipe/DeleteRecipeDialog";
 import Recipe from "../features/recipe/Recipe";
 import RecipeHeader from "../features/recipe/RecipeHeader";
 import { putRecipe, selectRecipe } from "../features/recipe/RecipeSlice";
+import { useApi } from "../hooks/useApi";
 
 export default function RecipePage() {
   const d = useDispatch();

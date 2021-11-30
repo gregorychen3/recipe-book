@@ -1,13 +1,13 @@
+import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { IRecipeModel } from "../../../src/db/recipe";
 import { IRecipe } from "../../../src/types";
-import { useApi } from "../hooks/useApi";
 import RecipeForm from "../features/recipe/RecipeForm";
 import RecipeHeader from "../features/recipe/RecipeHeader";
 import { putRecipe } from "../features/recipe/RecipeSlice";
-import { useSnackbar } from "notistack";
+import { useApi } from "../hooks/useApi";
 
 export default function RecipePage() {
   const d = useDispatch();
