@@ -19,13 +19,18 @@ export const recipeSlice = createSlice({
     putRecipe: (state, { payload }: PayloadAction<IRecipeModel>) => {
       state.recipesById[payload.id] = payload;
     },
+    putRecipes: (state, { payload }: PayloadAction<IRecipeModel[]>) => {
+      payload.forEach((r) => {
+        state.recipesById[r.id] = r;
+      });
+    },
     removeRecipe: (state, { payload }: PayloadAction<string>) => {
       delete state.recipesById[payload];
     },
   },
 });
 
-export const { putRecipe, removeRecipe } = recipeSlice.actions;
+export const { putRecipe, putRecipes, removeRecipe } = recipeSlice.actions;
 export default recipeSlice.reducer;
 
 //
