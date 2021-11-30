@@ -59,6 +59,6 @@ export const useApi = <R>(
 
       return [promise.finally(() => d(removeRequest({ id }))), canceler.abort] as const;
     },
-    [method, url, config]
+    [method, url, config, d]
   );
 };
