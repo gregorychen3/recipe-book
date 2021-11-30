@@ -1,5 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse, Method } from "axios";
 import { useCallback } from "react";
+import { useDispatch } from "react-redux";
+import { getNextRequestId, putRequest, removeRequest } from "../app/apiSlice";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
@@ -11,36 +13,57 @@ export const useApi = <R>(
   url: string,
   config?: AxiosRequestConfig
 ): ((data?: any) => readonly [Promise<AxiosResponse<R>>, () => void]) => {
+  const d = useDispatch();
   return useCallback(
     (data?: any) => {
+      const id = getNextRequestId();
+      d(putRequest({ id, method, url, data }));
+
       const canceler = new AbortController();
       const configWithCancel = { ...config, signal: canceler.signal };
+
+      let promise: Promise<AxiosResponse<R>>;
 
       switch (method) {
         case "get":
         case "GET":
-          return [axios.get(url, configWithCancel), canceler.abort] as const;
+          promise = axios.get(url, configWithCancel);
+          break;
         case "delete":
         case "DELETE":
-          return [axios.delete(url, configWithCancel), canceler.abort] as const;
+          promise = axios.delete(url, configWithCancel);
+          break;
         case "head":
         case "HEAD":
-          return [axios.head(url, configWithCancel), canceler.abort] as const;
+          promise = axios.head(url, configWithCancel);
+          break;
         case "options":
         case "OPTIONS":
-          return [axios.options(url, configWithCancel), canceler.abort] as const;
+          promise = axios.options(url, configWithCancel);
+          break;
         case "post":
         case "POST":
-          return [axios.post(url, data, configWithCancel), canceler.abort] as const;
+          promise = axios.post(url, data, configWithCancel);
+          break;
         case "put":
         case "PUT":
-          return [axios.put(url, data, configWithCancel), canceler.abort] as const;
+          promise = axios.put(url, data, configWithCancel);
+          break;
         case "patch":
         case "PATCH":
-          return [axios.patch(url, data, configWithCancel), canceler.abort] as const;
+          promise = axios.patch(url, data, configWithCancel);
+          break;
         default:
           return [Promise.reject(new Error(`Unsupported method ${method}`)), canceler.abort] as const;
       }
+
+      return [
+        promise.then((resp) => {
+          d(removeRequest({ id }));
+          return resp;
+        }),
+        canceler.abort,
+      ] as const;
     },
     [method, url, config]
   );

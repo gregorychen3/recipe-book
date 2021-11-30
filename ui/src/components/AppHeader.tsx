@@ -8,10 +8,11 @@ import IconButton from "@mui/material/IconButton";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography, { TypographyProps } from "@mui/material/Typography";
+import _ from "lodash";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link as RouterLink, useHistory } from "react-router-dom";
-import { selectShowLoading } from "../app/apiSlice";
+import { selectActiveRequests } from "../app/apiSlice";
 import { GroupBy } from "../pages/RecipesPage";
 import OauthAvatar from "./OauthAvatar";
 
@@ -31,7 +32,7 @@ export default function AppHeader() {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const isLoading = useSelector(selectShowLoading);
+  const isLoading = !_.isEmpty(useSelector(selectActiveRequests));
 
   const handleMenu = (e: React.MouseEvent<HTMLElement>) => setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);

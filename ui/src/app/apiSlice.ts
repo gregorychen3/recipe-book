@@ -1,25 +1,45 @@
-import { createSlice } from "@reduxjs/toolkit";
-import _ from "lodash";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Method } from "axios";
 import { RootState } from "./store";
+
+let nextRequestId = 0;
+export const getNextRequestId = () => nextRequestId++;
 
 //
 // SLICE
 // -----
 
-interface State {
-  inFlightRequests: { [requestId: string]: {} };
+export interface ActiveRequest {
+  id: number;
+  method: Method;
+  url: string;
+  data?: any;
 }
-const initialState: State = { inFlightRequests: {} };
+
+interface State {
+  requestsById: { [key: number]: ActiveRequest };
+}
+
+const initialState: State = { requestsById: {} };
+
 export const apiSlice = createSlice({
   name: "api",
   initialState,
-  reducers: {},
+  reducers: {
+    putRequest: (state, { payload }: PayloadAction<ActiveRequest>) => {
+      state.requestsById[payload.id] = payload;
+    },
+    removeRequest: (state, { payload }: PayloadAction<{ id: number }>) => {
+      delete state.requestsById[payload.id];
+    },
+  },
 });
 
+export const { putRequest, removeRequest } = apiSlice.actions;
 export default apiSlice.reducer;
 
 //
 // SELECTORS
 // ---------
 
-export const selectShowLoading = (state: RootState) => !_.isEmpty(state.api.inFlightRequests);
+export const selectActiveRequests = (state: RootState) => state.api.requestsById;
