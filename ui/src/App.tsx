@@ -12,49 +12,40 @@ import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import RecipePage from "./pages/RecipePage";
 import RecipesPage from "./pages/RecipesPage";
 
-/*
-const useStyles = makeStyles((theme) => ({
-  toast: getThemedToastClass(theme), // TODO
-}));
-*/
-
 export default function App() {
   return (
-    <>
-      {/*<ToastContainer toastClassName={classes.toast} />*/}
-      <Box display="flex">
-        <CssBaseline />
-        <AppHeader />
-        <Box component="main" sx={{ flexGrow: 1, height: "100vh", overflow: "auto" }}>
-          <Toolbar />
-          <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
-            <Switch>
-              <Route path="/recipes/create">
-                <CreateRecipePage />
-              </Route>
-              <Route path="/recipes/:recipeId/edit">
-                <EditRecipePage />
-              </Route>
-              <Route path="/recipes/:recipeId">
-                <RecipePage />
-              </Route>
-              <Route path="/recipes">
-                <RecipesPage />
-              </Route>
-              <Route path="/about">
-                <AboutPage />
-              </Route>
-              <Route path="/privacy-policy">
-                <PrivacyPolicyPage />
-              </Route>
-              <Route path="/">
-                <Redirect to="/recipes" />
-              </Route>
-            </Switch>
-            <Grid container spacing={3}></Grid>
-          </Container>
-        </Box>
+    <Box display="flex">
+      <CssBaseline />
+      <AppHeader />
+      <Box component="main" sx={{ flexGrow: 1, height: "100vh", overflow: "auto" }}>
+        <Toolbar />
+        <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
+          <Switch>
+            <Route path="/recipes/create">
+              <CreateRecipePage />
+            </Route>
+            <Route path="/recipes/:recipeId/edit">
+              <EditRecipePage />
+            </Route>
+            <Route path="/recipes/:recipeId">
+              <RecipePage />
+            </Route>
+            <Route path="/recipes">
+              <RecipesPage />
+            </Route>
+            <Route path="/about">
+              <AboutPage />
+            </Route>
+            <Route path="/privacy-policy">
+              <PrivacyPolicyPage />
+            </Route>
+            <Route path="/">
+              <Redirect to="/recipes" />
+            </Route>
+          </Switch>
+          <Grid container spacing={3}></Grid>
+        </Container>
       </Box>
-    </>
+    </Box>
   );
 }

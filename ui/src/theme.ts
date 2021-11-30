@@ -1,4 +1,4 @@
-import { createTheme, Theme } from "@mui/material";
+import { createTheme } from "@mui/material";
 
 export default createTheme({
   palette: {
@@ -11,23 +11,3 @@ export default createTheme({
     mode: "dark",
   },
 });
-
-export const getThemedToastClass = (theme: Theme) => {
-  return {
-    "&.Toastify__toast--info": {
-      backgroundColor: theme.palette.primary.main,
-    },
-    "&.Toastify__toast--success": {
-      backgroundColor: theme.palette.success.main,
-    },
-    "&.Toastify__toast--warning": {
-      backgroundColor: theme.palette.warning.main,
-    },
-    "&.Toastify__toast--error": {
-      backgroundColor: theme.palette.error.main,
-    },
-    "&.Toastify__toast--default": {
-      backgroundColor: theme.palette.background.paper,
-    },
-  };
-};
