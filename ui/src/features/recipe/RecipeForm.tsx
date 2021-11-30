@@ -4,7 +4,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import { styled } from "@mui/material/styles";
 import { Field, FieldArray, FieldArrayRenderProps, Form, Formik, FormikProps } from "formik";
-import { Select, TextField } from "formik-material-ui";
+import { Select, TextField } from "formik-mui";
 import { LabelDivider } from "mui-label-divider";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
