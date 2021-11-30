@@ -116,7 +116,7 @@ export default function RecipeForm({ recipe, onSubmit, onChange }: Props) {
 const InnerForm = (props: { onChange?: (recipe: IRecipe) => void } & FormikProps<Values>) => {
   const { onChange, values } = props;
   const recipes = useSelector(selectRecipes);
-  const cuisines = getCuisines(recipes);
+  const cuisines = getCuisines(Object.values(recipes));
 
   useEffect(() => {
     onChange && onChange(recipeFromValues(values));
