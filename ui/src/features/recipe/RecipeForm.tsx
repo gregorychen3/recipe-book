@@ -1,6 +1,4 @@
 import { Grid, GridProps } from "@mui/material";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import { styled } from "@mui/material/styles";
 import { Field, FieldArray, FieldArrayRenderProps, Form, Formik, FormikProps } from "formik";
@@ -163,28 +161,22 @@ const InnerForm = (props: { onChange?: (recipe: IRecipe) => void } & FormikProps
           <Field component={TextField} name="servings" type="number" label="Servings" fullWidth />
         </Grid>
         <Grid item xs={4}>
-          <FormControl fullWidth>
-            <InputLabel htmlFor="course">Course</InputLabel>
-            <Field component={Select} name="course" inputProps={{ id: "course" }}>
-              {CourseValues.map((c) => (
-                <MenuItem value={c} key={c}>
-                  {c}
-                </MenuItem>
-              ))}
-            </Field>
-          </FormControl>
+          <Field component={Select} formControl={{ sx: { width: "100%" } }} id="course" name="course" label="Course">
+            {CourseValues.map((c) => (
+              <MenuItem value={c} key={c}>
+                {c}
+              </MenuItem>
+            ))}
+          </Field>
         </Grid>
         <Grid item xs={4}>
-          <FormControl fullWidth>
-            <InputLabel htmlFor="cuisine">Cuisine</InputLabel>
-            <Field component={Select} name="cuisine" inputProps={{ id: "cuisine" }}>
-              {cuisines.map((c) => (
-                <MenuItem value={c} key={c}>
-                  {c}
-                </MenuItem>
-              ))}
-            </Field>
-          </FormControl>
+          <Field component={Select} formControl={{ sx: { width: "100%" } }} id="cuisine" name="cuisine" label="Cuisine">
+            {cuisines.map((c) => (
+              <MenuItem value={c} key={c}>
+                {c}
+              </MenuItem>
+            ))}
+          </Field>
         </Grid>
 
         <SectionGridItem item xs={12}>
