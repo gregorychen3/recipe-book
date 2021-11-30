@@ -36,7 +36,6 @@ export default function EditRecipePage() {
   }
 
   const handleRecipeSaved = (recipe: IRecipe) => {
-    //d(updateRecipe({ recipeId, recipe, history })
     const [call] = updateRecipe(recipe);
     call.then((resp) => {
       d(putRecipe(resp.data));
