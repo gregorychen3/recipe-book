@@ -1,4 +1,5 @@
 import { ThemeProvider } from "@mui/material/styles";
+import { SnackbarProvider } from "notistack";
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
@@ -16,7 +17,9 @@ root.render(
     <BrowserRouter>
       <Provider store={store}>
         <ThemeProvider theme={theme}>
-          <App />
+          <SnackbarProvider maxSnack={3} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
+            <App />
+          </SnackbarProvider>
         </ThemeProvider>
       </Provider>
     </BrowserRouter>
