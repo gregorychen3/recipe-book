@@ -19,6 +19,8 @@
     "@types/react-dom": "^18.0.9",
     "@types/react-router-dom": "^5.3.3",
     "axios": "^1.2.1",
+    "formik": "^2.2.9",
+    "formik-mui": "^5.0.0-alpha.0",
     "lodash": "^4.17.21",
     "mui-label-divider": "^4.0.2",
     "notistack": "^2.0.8",
@@ -29,7 +31,8 @@
     "react-router-dom": "^5.3.4",
     "react-scripts": "5.0.1",
     "typescript": "^4.9.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",
