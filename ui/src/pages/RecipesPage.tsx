@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { IRecipeModel } from "../../../src/db/recipe";
 import { useApi } from "../app/hooks";
-//import RecipeList from "../features/recipe/RecipeList";
+import RecipeList from "../features/recipe/RecipeList";
 import { putRecipes } from "../features/recipe/recipeSlice";
 
 export const GroupByValues = ["course", "cuisine", "alphabetical"] as const;
@@ -31,6 +31,5 @@ export default function RecipesPage() {
     }
   };
 
-  return null;
-  //  return <RecipeList groupBy={getGroupBy()} />;
+  return <RecipeList groupBy={getGroupBy()} />;
 }

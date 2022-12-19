@@ -19,6 +19,7 @@
     "@types/react-router-dom": "^5.3.3",
     "axios": "^1.2.1",
     "lodash": "^4.17.21",
+    "mui-label-divider": "^4.0.2",
     "notistack": "^2.0.8",
     "prettier": "^2.8.1",
     "react": "^18.2.0",
