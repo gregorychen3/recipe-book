@@ -1,35 +1,57 @@
-import React from "react";
-import { Counter } from "./features/counter/Counter";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import CssBaseline from "@mui/material/CssBaseline";
+import Grid from "@mui/material/Grid";
+import Toolbar from "@mui/material/Toolbar";
+import { Redirect, Route, Switch } from "react-router-dom";
+//import AppHeader from "./components/AppHeader";
+//import AboutPage from "./pages/AboutPage";
+//import CreateRecipePage from "./pages/CreateRecipePage";
+//import EditRecipePage from "./pages/EditRecipePage";
+//import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+//import RecipePage from "./pages/RecipePage";
+//import RecipesPage from "./pages/RecipesPage";
 
-function App() {
+export function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a className="App-link" href="https://reactjs.org/" target="_blank" rel="noopener noreferrer">
-            React
-          </a>
-          <span>, </span>
-          <a className="App-link" href="https://redux.js.org/" target="_blank" rel="noopener noreferrer">
-            Redux
-          </a>
-          <span>, </span>
-          <a className="App-link" href="https://redux-toolkit.js.org/" target="_blank" rel="noopener noreferrer">
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a className="App-link" href="https://react-redux.js.org/" target="_blank" rel="noopener noreferrer">
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <Box display="flex">
+      <CssBaseline />
+      APP
+      {/**
+       * 
+      <AppHeader />
+       */}
+      <Box component="main" sx={{ flexGrow: 1, height: "100vh", overflow: "auto" }}>
+        <Toolbar />
+        <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
+          <Switch>
+            {/**
+            <Route path="/recipes/create">
+              <CreateRecipePage />
+            </Route>
+            <Route path="/recipes/:recipeId/edit">
+              <EditRecipePage />
+            </Route>
+            <Route path="/recipes/:recipeId">
+              <RecipePage />
+            </Route>
+            <Route path="/recipes">
+              <RecipesPage />
+            </Route>
+            <Route path="/about">
+              <AboutPage />
+            </Route>
+            <Route path="/privacy-policy">
+              <PrivacyPolicyPage />
+            </Route>
+            <Route path="/">
+              <Redirect to="/recipes" />
+            </Route>
+             */}
+          </Switch>
+          <Grid container spacing={3}></Grid>
+        </Container>
+      </Box>
+    </Box>
   );
 }
-
-export default App;
