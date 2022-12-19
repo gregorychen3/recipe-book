@@ -9,8 +9,8 @@ import TextField from "@mui/material/TextField";
 import { useSnackbar } from "notistack";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { removeRecipe, selectRecipe } from "../../features/recipe/recipeSlice";
 import { useApi } from "../../app/hooks";
+import { removeRecipe, selectRecipe } from "../../features/recipe/recipeSlice";
 
 export interface DeleteRecipeDialogProps {
   recipeId?: string;
