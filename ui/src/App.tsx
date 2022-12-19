@@ -4,6 +4,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Toolbar from "@mui/material/Toolbar";
 import { Redirect, Route, Switch } from "react-router-dom";
+import AppHeader from "./components/AppHeader";
 //import AppHeader from "./components/AppHeader";
 //import AboutPage from "./pages/AboutPage";
 //import CreateRecipePage from "./pages/CreateRecipePage";
@@ -16,11 +17,7 @@ export function App() {
   return (
     <Box display="flex">
       <CssBaseline />
-      APP
-      {/**
-       * 
       <AppHeader />
-       */}
       <Box component="main" sx={{ flexGrow: 1, height: "100vh", overflow: "auto" }}>
         <Toolbar />
         <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
