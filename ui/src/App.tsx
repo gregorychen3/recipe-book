@@ -5,6 +5,7 @@ import Grid from "@mui/material/Grid";
 import Toolbar from "@mui/material/Toolbar";
 import { Redirect, Route, Switch } from "react-router-dom";
 import AppHeader from "./components/AppHeader";
+import AboutPage from "./pages/AboutPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 //import AppHeader from "./components/AppHeader";
 //import AboutPage from "./pages/AboutPage";
@@ -36,10 +37,10 @@ export function App() {
             <Route path="/recipes">
               <RecipesPage />
             </Route>
+             */}
             <Route path="/about">
               <AboutPage />
             </Route>
-             */}
             <Route path="/privacy-policy">
               <PrivacyPolicyPage />
             </Route>
