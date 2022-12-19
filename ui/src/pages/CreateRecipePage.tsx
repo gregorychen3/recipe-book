@@ -5,11 +5,11 @@ import { useHistory } from "react-router-dom";
 import { IRecipeModel } from "../../../src/db/recipe";
 import { IRecipe } from "../../../src/types";
 import { useApi } from "../app/hooks";
-import RecipeForm from "../features/recipe/RecipeForm";
-import RecipeHeader from "../features/recipe/RecipeHeader";
+import { RecipeForm } from "../features/recipe/RecipeForm";
+import { RecipeHeader } from "../features/recipe/RecipeHeader";
 import { putRecipe } from "../features/recipe/recipeSlice";
 
-export default function RecipePage() {
+export function CreateRecipePage() {
   const d = useDispatch();
   const h = useHistory();
   const { enqueueSnackbar } = useSnackbar();

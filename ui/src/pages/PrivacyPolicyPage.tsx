@@ -1,4 +1,4 @@
-export default function PrivacyPolicyPage() {
+export function PrivacyPolicyPage() {
   return (
     <div>
       <div id="md_en" data-target="out_en">

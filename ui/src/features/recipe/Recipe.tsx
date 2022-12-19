@@ -22,7 +22,7 @@ interface Props {
   recipe: IRecipe;
 }
 
-export default function Recipe({ recipe }: Props) {
+export function Recipe({ recipe }: Props) {
   const [servings, setServings] = useState(recipe.servings);
   useEffect(() => {
     setServings(recipe.servings);

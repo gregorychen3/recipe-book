@@ -95,7 +95,7 @@ interface Props {
   onSubmit: (recipe: IRecipe) => void;
   onChange?: (recipe: IRecipe) => void;
 }
-export default function RecipeForm({ recipe, onSubmit, onChange }: Props) {
+export function RecipeForm({ recipe, onSubmit, onChange }: Props) {
   return (
     <Formik
       initialValues={recipe ? valuesFromRecipe(recipe) : defaultValues}

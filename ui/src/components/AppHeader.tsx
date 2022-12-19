@@ -26,7 +26,7 @@ const AppTitle = styled(Typography)<TypographyProps>(() => ({
   cursor: "pointer",
 }));
 
-export default function AppHeader() {
+export function AppHeader() {
   const h = useHistory();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

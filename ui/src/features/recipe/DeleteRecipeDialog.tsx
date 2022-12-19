@@ -16,7 +16,7 @@ export interface DeleteRecipeDialogProps {
   recipeId?: string;
   onClose: () => void;
 }
-export default function DeleteRecipeDialog({ recipeId, onClose }: DeleteRecipeDialogProps) {
+export function DeleteRecipeDialog({ recipeId, onClose }: DeleteRecipeDialogProps) {
   const d = useDispatch();
   const h = useHistory();
   const { enqueueSnackbar } = useSnackbar();

@@ -9,7 +9,7 @@ const DisabledListItem = styled("li")(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function AboutPage() {
+export function AboutPage() {
   return (
     <>
       <img src={imagePath} alt="gregandally" style={{ height: "100%", width: "100%" }} />

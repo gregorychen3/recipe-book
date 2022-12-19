@@ -9,7 +9,7 @@ interface Props {
   disableSave: boolean;
 }
 
-export default function ActionMenu(props: Props & ButtonGroupProps) {
+export function ActionMenu(props: Props & ButtonGroupProps) {
   const { onDelete, onEdit, disableSave, ...buttonGroupProps } = props;
 
   return (

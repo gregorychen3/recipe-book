@@ -74,7 +74,7 @@ const ByCourseList = ({ recipes }: { recipes: IRecipeModel[] }) => {
 interface Props {
   groupBy: GroupBy;
 }
-export default function RecipeList({ groupBy }: Props) {
+export function RecipeList({ groupBy }: Props) {
   const recipes = _.sortBy(useSelector(selectRecipes), (r) => r.name);
 
   switch (groupBy) {

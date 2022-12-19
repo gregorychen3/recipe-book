@@ -7,7 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import { App } from "./App";
 import { store } from "./app/store";
 import reportWebVitals from "./reportWebVitals";
-import theme from "./theme";
+import { theme } from "./theme";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);

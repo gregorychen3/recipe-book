@@ -1,5 +1,5 @@
 import { Grid, Typography } from "@mui/material";
-import ActionMenu from "../../components/ActionMenu";
+import { ActionMenu } from "../../components/ActionMenu";
 
 interface Props {
   title: string;
@@ -7,7 +7,7 @@ interface Props {
   onEdit?: () => void;
   disableSave?: boolean;
 }
-export default function RecipeHeader({ title, onDelete, onEdit, disableSave }: Props) {
+export function RecipeHeader({ title, onDelete, onEdit, disableSave }: Props) {
   return (
     <Grid container direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
       <Grid item xs={12} sm={12} md={2} />
