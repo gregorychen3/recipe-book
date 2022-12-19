@@ -6,9 +6,9 @@ import Toolbar from "@mui/material/Toolbar";
 import { Redirect, Route, Switch } from "react-router-dom";
 import AppHeader from "./components/AppHeader";
 import AboutPage from "./pages/AboutPage";
+import CreateRecipePage from "./pages/CreateRecipePage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import RecipesPage from "./pages/RecipesPage";
-//import CreateRecipePage from "./pages/CreateRecipePage";
 //import EditRecipePage from "./pages/EditRecipePage";
 import RecipePage from "./pages/RecipePage";
 //import RecipesPage from "./pages/RecipesPage";
@@ -22,10 +22,10 @@ export function App() {
         <Toolbar />
         <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
           <Switch>
-            {/**
             <Route path="/recipes/create">
               <CreateRecipePage />
             </Route>
+            {/**
             <Route path="/recipes/:recipeId/edit">
               <EditRecipePage />
             </Route>
