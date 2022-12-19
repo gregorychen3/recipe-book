@@ -2,6 +2,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Method } from "axios";
 import { RootState } from "../../app/store";
 
+let nextRequestId = 0;
+export const getNextRequestId = () => nextRequestId++;
+
 export interface ActiveRequest {
   id: number;
   method: Method;
