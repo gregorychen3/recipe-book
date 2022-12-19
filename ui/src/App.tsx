@@ -41,10 +41,10 @@ export function App() {
             <Route path="/privacy-policy">
               <PrivacyPolicyPage />
             </Route>
+             */}
             <Route path="/">
               <Redirect to="/recipes" />
             </Route>
-             */}
           </Switch>
           <Grid container spacing={3}></Grid>
         </Container>
