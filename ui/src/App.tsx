@@ -7,11 +7,8 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import AppHeader from "./components/AppHeader";
 import AboutPage from "./pages/AboutPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
-//import AppHeader from "./components/AppHeader";
-//import AboutPage from "./pages/AboutPage";
 //import CreateRecipePage from "./pages/CreateRecipePage";
 //import EditRecipePage from "./pages/EditRecipePage";
-//import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 //import RecipePage from "./pages/RecipePage";
 //import RecipesPage from "./pages/RecipesPage";
 
