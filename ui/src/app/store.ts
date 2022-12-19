@@ -1,6 +1,7 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import { apiReducer } from "../features/api/apiSlice";
 import counterReducer from "../features/counter/counterSlice";
+import { recipeReducer } from "../features/recipe/recipeSlice";
 import { userReducer } from "../features/user/userSlice";
 
 export const store = configureStore({
@@ -8,6 +9,7 @@ export const store = configureStore({
     counter: counterReducer,
     api: apiReducer,
     user: userReducer,
+    recipe: recipeReducer,
   },
 });
 

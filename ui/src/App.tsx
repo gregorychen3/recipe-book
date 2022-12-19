@@ -7,6 +7,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import AppHeader from "./components/AppHeader";
 import AboutPage from "./pages/AboutPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import RecipesPage from "./pages/RecipesPage";
 //import CreateRecipePage from "./pages/CreateRecipePage";
 //import EditRecipePage from "./pages/EditRecipePage";
 //import RecipePage from "./pages/RecipePage";
@@ -31,10 +32,10 @@ export function App() {
             <Route path="/recipes/:recipeId">
               <RecipePage />
             </Route>
+             */}
             <Route path="/recipes">
               <RecipesPage />
             </Route>
-             */}
             <Route path="/about">
               <AboutPage />
             </Route>
