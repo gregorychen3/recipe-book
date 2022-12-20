@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import { Link as RouterLink, useHistory } from "react-router-dom";
 import { selectActiveRequests } from "../features/api/apiSlice";
 import { GroupBy } from "../pages/RecipesPage";
+import { OauthAvatar } from "./OauthAvatar";
 
 const browseMenuOpts: { label: string; value: GroupBy }[] = [
   { label: "By Course", value: "course" },
@@ -91,10 +92,7 @@ export function AppHeader() {
             <InfoIcon />
           </IconButton>
         </Hidden>
-        {/**
-         * TODO
         <OauthAvatar />
-         */}
       </Toolbar>
       {isLoading && <LinearProgress />}
     </AppBar>
