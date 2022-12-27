@@ -91,6 +91,9 @@ const InnerForm = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
+        <LabelDivider label="GENERAL" />
+      </Grid>
+      <Grid item xs={12}>
         <ControlledTextField textFieldProps={{ label: "Recipe Name", fullWidth: true }} ctrlProps={{ name: "name" }} />
       </Grid>
       <Grid item xs={4}>
