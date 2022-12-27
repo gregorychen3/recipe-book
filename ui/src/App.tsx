@@ -1,18 +1,17 @@
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
-import Grid from "@mui/material/Grid";
 import Toolbar from "@mui/material/Toolbar";
 import { Redirect, Route, Switch } from "react-router-dom";
-import AppHeader from "./components/AppHeader";
-import AboutPage from "./pages/AboutPage";
-import CreateRecipePage from "./pages/CreateRecipePage";
-import EditRecipePage from "./pages/EditRecipePage";
-import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
-import RecipePage from "./pages/RecipePage";
-import RecipesPage from "./pages/RecipesPage";
+import { AppHeader } from "./components/AppHeader";
+import { AboutPage } from "./pages/AboutPage";
+import { CreateRecipePage } from "./pages/CreateRecipePage";
+import { EditRecipePage } from "./pages/EditRecipePage";
+import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
+import { RecipePage } from "./pages/RecipePage";
+import { RecipesPage } from "./pages/RecipesPage";
 
-export default function App() {
+export function App() {
   return (
     <Box display="flex">
       <CssBaseline />
@@ -43,7 +42,6 @@ export default function App() {
               <Redirect to="/recipes" />
             </Route>
           </Switch>
-          <Grid container spacing={3}></Grid>
         </Container>
       </Box>
     </Box>

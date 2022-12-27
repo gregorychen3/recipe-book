@@ -1,15 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { clearAuthHeader, setAuthHeader } from "../hooks/useApi";
-import { RootState } from "./store";
+import { clearAuthHeader, setAuthHeader } from "../../app/hooks";
+import { RootState } from "../../app/store";
 
-//
-// SLICE
-// -----
-
-interface State {
+interface UserState {
   userTokenId?: string;
 }
-const initialState: State = { userTokenId: undefined };
+
+const initialState: UserState = { userTokenId: undefined };
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -27,7 +25,7 @@ export const userSlice = createSlice({
 
 export const { loadUserTokenId, clearUserTokenId } = userSlice.actions;
 
-export default userSlice.reducer;
+export const { reducer: userReducer } = userSlice;
 
 //
 // SELECTORS

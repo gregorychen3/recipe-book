@@ -10,7 +10,7 @@ import * as Yup from "yup";
 import { ICourse, ICuisine, IIngredient, IRecipe } from "../../../../src/types";
 import { CourseValues, CuisineValues } from "../../types";
 import { getCuisines } from "./helpers";
-import { selectRecipes } from "./RecipeSlice";
+import { selectRecipes } from "./recipeSlice";
 
 const SectionGridItem = styled(Grid)<GridProps>(({ theme }) => ({
   marginTop: theme.spacing(12),
@@ -95,7 +95,7 @@ interface Props {
   onSubmit: (recipe: IRecipe) => void;
   onChange?: (recipe: IRecipe) => void;
 }
-export default function RecipeForm({ recipe, onSubmit, onChange }: Props) {
+export function RecipeForm({ recipe, onSubmit, onChange }: Props) {
   return (
     <Formik
       initialValues={recipe ? valuesFromRecipe(recipe) : defaultValues}

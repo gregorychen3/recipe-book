@@ -6,7 +6,8 @@ interface Props {
   icon: React.ReactNode;
   iconPosition: "before" | "after";
 }
-export default function IconWithText(props: Props & TypographyProps) {
+
+export function IconWithText(props: Props & TypographyProps) {
   const { text, icon, iconPosition, ...typographyProps } = props;
 
   return (

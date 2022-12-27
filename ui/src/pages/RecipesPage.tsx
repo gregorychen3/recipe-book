@@ -2,14 +2,14 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { IRecipeModel } from "../../../src/db/recipe";
-import RecipeList from "../features/recipe/RecipeList";
-import { putRecipes } from "../features/recipe/RecipeSlice";
-import { useApi } from "../hooks/useApi";
+import { useApi } from "../app/hooks";
+import { RecipeList } from "../features/recipe/RecipeList";
+import { putRecipes } from "../features/recipe/recipeSlice";
 
 export const GroupByValues = ["course", "cuisine", "alphabetical"] as const;
 export type GroupBy = typeof GroupByValues[number];
 
-export default function RecipesPage() {
+export function RecipesPage() {
   const d = useDispatch();
 
   const getRecipes = useApi<IRecipeModel[]>("GET", "/api/recipes");

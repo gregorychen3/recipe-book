@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { IRecipeModel } from "../../../src/db/recipe";
 import { IRecipe } from "../../../src/types";
-import RecipeForm from "../features/recipe/RecipeForm";
-import RecipeHeader from "../features/recipe/RecipeHeader";
-import { putRecipe, selectRecipe } from "../features/recipe/RecipeSlice";
-import { useApi } from "../hooks/useApi";
+import { useApi } from "../app/hooks";
+import { RecipeForm } from "../features/recipe/RecipeForm";
+import { RecipeHeader } from "../features/recipe/RecipeHeader";
+import { putRecipe, selectRecipe } from "../features/recipe/recipeSlice";
 
-export default function EditRecipePage() {
+export function EditRecipePage() {
   const d = useDispatch();
   const h = useHistory();
   const { enqueueSnackbar } = useSnackbar();

@@ -12,9 +12,9 @@ import _ from "lodash";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link as RouterLink, useHistory } from "react-router-dom";
-import { selectActiveRequests } from "../app/apiSlice";
+import { selectActiveRequests } from "../features/api/apiSlice";
 import { GroupBy } from "../pages/RecipesPage";
-import OauthAvatar from "./OauthAvatar";
+import { OauthAvatar } from "./OauthAvatar";
 
 const browseMenuOpts: { label: string; value: GroupBy }[] = [
   { label: "By Course", value: "course" },
@@ -27,7 +27,7 @@ const AppTitle = styled(Typography)<TypographyProps>(() => ({
   cursor: "pointer",
 }));
 
-export default function AppHeader() {
+export function AppHeader() {
   const h = useHistory();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

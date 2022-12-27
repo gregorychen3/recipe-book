@@ -5,12 +5,24 @@ import { LabelDivider } from "mui-label-divider";
 import React, { useEffect, useState } from "react";
 import { IRecipe } from "../../../../src/types";
 import { formatIngredient } from "../../features/recipe/helpers";
-import { isValidURL } from "../../helpers";
+
+const urlRegex = new RegExp(
+  "^(https?:\\/\\/)?" +
+    "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
+    "((\\d{1,3}\\.){3}\\d{1,3}))" +
+    "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
+    "(\\?[;&a-z\\d%_.~+=-]*)?" +
+    "(\\#[-a-z\\d_]*)?$",
+  "i"
+);
+
+export const isValidURL = (s: string) => urlRegex.test(s);
 
 interface Props {
   recipe: IRecipe;
 }
-export default function Recipe({ recipe }: Props) {
+
+export function Recipe({ recipe }: Props) {
   const [servings, setServings] = useState(recipe.servings);
   useEffect(() => {
     setServings(recipe.servings);

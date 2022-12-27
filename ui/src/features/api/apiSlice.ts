@@ -1,13 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Method } from "axios";
-import { RootState } from "./store";
+import { RootState } from "../../app/store";
 
 let nextRequestId = 0;
 export const getNextRequestId = () => nextRequestId++;
-
-//
-// SLICE
-// -----
 
 export interface ActiveRequest {
   id: number;
@@ -16,11 +12,11 @@ export interface ActiveRequest {
   data?: any;
 }
 
-interface State {
+export interface ApiState {
   requestsById: { [key: number]: ActiveRequest };
 }
 
-const initialState: State = { requestsById: {} };
+const initialState: ApiState = { requestsById: {} };
 
 export const apiSlice = createSlice({
   name: "api",
@@ -36,7 +32,8 @@ export const apiSlice = createSlice({
 });
 
 export const { putRequest, removeRequest } = apiSlice.actions;
-export default apiSlice.reducer;
+
+export const { reducer: apiReducer } = apiSlice;
 
 //
 // SELECTORS

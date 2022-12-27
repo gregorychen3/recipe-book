@@ -2,15 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IRecipeModel } from "../../../../src/db/recipe";
 import { RootState } from "../../app/store";
 
-//
-// SLICE
-// -----
-
-interface State {
+interface RecipeState {
   recipesById: { [id: string]: IRecipeModel };
 }
 
-const initialState: State = { recipesById: {} };
+const initialState: RecipeState = { recipesById: {} };
 
 export const recipeSlice = createSlice({
   name: "recipe",
@@ -31,7 +27,7 @@ export const recipeSlice = createSlice({
 });
 
 export const { putRecipe, putRecipes, removeRecipe } = recipeSlice.actions;
-export default recipeSlice.reducer;
+export const { reducer: recipeReducer } = recipeSlice;
 
 //
 // SELECTORS

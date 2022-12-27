@@ -1,74 +1,58 @@
-import { Avatar, Tooltip } from "@mui/material";
+import { Avatar as MuiAvatar, Tooltip } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
+import { googleLogout, GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
 import { useSnackbar } from "notistack";
-import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline, GoogleLogout } from "react-google-login";
 import { useDispatch, useSelector } from "react-redux";
-import { clearUserTokenId, loadUserTokenId, selectUserTokenId } from "../app/userSlice";
+import { clearUserTokenId, loadUserTokenId, selectUserTokenId } from "../features/user/userSlice";
 
 // client id for local development
-// const clientId = "733241561721-4u35j8dtjmkisfs479m9an9f6p6tep1s.apps.googleusercontent.com";
+//const clientId = "733241561721-4u35j8dtjmkisfs479m9an9f6p6tep1s.apps.googleusercontent.com";
 
 // client id for prod
 const clientId = "733241561721-n27hobb24p9hak87q92kq90fmuobidhj.apps.googleusercontent.com";
 
-export default function OauthAvatar() {
+export function Avatar() {
   const d = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
 
   const user = useSelector(selectUserTokenId);
 
-  const handleLoginSuccess = (resp: GoogleLoginResponse | GoogleLoginResponseOffline) => {
-    if (resp.code) {
-      // TODO : if responseType is 'code', callback will return the authorization code that can be used to retrieve a refresh token from the server.
-      resp = resp as GoogleLoginResponseOffline;
-      return;
-    }
+  const login = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      d(loadUserTokenId(tokenResponse.access_token));
+      enqueueSnackbar("Successfully logged in", { variant: "success" });
+    },
+    onError: (errResp) => {
+      d(clearUserTokenId());
+      enqueueSnackbar(JSON.stringify(errResp), { variant: "error" });
+    },
+  });
 
-    enqueueSnackbar("Successfully logged in", { variant: "success" });
-    d(loadUserTokenId((resp as GoogleLoginResponse).tokenId));
-  };
-
-  const handleLoginFailure = (err: any) => {
-    enqueueSnackbar(`Failed to login: ${err.error}`, { variant: "error" });
-    d(clearUserTokenId());
-  };
-
-  const handleLogoutSuccess = () => {
+  const handleLogout = () => {
     d(clearUserTokenId());
     enqueueSnackbar("Successfully logged out", { variant: "success" });
+    googleLogout();
   };
 
-  const handleLogoutFailure = () => enqueueSnackbar("Failed to logout", { variant: "error" });
-
   return user ? (
-    <GoogleLogout
-      clientId={clientId}
-      buttonText="Logout"
-      onLogoutSuccess={handleLogoutSuccess}
-      onFailure={handleLogoutFailure}
-      render={(renderProps) => (
-        <Tooltip title="Click to logout">
-          <IconButton onClick={renderProps.onClick} disabled={renderProps.disabled} size="large">
-            <Avatar sx={{ width: 24, height: 24, backgroundColor: "primary.main" }} />
-          </IconButton>
-        </Tooltip>
-      )}
-    />
+    <Tooltip title="Click to logout">
+      <IconButton onClick={handleLogout} size="large">
+        <MuiAvatar sx={{ width: 24, height: 24, backgroundColor: "primary.main" }} />
+      </IconButton>
+    </Tooltip>
   ) : (
-    <GoogleLogin
-      clientId={clientId}
-      buttonText="Login"
-      onSuccess={handleLoginSuccess}
-      onFailure={handleLoginFailure}
-      isSignedIn
-      cookiePolicy="single_host_origin"
-      render={(renderProps) => (
-        <Tooltip title="Log in to edit recipes">
-          <IconButton onClick={renderProps.onClick} disabled={renderProps.disabled} size="large">
-            <Avatar sx={{ width: 24, height: 24 }} />
-          </IconButton>
-        </Tooltip>
-      )}
-    />
+    <Tooltip title="Log in to edit recipes">
+      <IconButton onClick={() => login()} size="large">
+        <MuiAvatar sx={{ width: 24, height: 24 }} />
+      </IconButton>
+    </Tooltip>
+  );
+}
+
+export function OauthAvatar() {
+  return (
+    <GoogleOAuthProvider clientId={clientId}>
+      <Avatar />
+    </GoogleOAuthProvider>
   );
 }

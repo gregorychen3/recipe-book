@@ -1,7 +1,7 @@
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { IconButton, Link, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import IconWithText from "../components/IconWithText";
+import { IconWithText } from "../components/IconWithText";
 
 const imagePath = "./gregandally.jpg";
 
@@ -9,7 +9,7 @@ const DisabledListItem = styled("li")(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function AboutPage() {
+export function AboutPage() {
   return (
     <>
       <img src={imagePath} alt="gregandally" style={{ height: "100%", width: "100%" }} />

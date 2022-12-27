@@ -1,8 +1,13 @@
 import axios, { AxiosRequestConfig, AxiosResponse, Method } from "axios";
 import { useSnackbar } from "notistack";
 import { useCallback } from "react";
-import { useDispatch } from "react-redux";
-import { getNextRequestId, putRequest, removeRequest } from "../app/apiSlice";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { getNextRequestId, putRequest, removeRequest } from "../features/api/apiSlice";
+import type { AppDispatch, RootState } from "./store";
+
+// Use throughout your app instead of plain `useDispatch` and `useSelector`
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
