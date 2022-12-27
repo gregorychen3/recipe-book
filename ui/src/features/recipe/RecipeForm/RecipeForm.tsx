@@ -1,7 +1,7 @@
 import { Grid, GridProps } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import { styled } from "@mui/material/styles";
-import { Field, FieldArray, FieldArrayRenderProps, Form, FormikProps } from "formik";
+import { Field, FieldArray, FieldArrayRenderProps, Form } from "formik";
 import { Select, TextField } from "formik-mui";
 import { LabelDivider } from "mui-label-divider";
 import React, { useEffect } from "react";
@@ -63,20 +63,15 @@ export function RecipeForm({ recipe, onSubmit, onChange }: Props) {
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} id="recipe-form">
-        <InnerForm onChange={onChange} />
+        <InnerForm />
       </form>
     </FormProvider>
   );
 }
 
-const InnerForm = (props: { onChange?: (recipe: IRecipe) => void } & FormikProps<RecipeFormValues>) => {
-  const { onChange, values } = props;
+const InnerForm = () => {
   const recipes = useSelector(selectRecipes);
   const cuisines = getCuisines(Object.values(recipes));
-
-  useEffect(() => {
-    onChange && onChange(recipeFromValues(values));
-  }, [onChange, values]);
 
   const handleIngredientNameFieldChanged =
     (idx: number, { form, push }: FieldArrayRenderProps) =>
