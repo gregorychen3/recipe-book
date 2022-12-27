@@ -12,6 +12,7 @@ import { ControlledTextField } from "../../../components/form/ControlledTextFiel
 import { CourseValues, CuisineValues } from "../../../types";
 import { getCuisines } from "../helpers";
 import { selectRecipes } from "../recipeSlice";
+import { GeneralSection } from "./GeneralSection";
 import { IngredientsSection } from "./IngredientsSection";
 import { defaultValues, recipeFromValues, Values as RecipeFormValues, valuesFromRecipe } from "./types";
 
@@ -90,32 +91,7 @@ const InnerForm = () => {
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <LabelDivider label="GENERAL" />
-      </Grid>
-      <Grid item xs={12}>
-        <ControlledTextField textFieldProps={{ label: "Recipe Name", fullWidth: true }} ctrlProps={{ name: "name" }} />
-      </Grid>
-      <Grid item xs={4}>
-        <ControlledTextField
-          textFieldProps={{ label: "Servings", type: "number", fullWidth: true }}
-          ctrlProps={{ name: "servings" }}
-        />
-      </Grid>
-      <Grid item xs={4}>
-        <ControlledAutocomplete
-          ctrlProps={{ name: "course" }}
-          textFieldProps={{ label: "Course" }}
-          autocompleteProps={{ options: CourseValues, disableClearable: true }}
-        />
-      </Grid>
-      <Grid item xs={4}>
-        <ControlledAutocomplete
-          ctrlProps={{ name: "cuisine" }}
-          textFieldProps={{ label: "Cuisine" }}
-          autocompleteProps={{ options: cuisines, disableClearable: true }}
-        />
-      </Grid>
+      <GeneralSection />
 
       <SectionGridItem item xs={12}>
         <LabelDivider label="INGREDIENTS" />
