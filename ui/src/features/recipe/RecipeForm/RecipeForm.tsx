@@ -1,17 +1,24 @@
 import { Grid, GridProps } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import { styled } from "@mui/material/styles";
-import { Field, FieldArray, FieldArrayRenderProps, Form, Formik, FormikProps } from "formik";
+import { Field, FieldArray, FieldArrayRenderProps, Form, FormikProps } from "formik";
 import { Select, TextField } from "formik-mui";
 import { LabelDivider } from "mui-label-divider";
 import React, { useEffect } from "react";
+import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { useSelector } from "react-redux";
 import * as Yup from "yup";
 import { IRecipe } from "../../../../../src/types";
 import { CourseValues, CuisineValues } from "../../../types";
 import { getCuisines } from "../helpers";
 import { selectRecipes } from "../recipeSlice";
-import { defaultIngredient, defaultValues, recipeFromValues, Values, valuesFromRecipe } from "./types";
+import {
+  defaultIngredient,
+  defaultValues,
+  recipeFromValues,
+  Values as RecipeFormValues,
+  valuesFromRecipe,
+} from "./types";
 
 const SectionGridItem = styled(Grid)<GridProps>(({ theme }) => ({
   marginTop: theme.spacing(12),
@@ -31,22 +38,38 @@ interface Props {
 }
 
 export function RecipeForm({ recipe, onSubmit, onChange }: Props) {
+  const form = useForm<RecipeFormValues>({
+    mode: "onTouched",
+    defaultValues: recipe ? valuesFromRecipe(recipe) : defaultValues,
+  });
+
+  useEffect(() => {
+    if (!recipe) {
+      return;
+    }
+
+    form.reset(valuesFromRecipe(recipe));
+  }, [recipe, form]);
+
+  const values = useWatch({ control: form.control }) as RecipeFormValues;
+  useEffect(() => {
+    onChange?.(recipeFromValues(values));
+  }, [values, onChange]);
+
+  const handleSubmit = (v: RecipeFormValues) => {
+    onSubmit(recipeFromValues(values));
+  };
+
   return (
-    <Formik
-      initialValues={recipe ? valuesFromRecipe(recipe) : defaultValues}
-      validationSchema={validationSchema}
-      onSubmit={(values, { setSubmitting }) => {
-        const recipe = recipeFromValues(values);
-        onSubmit(recipe);
-        setSubmitting(false);
-      }}
-    >
-      {(formikProps) => <InnerForm onChange={onChange} {...formikProps} />}
-    </Formik>
+    <FormProvider {...form}>
+      <form onSubmit={form.handleSubmit(handleSubmit)} id="recipe-form">
+        <InnerForm onChange={onChange} />
+      </form>
+    </FormProvider>
   );
 }
 
-const InnerForm = (props: { onChange?: (recipe: IRecipe) => void } & FormikProps<Values>) => {
+const InnerForm = (props: { onChange?: (recipe: IRecipe) => void } & FormikProps<RecipeFormValues>) => {
   const { onChange, values } = props;
   const recipes = useSelector(selectRecipes);
   const cuisines = getCuisines(Object.values(recipes));
