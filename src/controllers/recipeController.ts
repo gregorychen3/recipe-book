@@ -1,7 +1,6 @@
 import express, { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { IRecipeModel, Recipe } from "../db/recipe";
-import { auth } from "../middlewares/auth";
 import { recipeValidation } from "../middlewares/recipeValidation";
 
 const recipeController = express.Router();
@@ -21,7 +20,7 @@ recipeController.get("/:id", async (req, res) => {
   return recipe ? res.send(recipe) : res.sendStatus(404);
 });
 
-recipeController.post("/", auth, recipeValidation, async (req: Request, res: Response) => {
+recipeController.post("/", /*auth,*/ recipeValidation, async (req: Request, res: Response) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).send({ errors: errors.array({ onlyFirstError: true }) });
@@ -47,7 +46,7 @@ recipeController.post("/", auth, recipeValidation, async (req: Request, res: Res
   }
 });
 
-recipeController.post("/:id", auth, recipeValidation, async (req: Request, res: Response) => {
+recipeController.post("/:id", /*auth,*/ recipeValidation, async (req: Request, res: Response) => {
   let recipe: IRecipeModel | null;
   try {
     recipe = await Recipe.findOne({ _id: req.params.id }).exec();
@@ -77,19 +76,22 @@ recipeController.post("/:id", auth, recipeValidation, async (req: Request, res: 
   return res.send(updatedRecipe);
 });
 
-recipeController.delete("/:id", auth, async (req, res) => {
-  let recipe: IRecipeModel | null;
-  try {
-    recipe = await Recipe.findOne({ _id: req.params.id });
-  } catch (e) {
-    return res.status(400).send(e.message);
-  }
-  if (!recipe) {
-    return res.sendStatus(404);
-  }
+recipeController.delete(
+  "/:id",
+  /*auth,*/ async (req, res) => {
+    let recipe: IRecipeModel | null;
+    try {
+      recipe = await Recipe.findOne({ _id: req.params.id });
+    } catch (e) {
+      return res.status(400).send(e.message);
+    }
+    if (!recipe) {
+      return res.sendStatus(404);
+    }
 
-  const deleted = await recipe.remove();
-  return res.send({ id: deleted.id });
-});
+    const deleted = await recipe.remove();
+    return res.send({ id: deleted.id });
+  }
+);
 
 export default recipeController;
