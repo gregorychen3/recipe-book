@@ -27,7 +27,7 @@ const validationSchema = Yup.object().shape({
 interface Props {
   recipe?: IRecipe;
   onSubmit: (recipe: IRecipe) => void;
-  onChange?: (recipe: IRecipe) => void;
+  onChange: (recipe: IRecipe) => void;
 }
 
 export function RecipeForm({ recipe, onSubmit, onChange }: Props) {
