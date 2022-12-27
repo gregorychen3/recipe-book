@@ -7,10 +7,11 @@ import { LabelDivider } from "mui-label-divider";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import * as Yup from "yup";
-import { ICourse, ICuisine, IIngredient, IRecipe } from "../../../../../src/types";
+import { IRecipe } from "../../../../../src/types";
 import { CourseValues, CuisineValues } from "../../../types";
 import { getCuisines } from "../helpers";
 import { selectRecipes } from "../recipeSlice";
+import { defaultIngredient, defaultValues, recipeFromValues, Values, valuesFromRecipe } from "./types";
 
 const SectionGridItem = styled(Grid)<GridProps>(({ theme }) => ({
   marginTop: theme.spacing(12),
@@ -23,78 +24,12 @@ const validationSchema = Yup.object().shape({
   servings: Yup.number().integer("Must be an integer").moreThan(0, "Must be greater than 0"),
 });
 
-const defaultIngredient = (): IngredientValues => ({ qty: "", unit: "", name: "" });
-
-const defaultValues: Values = {
-  name: "",
-  course: "Primi",
-  cuisine: "Italian",
-  servings: 2,
-  ingredients: [defaultIngredient()],
-  instructions: [""],
-  sources: [""],
-};
-
-const valuesFromRecipe = (r: IRecipe): Values => {
-  const { name, course, cuisine, servings, ingredients, instructions, sources } = r;
-  const ret: Values = {
-    name,
-    course,
-    cuisine,
-    servings,
-    ingredients: [
-      ...ingredients.map((i) => ({
-        qty: i.qty ?? ("" as const),
-        unit: i.unit ?? "",
-        name: i.name,
-      })),
-      defaultIngredient(),
-    ],
-    instructions: [...instructions, ""],
-    sources: [...sources, ""],
-  };
-  return ret;
-};
-
-const recipeFromValues = ({
-  name,
-  course,
-  cuisine,
-  servings,
-  ingredients,
-  instructions,
-  sources,
-}: Values): IRecipe => ({
-  name,
-  course,
-  cuisine,
-  servings,
-  ingredients: ingredients
-    .filter((i) => i.name)
-    .map((i): IIngredient => ({ qty: i.qty || undefined, unit: i.unit || undefined, name: i.name })),
-  instructions: instructions.filter((i) => i),
-  sources: sources.filter((s) => s),
-});
-
-interface IngredientValues {
-  qty: number | "";
-  unit: string;
-  name: string;
-}
-interface Values {
-  name: string;
-  course: ICourse;
-  cuisine: ICuisine;
-  servings: number;
-  ingredients: IngredientValues[];
-  instructions: string[];
-  sources: string[];
-}
 interface Props {
   recipe?: IRecipe;
   onSubmit: (recipe: IRecipe) => void;
   onChange?: (recipe: IRecipe) => void;
 }
+
 export function RecipeForm({ recipe, onSubmit, onChange }: Props) {
   return (
     <Formik
