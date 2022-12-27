@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 import { FieldArrayRenderProps } from "formik";
 import { LabelDivider } from "mui-label-divider";
 import React, { useEffect } from "react";
-import { FormProvider, useForm, useWatch } from "react-hook-form";
+import { FormProvider, useFieldArray, useForm, useFormContext, useWatch } from "react-hook-form";
 import { useSelector } from "react-redux";
 import * as Yup from "yup";
 import { IRecipe } from "../../../../../src/types";
@@ -73,16 +73,6 @@ const InnerForm = () => {
   const recipes = useSelector(selectRecipes);
   const cuisines = getCuisines(Object.values(recipes));
 
-  const handleIngredientNameFieldChanged =
-    (idx: number, { form, push }: FieldArrayRenderProps) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { values, setFieldValue } = form;
-      setFieldValue(`ingredients.${idx}.name`, e.target.value);
-      if (idx === values.ingredients.length - 1) {
-        push(defaultIngredient());
-      }
-    };
-
   const handleInstructionFieldChanged =
     (idx: number, { form, push }: FieldArrayRenderProps) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -132,45 +122,9 @@ const InnerForm = () => {
       <SectionGridItem item xs={12}>
         <LabelDivider label="INGREDIENTS" />
       </SectionGridItem>
-      {/*
-        <FieldArray name="ingredients">
-          {(arrHelpers) =>
-            values.ingredients.map((_, idx) => (
-              <React.Fragment key={idx}>
-                <Grid item xs={4}>
-                  <Field
-                    component={TextField}
-                    name={`ingredients.${idx}.qty`}
-                    label={idx === 0 ? "Quantity" : undefined}
-                    type="number"
-                    inputProps={{ step: "0.01" }}
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={4}>
-                  <Field
-                    component={TextField}
-                    name={`ingredients.${idx}.unit`}
-                    label={idx === 0 ? "Unit" : undefined}
-                    type="text"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={4}>
-                  <Field
-                    component={TextField}
-                    name={`ingredients.${idx}.name`}
-                    label={idx === 0 ? "Name" : undefined}
-                    type="text"
-                    fullWidth
-                    onChange={handleIngredientNameFieldChanged(idx, arrHelpers)}
-                  />
-                </Grid>
-              </React.Fragment>
-            ))
-          }
-        </FieldArray>
 
+      <IngredientsSection />
+      {/*
         <SectionGridItem item xs={12}>
           <LabelDivider label="INSTRUCTIONS" />
         </SectionGridItem>
@@ -213,3 +167,55 @@ const InnerForm = () => {
     </Grid>
   );
 };
+
+function IngredientsSection() {
+  const { fields, append } = useFieldArray<RecipeFormValues>({ name: "ingredients" });
+  const { setValue } = useFormContext<RecipeFormValues>();
+
+  const handleIngredientNameChanged = (idx: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(`ingredients.${idx}.name`, e.target.value);
+    if (idx === fields.length - 1) {
+      append(defaultIngredient());
+    }
+  };
+
+  return (
+    <>
+      {fields.map((ingredient, idx) => (
+        <React.Fragment key={ingredient.id}>
+          <Grid item xs={4}>
+            <ControlledTextField
+              textFieldProps={{
+                label: idx === 0 ? "Quantity" : undefined,
+                type: "number",
+                inputProps: { step: "0.01" },
+                fullWidth: true,
+              }}
+              ctrlProps={{ name: `ingredients.${idx}.qty` }}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <ControlledTextField
+              textFieldProps={{
+                label: idx === 0 ? "Unit" : undefined,
+                inputProps: { step: "0.01" },
+                fullWidth: true,
+              }}
+              ctrlProps={{ name: `ingredients.${idx}.unit` }}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <ControlledTextField
+              textFieldProps={{
+                label: idx === 0 ? "Name" : undefined,
+                fullWidth: true,
+              }}
+              ctrlProps={{ name: `ingredients.${idx}.name` }}
+              onChange={handleIngredientNameChanged(idx)}
+            />
+          </Grid>
+        </React.Fragment>
+      ))}
+    </>
+  );
+}
