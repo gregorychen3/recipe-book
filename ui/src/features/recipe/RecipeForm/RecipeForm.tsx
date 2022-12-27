@@ -1,14 +1,14 @@
 import { Grid, GridProps } from "@mui/material";
-import MenuItem from "@mui/material/MenuItem";
 import { styled } from "@mui/material/styles";
-import { Field, FieldArray, FieldArrayRenderProps, Form } from "formik";
-import { Select, TextField } from "formik-mui";
+import { FieldArrayRenderProps } from "formik";
 import { LabelDivider } from "mui-label-divider";
 import React, { useEffect } from "react";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { useSelector } from "react-redux";
 import * as Yup from "yup";
 import { IRecipe } from "../../../../../src/types";
+import { ControlledAutocomplete } from "../../../components/form/ControlledAutocomplete";
+import { ControlledTextField } from "../../../components/form/ControlledTextField";
 import { CourseValues, CuisineValues } from "../../../types";
 import { getCuisines } from "../helpers";
 import { selectRecipes } from "../recipeSlice";
@@ -104,37 +104,35 @@ const InnerForm = () => {
     };
 
   return (
-    <Form id="recipe-form">
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Field component={TextField} name="name" type="text" label="Recipe Name" fullWidth />
-        </Grid>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <ControlledTextField textFieldProps={{ label: "Recipe Name", fullWidth: true }} ctrlProps={{ name: "name" }} />
+      </Grid>
+      <Grid item xs={4}>
+        <ControlledTextField
+          textFieldProps={{ label: "Servings", type: "number", fullWidth: true }}
+          ctrlProps={{ name: "servings" }}
+        />
+      </Grid>
+      <Grid item xs={4}>
+        <ControlledAutocomplete
+          ctrlProps={{ name: "course" }}
+          textFieldProps={{ label: "Course" }}
+          autocompleteProps={{ options: CourseValues, disableClearable: true }}
+        />
+      </Grid>
+      <Grid item xs={4}>
+        <ControlledAutocomplete
+          ctrlProps={{ name: "cuisine" }}
+          textFieldProps={{ label: "Cuisine" }}
+          autocompleteProps={{ options: cuisines, disableClearable: true }}
+        />
+      </Grid>
 
-        <Grid item xs={4}>
-          <Field component={TextField} name="servings" type="number" label="Servings" fullWidth />
-        </Grid>
-        <Grid item xs={4}>
-          <Field component={Select} formControl={{ sx: { width: "100%" } }} id="course" name="course" label="Course">
-            {CourseValues.map((c) => (
-              <MenuItem value={c} key={c}>
-                {c}
-              </MenuItem>
-            ))}
-          </Field>
-        </Grid>
-        <Grid item xs={4}>
-          <Field component={Select} formControl={{ sx: { width: "100%" } }} id="cuisine" name="cuisine" label="Cuisine">
-            {cuisines.map((c) => (
-              <MenuItem value={c} key={c}>
-                {c}
-              </MenuItem>
-            ))}
-          </Field>
-        </Grid>
-
-        <SectionGridItem item xs={12}>
-          <LabelDivider label="INGREDIENTS" />
-        </SectionGridItem>
+      <SectionGridItem item xs={12}>
+        <LabelDivider label="INGREDIENTS" />
+      </SectionGridItem>
+      {/*
         <FieldArray name="ingredients">
           {(arrHelpers) =>
             values.ingredients.map((_, idx) => (
@@ -211,7 +209,7 @@ const InnerForm = () => {
             ))
           }
         </FieldArray>
-      </Grid>
-    </Form>
+*/}
+    </Grid>
   );
 };
