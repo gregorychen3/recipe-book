@@ -1,7 +1,6 @@
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
-import Grid from "@mui/material/Grid";
 import Toolbar from "@mui/material/Toolbar";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { AppHeader } from "./components/AppHeader";
@@ -43,7 +42,6 @@ export function App() {
               <Redirect to="/recipes" />
             </Route>
           </Switch>
-          <Grid container spacing={3}></Grid>
         </Container>
       </Box>
     </Box>
