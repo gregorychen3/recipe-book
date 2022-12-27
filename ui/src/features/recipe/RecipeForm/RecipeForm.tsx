@@ -4,14 +4,9 @@ import { FieldArrayRenderProps } from "formik";
 import { LabelDivider } from "mui-label-divider";
 import React, { useEffect } from "react";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
-import { useSelector } from "react-redux";
 import * as Yup from "yup";
 import { IRecipe } from "../../../../../src/types";
-import { ControlledAutocomplete } from "../../../components/form/ControlledAutocomplete";
-import { ControlledTextField } from "../../../components/form/ControlledTextField";
 import { CourseValues, CuisineValues } from "../../../types";
-import { getCuisines } from "../helpers";
-import { selectRecipes } from "../recipeSlice";
 import { GeneralSection } from "./GeneralSection";
 import { IngredientsSection } from "./IngredientsSection";
 import { defaultValues, recipeFromValues, Values as RecipeFormValues, valuesFromRecipe } from "./types";
@@ -52,22 +47,7 @@ export function RecipeForm({ recipe, onSubmit, onChange }: Props) {
     onChange?.(recipeFromValues(values));
   }, [values, onChange]);
 
-  const handleSubmit = (v: RecipeFormValues) => {
-    onSubmit(recipeFromValues(values));
-  };
-
-  return (
-    <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} id="recipe-form">
-        <InnerForm />
-      </form>
-    </FormProvider>
-  );
-}
-
-const InnerForm = () => {
-  const recipes = useSelector(selectRecipes);
-  const cuisines = getCuisines(Object.values(recipes));
+  const handleSubmit = (v: RecipeFormValues) => onSubmit(recipeFromValues(values));
 
   const handleInstructionFieldChanged =
     (idx: number, { form, push }: FieldArrayRenderProps) =>
@@ -90,15 +70,17 @@ const InnerForm = () => {
     };
 
   return (
-    <Grid container spacing={2}>
-      <GeneralSection />
+    <FormProvider {...form}>
+      <form onSubmit={form.handleSubmit(handleSubmit)} id="recipe-form">
+        <Grid container spacing={2}>
+          <GeneralSection />
 
-      <SectionGridItem item xs={12}>
-        <LabelDivider label="INGREDIENTS" />
-      </SectionGridItem>
+          <SectionGridItem item xs={12}>
+            <LabelDivider label="INGREDIENTS" />
+          </SectionGridItem>
 
-      <IngredientsSection />
-      {/*
+          <IngredientsSection />
+          {/*
         <SectionGridItem item xs={12}>
           <LabelDivider label="INSTRUCTIONS" />
         </SectionGridItem>
@@ -138,6 +120,8 @@ const InnerForm = () => {
           }
         </FieldArray>
 */}
-    </Grid>
+        </Grid>
+      </form>
+    </FormProvider>
   );
-};
+}
