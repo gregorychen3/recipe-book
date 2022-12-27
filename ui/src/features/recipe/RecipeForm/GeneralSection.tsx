@@ -1,5 +1,4 @@
-import { Grid, GridProps } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Grid } from "@mui/material";
 import { LabelDivider } from "mui-label-divider";
 import { useSelector } from "react-redux";
 import { ControlledAutocomplete } from "../../../components/form/ControlledAutocomplete";
@@ -8,16 +7,12 @@ import { CourseValues } from "../../../types";
 import { getCuisines } from "../helpers";
 import { selectRecipes } from "../recipeSlice";
 
-const SectionGridItem = styled(Grid)<GridProps>(({ theme }) => ({
-  marginTop: theme.spacing(12),
-}));
-
 export function GeneralSection() {
   const recipes = useSelector(selectRecipes);
   const cuisines = getCuisines(Object.values(recipes));
 
   return (
-    <>
+    <Grid container spacing={2}>
       <Grid item xs={12}>
         <LabelDivider label="GENERAL" />
       </Grid>
@@ -44,6 +39,6 @@ export function GeneralSection() {
           autocompleteProps={{ options: cuisines, disableClearable: true }}
         />
       </Grid>
-    </>
+    </Grid>
   );
 }

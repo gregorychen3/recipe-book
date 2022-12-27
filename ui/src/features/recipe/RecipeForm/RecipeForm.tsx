@@ -1,7 +1,6 @@
 import { Grid, GridProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { FieldArrayRenderProps } from "formik";
-import { LabelDivider } from "mui-label-divider";
 import React, { useEffect } from "react";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 import * as Yup from "yup";
@@ -72,15 +71,9 @@ export function RecipeForm({ recipe, onSubmit, onChange }: Props) {
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} id="recipe-form">
-        <Grid container spacing={2}>
-          <GeneralSection />
-
-          <SectionGridItem item xs={12}>
-            <LabelDivider label="INGREDIENTS" />
-          </SectionGridItem>
-
-          <IngredientsSection />
-          {/*
+        <GeneralSection />
+        <IngredientsSection />
+        {/*
         <SectionGridItem item xs={12}>
           <LabelDivider label="INSTRUCTIONS" />
         </SectionGridItem>
@@ -120,7 +113,6 @@ export function RecipeForm({ recipe, onSubmit, onChange }: Props) {
           }
         </FieldArray>
 */}
-        </Grid>
       </form>
     </FormProvider>
   );

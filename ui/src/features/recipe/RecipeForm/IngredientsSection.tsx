@@ -1,4 +1,5 @@
 import { Grid } from "@mui/material";
+import { LabelDivider } from "mui-label-divider";
 import React from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { ControlledTextField } from "../../../components/form/ControlledTextField";
@@ -16,7 +17,10 @@ export function IngredientsSection() {
   };
 
   return (
-    <>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <LabelDivider label="INGREDIENTS" />
+      </Grid>
       {fields.map((ingredient, idx) => (
         <React.Fragment key={ingredient.id}>
           <Grid item xs={4}>
@@ -52,6 +56,6 @@ export function IngredientsSection() {
           </Grid>
         </React.Fragment>
       ))}
-    </>
+    </Grid>
   );
 }
