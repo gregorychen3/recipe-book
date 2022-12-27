@@ -7,10 +7,10 @@ import { LabelDivider } from "mui-label-divider";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import * as Yup from "yup";
-import { ICourse, ICuisine, IIngredient, IRecipe } from "../../../../src/types";
-import { CourseValues, CuisineValues } from "../../types";
-import { getCuisines } from "./helpers";
-import { selectRecipes } from "./recipeSlice";
+import { ICourse, ICuisine, IIngredient, IRecipe } from "../../../../../src/types";
+import { CourseValues, CuisineValues } from "../../../types";
+import { getCuisines } from "../helpers";
+import { selectRecipes } from "../recipeSlice";
 
 const SectionGridItem = styled(Grid)<GridProps>(({ theme }) => ({
   marginTop: theme.spacing(12),
