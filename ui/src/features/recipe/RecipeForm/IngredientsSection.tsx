@@ -3,7 +3,7 @@ import { LabelDivider } from "mui-label-divider";
 import React from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { ControlledTextField } from "../../../components/form/ControlledTextField";
-import { defaultIngredient, Values as RecipeFormValues } from "./types";
+import { defaultIngredient, RecipeFormValues as RecipeFormValues } from "./types";
 
 export function IngredientsSection() {
   const { fields, append } = useFieldArray<RecipeFormValues>({ name: "ingredients" });

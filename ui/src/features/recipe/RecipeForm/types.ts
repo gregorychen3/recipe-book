@@ -2,7 +2,7 @@ import { ICourse, ICuisine, IIngredient, IRecipe } from "../../../../../src/type
 
 export const defaultIngredient = (): IngredientValues => ({ qty: "", unit: "", name: "" });
 
-export const defaultValues: Values = {
+export const defaultValues: RecipeFormValues = {
   name: "",
   course: "Primi",
   cuisine: "Italian",
@@ -12,9 +12,9 @@ export const defaultValues: Values = {
   sources: [""],
 };
 
-export const valuesFromRecipe = (r: IRecipe): Values => {
+export const valuesFromRecipe = (r: IRecipe): RecipeFormValues => {
   const { name, course, cuisine, servings, ingredients, instructions, sources } = r;
-  const ret: Values = {
+  const ret: RecipeFormValues = {
     name,
     course,
     cuisine,
@@ -41,7 +41,7 @@ export const recipeFromValues = ({
   ingredients,
   instructions,
   sources,
-}: Values): IRecipe => ({
+}: RecipeFormValues): IRecipe => ({
   name,
   course,
   cuisine,
@@ -59,7 +59,7 @@ export interface IngredientValues {
   name: string;
 }
 
-export interface Values {
+export interface RecipeFormValues {
   name: string;
   course: ICourse;
   cuisine: ICuisine;

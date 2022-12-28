@@ -8,7 +8,7 @@ import { IRecipe } from "../../../../../src/types";
 import { CourseValues, CuisineValues } from "../../../types";
 import { GeneralSection } from "./GeneralSection";
 import { IngredientsSection } from "./IngredientsSection";
-import { defaultValues, recipeFromValues, Values as RecipeFormValues, valuesFromRecipe } from "./types";
+import { defaultValues, RecipeFormValues, recipeFromValues, valuesFromRecipe } from "./types";
 
 const SectionGridItem = styled(Grid)<GridProps>(({ theme }) => ({
   marginTop: theme.spacing(12),
