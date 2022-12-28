@@ -23,7 +23,7 @@ export function InstructionsSection() {
       </Grid>
       {fields.map((instruction, idx) => (
         <React.Fragment key={instruction.id}>
-          <Grid item xs={4}>
+          <Grid item xs={12}>
             <ControlledTextField
               onChange={handleInstructionFieldChanged(idx)}
               textFieldProps={{
