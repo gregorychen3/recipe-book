@@ -1,7 +1,6 @@
 import { Grid, GridProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { FieldArrayRenderProps } from "formik";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 import * as Yup from "yup";
 import { IRecipe } from "../../../../../src/types";
@@ -9,6 +8,7 @@ import { CourseValues, CuisineValues } from "../../../types";
 import { GeneralSection } from "./GeneralSection";
 import { IngredientsSection } from "./IngredientsSection";
 import { InstructionsSection } from "./InstructionsSection";
+import { SourcesSection } from "./SourcesSection";
 import { defaultValues, RecipeFormValues, recipeFromValues, valuesFromRecipe } from "./types";
 
 const SectionGridItem = styled(Grid)<GridProps>(({ theme }) => ({
@@ -47,27 +47,7 @@ export function RecipeForm({ recipe, onSubmit, onChange }: Props) {
     onChange?.(recipeFromValues(values));
   }, [values, onChange]);
 
-  const handleSubmit = (v: RecipeFormValues) => onSubmit(recipeFromValues(values));
-
-  const handleInstructionFieldChanged =
-    (idx: number, { form, push }: FieldArrayRenderProps) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { values, setFieldValue } = form;
-      setFieldValue(`instructions.${idx}`, e.target.value);
-      if (idx === values.instructions.length - 1) {
-        push("");
-      }
-    };
-
-  const handleSourceFieldChanged =
-    (idx: number, { form, push }: FieldArrayRenderProps) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { values, setFieldValue } = form;
-      setFieldValue(`sources.${idx}`, e.target.value);
-      if (idx === values.sources.length - 1) {
-        push("");
-      }
-    };
+  const handleSubmit = (v: RecipeFormValues) => onSubmit(recipeFromValues(v));
 
   return (
     <FormProvider {...form}>
@@ -75,27 +55,7 @@ export function RecipeForm({ recipe, onSubmit, onChange }: Props) {
         <GeneralSection />
         <IngredientsSection />
         <InstructionsSection />
-        {/*
-        <SectionGridItem item xs={12}>
-          <LabelDivider label="SOURCES" />
-        </SectionGridItem>
-        <FieldArray name="sources">
-          {(arrHelpers) =>
-            values.sources.map((_, idx) => (
-              <Grid item xs={12} key={idx}>
-                <Field
-                  component={TextField}
-                  name={`sources.${idx}`}
-                  label={idx === 0 ? "Enter source" : undefined}
-                  type="string"
-                  fullWidth
-                  onChange={handleSourceFieldChanged(idx, arrHelpers)}
-                />
-              </Grid>
-            ))
-          }
-        </FieldArray>
-*/}
+        <SourcesSection />
       </form>
     </FormProvider>
   );
