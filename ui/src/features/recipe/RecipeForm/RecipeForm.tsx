@@ -8,6 +8,7 @@ import { IRecipe } from "../../../../../src/types";
 import { CourseValues, CuisineValues } from "../../../types";
 import { GeneralSection } from "./GeneralSection";
 import { IngredientsSection } from "./IngredientsSection";
+import { InstructionsSection } from "./InstructionsSection";
 import { defaultValues, RecipeFormValues, recipeFromValues, valuesFromRecipe } from "./types";
 
 const SectionGridItem = styled(Grid)<GridProps>(({ theme }) => ({
@@ -73,26 +74,8 @@ export function RecipeForm({ recipe, onSubmit, onChange }: Props) {
       <form onSubmit={form.handleSubmit(handleSubmit)} id="recipe-form">
         <GeneralSection />
         <IngredientsSection />
+        <InstructionsSection />
         {/*
-        <SectionGridItem item xs={12}>
-          <LabelDivider label="INSTRUCTIONS" />
-        </SectionGridItem>
-        <FieldArray name="instructions">
-          {(arrHelpers) =>
-            values.instructions.map((_, idx) => (
-              <Grid item xs={12} key={idx}>
-                <Field
-                  component={TextField}
-                  name={`instructions.${idx}`}
-                  label={idx === 0 ? "Enter step" : undefined}
-                  type="string"
-                  fullWidth
-                  onChange={handleInstructionFieldChanged(idx, arrHelpers)}
-                />
-              </Grid>
-            ))
-          }
-        </FieldArray>
         <SectionGridItem item xs={12}>
           <LabelDivider label="SOURCES" />
         </SectionGridItem>

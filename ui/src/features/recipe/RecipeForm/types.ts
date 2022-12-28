@@ -2,13 +2,15 @@ import { ICourse, ICuisine, IIngredient, IRecipe } from "../../../../../src/type
 
 export const defaultIngredient = (): IngredientValues => ({ qty: "", unit: "", name: "" });
 
+export const defaultInstruction = () => ({ value: "" });
+
 export const defaultValues: RecipeFormValues = {
   name: "",
   course: "Primi",
   cuisine: "Italian",
   servings: 2,
   ingredients: [defaultIngredient()],
-  instructions: [""],
+  instructions: [defaultInstruction()],
   sources: [""],
 };
 
@@ -27,7 +29,7 @@ export const valuesFromRecipe = (r: IRecipe): RecipeFormValues => {
       })),
       defaultIngredient(),
     ],
-    instructions: [...instructions, ""],
+    instructions: [...instructions.map((i) => ({ value: i })), defaultInstruction()],
     sources: [...sources, ""],
   };
   return ret;
@@ -49,7 +51,7 @@ export const recipeFromValues = ({
   ingredients: ingredients
     .filter((i) => i.name)
     .map((i): IIngredient => ({ qty: i.qty || undefined, unit: i.unit || undefined, name: i.name })),
-  instructions: instructions.filter((i) => i),
+  instructions: instructions.map((i) => i.value).filter((x) => x),
   sources: sources.filter((s) => s),
 });
 
@@ -59,12 +61,16 @@ export interface IngredientValues {
   name: string;
 }
 
+export interface Instruction {
+  value: string;
+}
+
 export interface RecipeFormValues {
   name: string;
   course: ICourse;
   cuisine: ICuisine;
   servings: number;
   ingredients: IngredientValues[];
-  instructions: string[];
+  instructions: Instruction[];
   sources: string[];
 }
