@@ -37,12 +37,7 @@ export function RecipePage() {
       <DeleteRecipeDialog recipeId={deleteDialogData} onClose={handleCloseDeleteDialog} />
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <RecipeHeader
-            title={recipe.name.toUpperCase()}
-            onDelete={handleShowDeleteDialog}
-            onEdit={handleEditClicked}
-            disableSave
-          />
+          <RecipeHeader title={recipe.name} onDelete={handleShowDeleteDialog} onEdit={handleEditClicked} disableSave />
         </Grid>
         <Grid item xs={12}>
           <Recipe recipe={recipe} />
