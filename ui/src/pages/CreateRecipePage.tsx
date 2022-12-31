@@ -1,3 +1,4 @@
+import { Grid } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -29,9 +30,13 @@ export function CreateRecipePage() {
   };
 
   return (
-    <>
-      <RecipeHeader title={headerText} />
-      <RecipeForm onChange={handleRecipeEdited} onSubmit={handleSubmit} />
-    </>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <RecipeHeader title={headerText} />
+      </Grid>
+      <Grid item xs={12}>
+        <RecipeForm onChange={handleRecipeEdited} onSubmit={handleSubmit} />
+      </Grid>
+    </Grid>
   );
 }

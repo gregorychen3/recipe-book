@@ -1,3 +1,4 @@
+import { Grid } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -47,9 +48,13 @@ export function EditRecipePage() {
   const handleRecipeEdited = (recipe: IRecipe) => setHeaderText(recipe.name);
 
   return (
-    <>
-      <RecipeHeader title={headerText} />
-      <RecipeForm recipe={recipe} onChange={handleRecipeEdited} onSubmit={handleSubmit} />
-    </>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <RecipeHeader title={headerText} />
+      </Grid>
+      <Grid item xs={12}>
+        <RecipeForm recipe={recipe} onChange={handleRecipeEdited} onSubmit={handleSubmit} />
+      </Grid>
+    </Grid>
   );
 }

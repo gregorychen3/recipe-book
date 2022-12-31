@@ -1,3 +1,4 @@
+import { Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
@@ -34,13 +35,19 @@ export function RecipePage() {
   return (
     <>
       <DeleteRecipeDialog recipeId={deleteDialogData} onClose={handleCloseDeleteDialog} />
-      <RecipeHeader
-        title={recipe.name.toUpperCase()}
-        onDelete={handleShowDeleteDialog}
-        onEdit={handleEditClicked}
-        disableSave
-      />
-      <Recipe recipe={recipe} />
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <RecipeHeader
+            title={recipe.name.toUpperCase()}
+            onDelete={handleShowDeleteDialog}
+            onEdit={handleEditClicked}
+            disableSave
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Recipe recipe={recipe} />
+        </Grid>
+      </Grid>
     </>
   );
 }
