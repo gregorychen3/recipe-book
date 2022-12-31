@@ -12,7 +12,7 @@ import { useHistory } from "react-router-dom";
 import { useApi } from "../../app/hooks";
 import { removeRecipe, selectRecipe } from "../../features/recipe/recipeSlice";
 
-export interface DeleteRecipeDialogProps {
+interface DeleteRecipeDialogProps {
   recipeId?: string;
   onClose: () => void;
 }

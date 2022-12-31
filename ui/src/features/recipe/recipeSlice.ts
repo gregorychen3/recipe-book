@@ -8,7 +8,7 @@ interface RecipeState {
 
 const initialState: RecipeState = { recipesById: {} };
 
-export const recipeSlice = createSlice({
+const recipeSlice = createSlice({
   name: "recipe",
   initialState,
   reducers: {
