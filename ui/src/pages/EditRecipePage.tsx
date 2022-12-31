@@ -29,7 +29,7 @@ export function EditRecipePage() {
   }, [getRecipe, d]);
 
   useEffect(() => {
-    setHeaderText(recipe?.name.toUpperCase() ?? "");
+    setHeaderText(recipe?.name ?? "");
   }, [recipe]);
 
   if (!recipe) {
