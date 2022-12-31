@@ -16,7 +16,7 @@ const urlRegex = new RegExp(
   "i"
 );
 
-export const isValidURL = (s: string) => urlRegex.test(s);
+const isValidURL = (s: string) => urlRegex.test(s);
 
 interface Props {
   recipe: IRecipe;

@@ -57,17 +57,17 @@ export const recipeFromValues = ({
   sources: sources.map((s) => s.value).filter((x) => x),
 });
 
-export interface IngredientValues {
+interface IngredientValues {
   qty: number | "";
   unit: string;
   name: string;
 }
 
-export interface Instruction {
+interface Instruction {
   value: string;
 }
 
-export interface Source {
+interface Source {
   value: string;
 }
 
