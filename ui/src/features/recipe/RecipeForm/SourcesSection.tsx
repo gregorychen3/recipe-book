@@ -17,7 +17,7 @@ export function SourcesSection() {
   };
 
   return (
-    <Grid container spacing={2}>
+    <>
       <Grid item xs={12}>
         <LabelDivider label="SOURCES" />
       </Grid>
@@ -35,6 +35,6 @@ export function SourcesSection() {
           </Grid>
         </React.Fragment>
       ))}
-    </Grid>
+    </>
   );
 }

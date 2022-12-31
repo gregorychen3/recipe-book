@@ -12,7 +12,7 @@ export function GeneralSection() {
   const cuisines = getCuisines(Object.values(recipes));
 
   return (
-    <Grid container spacing={2}>
+    <>
       <Grid item xs={12}>
         <LabelDivider label="GENERAL" />
       </Grid>
@@ -39,6 +39,6 @@ export function GeneralSection() {
           autocompleteProps={{ options: cuisines, disableClearable: true }}
         />
       </Grid>
-    </Grid>
+    </>
   );
 }

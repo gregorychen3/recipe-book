@@ -17,7 +17,7 @@ export function InstructionsSection() {
   };
 
   return (
-    <Grid container spacing={2}>
+    <>
       <Grid item xs={12}>
         <LabelDivider label="INSTRUCTIONS" />
       </Grid>
@@ -35,6 +35,6 @@ export function InstructionsSection() {
           </Grid>
         </React.Fragment>
       ))}
-    </Grid>
+    </>
   );
 }
