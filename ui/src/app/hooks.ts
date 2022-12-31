@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, AxiosResponse, Method } from "axios";
 import { useSnackbar } from "notistack";
 import { useCallback } from "react";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { getNextRequestId, putRequest, removeRequest } from "../features/api/apiSlice";
+import { getNextRequestId, putRequest, removeRequest } from "../features/api/apiSlicee";
 import type { AppDispatch, RootState } from "./store";
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`

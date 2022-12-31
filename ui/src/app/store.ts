@@ -1,5 +1,5 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
-import { apiReducer } from "../features/api/apiSlice";
+import { apiReducer } from "../features/api/apiSlicee";
 import { recipeReducer } from "../features/recipe/recipeSlice";
 import { userReducer } from "../features/user/userSlice";
 

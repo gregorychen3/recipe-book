@@ -12,7 +12,7 @@ import _ from "lodash";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link as RouterLink, useHistory } from "react-router-dom";
-import { selectActiveRequests } from "../features/api/apiSlice";
+import { selectActiveRequests } from "../features/api/apiSlicee";
 import { GroupBy } from "../pages/RecipesPage";
 import { OauthAvatar } from "./OauthAvatar";
 
