@@ -2,7 +2,9 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
+import { useEffect } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
+import { useApi } from "./app/hooks";
 import { AppHeader } from "./components/AppHeader";
 import { AboutPage } from "./pages/AboutPage";
 import { CreateRecipePage } from "./pages/CreateRecipePage";
@@ -12,6 +14,11 @@ import { RecipePage } from "./pages/RecipePage";
 import { RecipesPage } from "./pages/RecipesPage";
 
 export function App() {
+  const migrate = useApi("GET", `/api/recipes/migrate`);
+  useEffect(() => {
+    migrate();
+  }, []);
+
   return (
     <Box display="flex">
       <CssBaseline />
