@@ -15,7 +15,7 @@ migrationController.get(
     const pgdburl =
       "postgres://txlwfrblsnymrh:be0b38b28da1400dc6178fd3da5d79f1c1af197593029f4a6cede5d838d154a7@ec2-34-197-84-74.compute-1.amazonaws.com:5432/dd0hh4sp8fvbep";
     const pgClient = new Client({
-      connectionString: "recipe",
+      connectionString: pgdburl,
       ssl: {
         rejectUnauthorized: false,
       },
