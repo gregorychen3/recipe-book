@@ -3,6 +3,13 @@ import { validationResult } from "express-validator";
 import { IRecipeModel, Recipe } from "../db/recipe";
 import { recipeValidation } from "../middlewares/recipeValidation";
 
+const selectRecipeQ = "SELECT body FROM recipe WHERE id=$1";
+const selectRecipesQ = "SELECT body FROM recipe";
+const createRecipeQ =
+  "INSERT INTO recipe(id, body) VALUES($1, $2) RETURNING body";
+const updateRecipeQ = "UPDATE recipe set body=$1 where id=$2 RETURNING body";
+const deleteRecipeQ = "DELETE FROM recipe WHERE id=$1 returning body";
+
 const recipeController = express.Router();
 
 recipeController.get("/", async (_, res) => {
@@ -20,61 +27,91 @@ recipeController.get("/:id", async (req, res) => {
   return recipe ? res.send(recipe) : res.sendStatus(404);
 });
 
-recipeController.post("/", /*auth,*/ recipeValidation, async (req: Request, res: Response) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).send({ errors: errors.array({ onlyFirstError: true }) });
+recipeController.post(
+  "/",
+  /*auth,*/ recipeValidation,
+  async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res
+        .status(400)
+        .send({ errors: errors.array({ onlyFirstError: true }) });
+    }
+
+    const {
+      name,
+      course,
+      cuisine,
+      servings,
+      ingredients,
+      instructions,
+      sources,
+    } = req.body;
+
+    const recipe = new Recipe({
+      name,
+      course,
+      cuisine,
+      servings,
+      ingredients,
+      instructions,
+      sources,
+    });
+
+    try {
+      const newRecipe = await recipe.save();
+      return res.send(newRecipe);
+    } catch (e) {
+      return res
+        .status(500)
+        .send({ errors: errors.array({ onlyFirstError: true }) });
+    }
   }
+);
 
-  const { name, course, cuisine, servings, ingredients, instructions, sources } = req.body;
+recipeController.post(
+  "/:id",
+  /*auth,*/ recipeValidation,
+  async (req: Request, res: Response) => {
+    let recipe: IRecipeModel | null;
+    try {
+      recipe = await Recipe.findOne({ _id: req.params.id }).exec();
+    } catch (e) {
+      return res.status(400).send(e.message);
+    }
+    if (!recipe) {
+      return res.sendStatus(404);
+    }
 
-  const recipe = new Recipe({
-    name,
-    course,
-    cuisine,
-    servings,
-    ingredients,
-    instructions,
-    sources,
-  });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res
+        .status(422)
+        .send({ errors: errors.array({ onlyFirstError: true }) });
+    }
 
-  try {
-    const newRecipe = await recipe.save();
-    return res.send(newRecipe);
-  } catch (e) {
-    return res.status(500).send({ errors: errors.array({ onlyFirstError: true }) });
+    const {
+      name,
+      course,
+      cuisine,
+      servings,
+      ingredients,
+      instructions,
+      sources,
+    } = req.body;
+
+    recipe.name = name;
+    recipe.course = course;
+    recipe.cuisine = cuisine;
+    recipe.servings = servings;
+    recipe.ingredients = ingredients;
+    recipe.instructions = instructions;
+    recipe.sources = sources;
+
+    const updatedRecipe = await recipe.save();
+    return res.send(updatedRecipe);
   }
-});
-
-recipeController.post("/:id", /*auth,*/ recipeValidation, async (req: Request, res: Response) => {
-  let recipe: IRecipeModel | null;
-  try {
-    recipe = await Recipe.findOne({ _id: req.params.id }).exec();
-  } catch (e) {
-    return res.status(400).send(e.message);
-  }
-  if (!recipe) {
-    return res.sendStatus(404);
-  }
-
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(422).send({ errors: errors.array({ onlyFirstError: true }) });
-  }
-
-  const { name, course, cuisine, servings, ingredients, instructions, sources } = req.body;
-
-  recipe.name = name;
-  recipe.course = course;
-  recipe.cuisine = cuisine;
-  recipe.servings = servings;
-  recipe.ingredients = ingredients;
-  recipe.instructions = instructions;
-  recipe.sources = sources;
-
-  const updatedRecipe = await recipe.save();
-  return res.send(updatedRecipe);
-});
+);
 
 recipeController.delete(
   "/:id",
