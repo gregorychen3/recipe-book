@@ -6,6 +6,7 @@ import recipeController from "./controllers/recipeController";
 import testController from "./controllers/testController";
 import "./db/db"; // for side effect of initializing db conn
 import logger from "./logger";
+import migrationController from "./controllers/migrationController";
 
 const server = express();
 
@@ -19,6 +20,7 @@ logger.info(`Serving UI static assets from ${uiStaticAssetsPath}`);
 
 server.use("/test/", testController);
 server.use("/api/recipes", recipeController);
+server.use("/api/migrate", migrationController);
 
 // catchall: send UI index.html file.
 server.get("/*", (req, res) => {
