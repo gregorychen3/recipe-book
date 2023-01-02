@@ -15,17 +15,19 @@ const deleteRecipeQ = "DELETE FROM recipe WHERE id=$1 returning body";
 const recipeController = express.Router();
 
 recipeController.get("/", async (_, res) => {
-  const dbResp = await db.query(selectRecipesQ);
-  return res.send(dbResp.rows);
+  const dbResp = await db.query<{ body: Recipe }>(selectRecipesQ);
+  return res.send(dbResp.rows.map((row) => row.body));
 });
 
 recipeController.get("/:id", async (req, res) => {
-  const dbResp = await db.query(selectRecipeQ, [req.params.id]);
+  const dbResp = await db.query<{ body: Recipe }>(selectRecipeQ, [
+    req.params.id,
+  ]);
   if (!dbResp.rowCount) {
     return res.sendStatus(404);
   }
 
-  return res.send(dbResp.rows[0]);
+  return res.send(dbResp.rows[0].body);
 });
 
 recipeController.post(
@@ -40,8 +42,11 @@ recipeController.post(
     const recipe: Recipe = req.body;
     recipe.id = uuidv4();
 
-    const dbResp = await db.query(createRecipeQ, [recipe.id, recipe]);
-    return res.send(dbResp.rows[0]);
+    const dbResp = await db.query<{ body: Recipe }>(createRecipeQ, [
+      recipe.id,
+      recipe,
+    ]);
+    return res.send(dbResp.rows[0].body);
   }
 );
 
@@ -57,8 +62,11 @@ recipeController.post(
         .send({ error: "url param and recipe body id do not match" });
     }
 
-    const dbResp = await db.query(updateRecipeQ, [recipe, rid]);
-    return res.send(dbResp.rows[0]);
+    const dbResp = await db.query<{ body: Recipe }>(updateRecipeQ, [
+      recipe,
+      rid,
+    ]);
+    return res.send(dbResp.rows[0].body);
   }
 );
 
@@ -66,8 +74,8 @@ recipeController.delete(
   "/:id",
   /*auth,*/ async (req, res) => {
     const rid = req.params.id;
-    const dbResp = await db.query(deleteRecipeQ, [rid]);
-    return res.send(dbResp.rows);
+    const dbResp = await db.query<{ body: Recipe }>(deleteRecipeQ, [rid]);
+    return res.send(dbResp.rows.map((row) => row.body));
   }
 );
 

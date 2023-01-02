@@ -2,7 +2,7 @@ import { Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { IRecipeModel } from "../../../src/db/recipe";
+import { Recipe as RecipeModel } from "../../../src/recipe";
 import { useApi } from "../app/hooks";
 import { DeleteRecipeDialog } from "../features/recipe/DeleteRecipeDialog";
 import { Recipe } from "../features/recipe/Recipe";
@@ -13,12 +13,14 @@ export function RecipePage() {
   const d = useDispatch();
   const h = useHistory();
 
-  const [deleteDialogData, setDeleteDialogData] = useState<string | undefined>(undefined);
+  const [deleteDialogData, setDeleteDialogData] = useState<string | undefined>(
+    undefined
+  );
 
   const { recipeId } = useParams<{ recipeId: string }>();
   const recipe = useSelector(selectRecipe(recipeId));
 
-  const getRecipe = useApi<IRecipeModel>("GET", `/api/recipes/${recipeId}`);
+  const getRecipe = useApi<RecipeModel>("GET", `/api/recipes/${recipeId}`);
   useEffect(() => {
     const [call] = getRecipe();
     call.then((resp) => d(putRecipe(resp.data)));
@@ -34,10 +36,18 @@ export function RecipePage() {
 
   return (
     <>
-      <DeleteRecipeDialog recipeId={deleteDialogData} onClose={handleCloseDeleteDialog} />
+      <DeleteRecipeDialog
+        recipeId={deleteDialogData}
+        onClose={handleCloseDeleteDialog}
+      />
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <RecipeHeader title={recipe.name} onDelete={handleShowDeleteDialog} onEdit={handleEditClicked} disableSave />
+          <RecipeHeader
+            title={recipe.name}
+            onDelete={handleShowDeleteDialog}
+            onEdit={handleEditClicked}
+            disableSave
+          />
         </Grid>
         <Grid item xs={12}>
           <Recipe recipe={recipe} />

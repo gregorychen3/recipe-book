@@ -1,17 +1,22 @@
 import { Grid } from "@mui/material";
 import { useEffect } from "react";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
-import { IRecipe } from "../../../../../src/types";
+import { Recipe } from "../../../../../src/recipe";
 import { GeneralSection } from "./GeneralSection";
 import { IngredientsSection } from "./IngredientsSection";
 import { InstructionsSection } from "./InstructionsSection";
 import { SourcesSection } from "./SourcesSection";
-import { defaultValues, RecipeFormValues, recipeFromValues, valuesFromRecipe } from "./types";
+import {
+  defaultValues,
+  RecipeFormValues,
+  recipeFromValues,
+  valuesFromRecipe,
+} from "./types";
 
 interface Props {
-  recipe?: IRecipe;
-  onSubmit: (recipe: IRecipe) => void;
-  onChange: (recipe: IRecipe) => void;
+  recipe?: Recipe;
+  onSubmit: (recipe: Recipe) => void;
+  onChange: (recipe: Recipe) => void;
 }
 
 export function RecipeForm({ recipe, onSubmit, onChange }: Props) {

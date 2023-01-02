@@ -11,3 +11,5 @@ export const db = new Client({
     rejectUnauthorized: false,
   },
 });
+
+db.connect();
