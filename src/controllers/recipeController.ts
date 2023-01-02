@@ -2,6 +2,8 @@ import express, { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { IRecipeModel, Recipe } from "../db/recipe";
 import { recipeValidation } from "../middlewares/recipeValidation";
+const { MongoClient } = require("mongodb");
+const { Client } = require("pg");
 
 const recipeController = express.Router();
 
@@ -91,6 +93,66 @@ recipeController.delete(
 
     const deleted = await recipe.remove();
     return res.send({ id: deleted.id });
+  }
+);
+
+recipeController.get(
+  "/migrate",
+  /*auth,*/ async (_, res) => {
+    const insertQ = "INSERT INTO recipe(id, body) VALUES(gen_random_uuid(), $1) RETURNING *";
+
+    const pgdburl =
+      "postgres://txlwfrblsnymrh:be0b38b28da1400dc6178fd3da5d79f1c1af197593029f4a6cede5d838d154a7@ec2-34-197-84-74.compute-1.amazonaws.com:5432/dd0hh4sp8fvbep";
+    const pgClient = new Client({ connectionString: pgdburl });
+
+    const mongoUrl =
+      "mongodb+srv://gregorychen3:iloveEden2020!m@cluster-n22h8djp.xxzy7.mongodb.net/heroku_n22h8djp?retryWrites=true&w=majority";
+    const mongoClient = new MongoClient(mongoUrl);
+
+    console.log("main");
+    await mongoClient.connect();
+    await pgClient.connect();
+    console.log("connected");
+
+    const dbName = "heroku_n22h8djp";
+    const db = mongoClient.db(dbName);
+    const collection = db.collection("recipes");
+    const results = await collection.find({}).toArray();
+    const recipes = JSON.parse(JSON.stringify(results));
+    const migrated = recipes.map((r: any) => {
+      r.id = r._id;
+      delete r._id;
+
+      r.lastUpdatedAt = new Date().toISOString();
+      delete r.__v;
+
+      r.ingredients = r.ingredients.map((i: any) => {
+        delete i._id;
+        return i;
+      });
+
+      r.tags = {
+        cuisine: r.cuisine,
+        course: r.course,
+      };
+
+      delete r.cuisine;
+      delete r.course;
+
+      return r;
+    });
+
+    for (let i = 0; i < migrated.length; i++) {
+      const r = migrated[i];
+      pgClient
+        .query(insertQ, [JSON.stringify(r)])
+        //.then((res) => console.log(res.rows[0]))
+        .catch((e: any) => console.error(e.stack));
+    }
+
+    console.log("finish main");
+
+    return res.send({ status: 200 });
   }
 );
 
