@@ -1,9 +1,17 @@
 import LanguageIcon from "@mui/icons-material/Language";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
-import { Grid, InputAdornment, Link, List, ListItem, ListItemText, TextField } from "@mui/material";
+import {
+  Grid,
+  InputAdornment,
+  Link,
+  List,
+  ListItem,
+  ListItemText,
+  TextField,
+} from "@mui/material";
 import { LabelDivider } from "mui-label-divider";
 import React, { useEffect, useState } from "react";
-import { IRecipe } from "../../../../src/types";
+import { Recipe as RecipeModel } from "../../../../src/recipe";
 import { formatIngredient } from "../../features/recipe/helpers";
 
 const urlRegex = new RegExp(
@@ -19,7 +27,7 @@ const urlRegex = new RegExp(
 const isValidURL = (s: string) => urlRegex.test(s);
 
 interface Props {
-  recipe: IRecipe;
+  recipe: RecipeModel;
 }
 
 export function Recipe({ recipe }: Props) {
@@ -28,7 +36,8 @@ export function Recipe({ recipe }: Props) {
     setServings(recipe.servings);
   }, [recipe.servings]);
 
-  const handleServingsChanged = (e: React.ChangeEvent<HTMLInputElement>) => setServings(parseFloat(e.target.value));
+  const handleServingsChanged = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setServings(parseFloat(e.target.value));
 
   return (
     <>
@@ -38,13 +47,20 @@ export function Recipe({ recipe }: Props) {
             <LabelDivider label="INGREDIENTS" />
           </Grid>
           <Grid item xs={6}>
-            <TextField label="Servings" type="number" value={servings} onChange={handleServingsChanged} />
+            <TextField
+              label="Servings"
+              type="number"
+              value={servings}
+              onChange={handleServingsChanged}
+            />
           </Grid>
           <Grid item xs={6}>
             <List component="ul" dense>
               {recipe.ingredients.map((i, idx) => (
                 <ListItem key={idx}>
-                  <ListItemText primary={formatIngredient(i, recipe.servings, servings)} />
+                  <ListItemText
+                    primary={formatIngredient(i, recipe.servings, servings)}
+                  />
                 </ListItem>
               ))}
             </List>
@@ -68,7 +84,7 @@ export function Recipe({ recipe }: Props) {
           <Grid item xs={6}>
             <TextField
               label="Cuisine"
-              value={recipe.cuisine}
+              value={recipe.tags.cuisine}
               disabled
               fullWidth
               InputProps={{
@@ -83,7 +99,7 @@ export function Recipe({ recipe }: Props) {
           <Grid item xs={6}>
             <TextField
               label="Course"
-              value={recipe.course}
+              value={recipe.tags.course}
               disabled
               fullWidth
               InputProps={{

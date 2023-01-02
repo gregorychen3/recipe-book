@@ -3,8 +3,7 @@ import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { IRecipeModel } from "../../../src/db/recipe";
-import { IRecipe } from "../../../src/types";
+import { Recipe } from "../../../src/recipe";
 import { useApi } from "../app/hooks";
 import { RecipeForm } from "../features/recipe/RecipeForm";
 import { RecipeHeader } from "../features/recipe/RecipeHeader";
@@ -17,13 +16,15 @@ export function CreateRecipePage() {
 
   const [headerText, setHeaderText] = useState("");
 
-  const handleRecipeEdited = (recipe: IRecipe) => setHeaderText(recipe.name);
+  const handleRecipeEdited = (recipe: Recipe) => setHeaderText(recipe.name);
 
-  const createRecipe = useApi<IRecipeModel>("POST", `/api/recipes`);
-  const handleSubmit = (recipe: IRecipe) => {
+  const createRecipe = useApi<Recipe>("POST", `/api/recipes`);
+  const handleSubmit = (recipe: Recipe) => {
     const [call] = createRecipe(recipe);
     call.then((resp) => {
-      enqueueSnackbar(`Successfully created recipe ${resp.data.name}`, { variant: "success" });
+      enqueueSnackbar(`Successfully created recipe ${resp.data.name}`, {
+        variant: "success",
+      });
       d(putRecipe(resp.data));
       h.push(`/recipes/${resp.data.id}`);
     });

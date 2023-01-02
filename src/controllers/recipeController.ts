@@ -1,96 +1,81 @@
 import express, { Request, Response } from "express";
 import { validationResult } from "express-validator";
-import { IRecipeModel, Recipe } from "../db/recipe";
+import { v4 as uuidv4 } from "uuid";
+import { db } from "../db/db";
 import { recipeValidation } from "../middlewares/recipeValidation";
+import { Recipe } from "../recipe";
+
+const selectRecipeQ = "SELECT body FROM recipe WHERE id=$1";
+const selectRecipesQ = "SELECT body FROM recipe";
+const createRecipeQ =
+  "INSERT INTO recipe(id, body) VALUES($1, $2) RETURNING body";
+const updateRecipeQ = "UPDATE recipe set body=$1 where id=$2 RETURNING body";
+const deleteRecipeQ = "DELETE FROM recipe WHERE id=$1 returning body";
 
 const recipeController = express.Router();
 
 recipeController.get("/", async (_, res) => {
-  const recipes = await Recipe.find();
-  return res.send(recipes);
+  const dbResp = await db.query<{ body: Recipe }>(selectRecipesQ);
+  return res.send(dbResp.rows.map((row) => row.body));
 });
 
 recipeController.get("/:id", async (req, res) => {
-  var recipe: IRecipeModel | null;
-  try {
-    recipe = await Recipe.findOne({ _id: req.params.id });
-  } catch (e) {
-    return res.status(400).send(e.message);
-  }
-  return recipe ? res.send(recipe) : res.sendStatus(404);
-});
-
-recipeController.post("/", /*auth,*/ recipeValidation, async (req: Request, res: Response) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).send({ errors: errors.array({ onlyFirstError: true }) });
-  }
-
-  const { name, course, cuisine, servings, ingredients, instructions, sources } = req.body;
-
-  const recipe = new Recipe({
-    name,
-    course,
-    cuisine,
-    servings,
-    ingredients,
-    instructions,
-    sources,
-  });
-
-  try {
-    const newRecipe = await recipe.save();
-    return res.send(newRecipe);
-  } catch (e) {
-    return res.status(500).send({ errors: errors.array({ onlyFirstError: true }) });
-  }
-});
-
-recipeController.post("/:id", /*auth,*/ recipeValidation, async (req: Request, res: Response) => {
-  let recipe: IRecipeModel | null;
-  try {
-    recipe = await Recipe.findOne({ _id: req.params.id }).exec();
-  } catch (e) {
-    return res.status(400).send(e.message);
-  }
-  if (!recipe) {
+  const dbResp = await db.query<{ body: Recipe }>(selectRecipeQ, [
+    req.params.id,
+  ]);
+  if (!dbResp.rowCount) {
     return res.sendStatus(404);
   }
 
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(422).send({ errors: errors.array({ onlyFirstError: true }) });
-  }
-
-  const { name, course, cuisine, servings, ingredients, instructions, sources } = req.body;
-
-  recipe.name = name;
-  recipe.course = course;
-  recipe.cuisine = cuisine;
-  recipe.servings = servings;
-  recipe.ingredients = ingredients;
-  recipe.instructions = instructions;
-  recipe.sources = sources;
-
-  const updatedRecipe = await recipe.save();
-  return res.send(updatedRecipe);
+  return res.send(dbResp.rows[0].body);
 });
+
+recipeController.post(
+  "/",
+  /*auth,*/ recipeValidation,
+  async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).send({ errors: errors.array() });
+    }
+
+    const recipe: Recipe = req.body;
+    recipe.id = uuidv4();
+
+    const dbResp = await db.query<{ body: Recipe }>(createRecipeQ, [
+      recipe.id,
+      recipe,
+    ]);
+    return res.send(dbResp.rows[0].body);
+  }
+);
+
+recipeController.post(
+  "/:id",
+  /*auth,*/ recipeValidation,
+  async (req: Request, res: Response) => {
+    const rid = req.params.id;
+    const recipe: Recipe = req.body;
+    if (rid !== recipe.id) {
+      res
+        .status(400)
+        .send({ error: "url param and recipe body id do not match" });
+    }
+
+    const dbResp = await db.query<{ body: Recipe }>(updateRecipeQ, [
+      recipe,
+      rid,
+    ]);
+    return res.send(dbResp.rows[0].body);
+  }
+);
 
 recipeController.delete(
   "/:id",
   /*auth,*/ async (req, res) => {
-    let recipe: IRecipeModel | null;
-    try {
-      recipe = await Recipe.findOne({ _id: req.params.id });
-    } catch (e) {
-      return res.status(400).send(e.message);
-    }
-    if (!recipe) {
-      return res.sendStatus(404);
-    }
-
-    const deleted = await recipe.remove();
-    return res.send({ id: deleted.id });
+    const rid = req.params.id;
+    const dbResp = await db.query<{ body: Recipe }>(deleteRecipeQ, [rid]);
+    return res.send(dbResp.rows[0].body);
   }
 );
 

@@ -1,11 +1,15 @@
-import mongoose from "mongoose";
+import { Client } from "pg";
 import logger from "../logger";
 
-const MONGODB_URI = process.env.MONGODB_URI || "";
+const DATABASE_URL = process.env.DATABASE_URL || "";
 
-logger.info(`Connecting to mongo at ${MONGODB_URI}`);
+logger.info(`Connecting to postgres`);
 
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+export const db = new Client({
+  connectionString: DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
 
-const db = mongoose.connection;
-db.on("error", (err) => logger.error(`Failed connecting to mongodb: ${err}`));
+db.connect();

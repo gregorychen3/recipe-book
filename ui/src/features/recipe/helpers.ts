@@ -1,10 +1,16 @@
-import { IIngredient, IRecipe } from "../../../../src/types";
+import { Ingredient, Recipe } from "../../../../src/recipe";
 
-export const formatIngredient = (i: IIngredient, defaultServings: number, desiredServings: number) => {
+export const formatIngredient = (
+  i: Ingredient,
+  defaultServings: number,
+  desiredServings: number
+) => {
   let ret = "";
 
   if (i.qty) {
-    const qtyDisplay = desiredServings ? ((i.qty / defaultServings) * desiredServings).toFixed(2) : "--";
+    const qtyDisplay = desiredServings
+      ? ((i.qty / defaultServings) * desiredServings).toFixed(2)
+      : "--";
     ret += `${qtyDisplay} `;
   }
 
@@ -13,4 +19,6 @@ export const formatIngredient = (i: IIngredient, defaultServings: number, desire
   return ret;
 };
 
-export const getCuisines = (recipes: IRecipe[]) => [...new Set<string>(recipes.map((r) => r.cuisine))];
+export const getCuisines = (recipes: Recipe[]) => [
+  ...new Set<string>(recipes.map((r) => r.tags.cuisine)),
+];

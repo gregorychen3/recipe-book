@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IRecipeModel } from "../../../../src/db/recipe";
+import { Recipe } from "../../../../src/recipe";
 import { RootState } from "../../app/store";
 
 interface RecipeState {
-  recipesById: { [id: string]: IRecipeModel };
+  recipesById: { [id: string]: Recipe };
 }
 
 const initialState: RecipeState = { recipesById: {} };
@@ -12,10 +12,10 @@ const recipeSlice = createSlice({
   name: "recipe",
   initialState,
   reducers: {
-    putRecipe: (state, { payload }: PayloadAction<IRecipeModel>) => {
+    putRecipe: (state, { payload }: PayloadAction<Recipe>) => {
       state.recipesById[payload.id] = payload;
     },
-    putRecipes: (state, { payload }: PayloadAction<IRecipeModel[]>) => {
+    putRecipes: (state, { payload }: PayloadAction<Recipe[]>) => {
       payload.forEach((r) => {
         state.recipesById[r.id] = r;
       });
@@ -34,4 +34,5 @@ export const { reducer: recipeReducer } = recipeSlice;
 // ---------
 
 export const selectRecipes = (state: RootState) => state.recipe.recipesById;
-export const selectRecipe = (recipeId: string) => (state: RootState) => state.recipe.recipesById[recipeId];
+export const selectRecipe = (recipeId: string) => (state: RootState) =>
+  state.recipe.recipesById[recipeId];
