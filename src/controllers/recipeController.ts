@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { IRecipeModel, Recipe } from "../db/recipe";
+import logger from "../logger";
 import { recipeValidation } from "../middlewares/recipeValidation";
 const { MongoClient } = require("mongodb");
 const { Client } = require("pg");
@@ -99,6 +100,7 @@ recipeController.delete(
 recipeController.get(
   "/migrate",
   /*auth,*/ async (_, res) => {
+    logger.info(`1`);
     const insertQ = "INSERT INTO recipe(id, body) VALUES(gen_random_uuid(), $1) RETURNING *";
 
     const pgdburl =
@@ -109,16 +111,19 @@ recipeController.get(
       "mongodb+srv://gregorychen3:iloveEden2020!m@cluster-n22h8djp.xxzy7.mongodb.net/heroku_n22h8djp?retryWrites=true&w=majority";
     const mongoClient = new MongoClient(mongoUrl);
 
+    logger.info(`2`);
     console.log("main");
     await mongoClient.connect();
     await pgClient.connect();
     console.log("connected");
 
+    logger.info(`3`);
     const dbName = "heroku_n22h8djp";
     const db = mongoClient.db(dbName);
     const collection = db.collection("recipes");
     const results = await collection.find({}).toArray();
     const recipes = JSON.parse(JSON.stringify(results));
+    logger.info(`4`);
     const migrated = recipes.map((r: any) => {
       r.id = r._id;
       delete r._id;
@@ -142,6 +147,7 @@ recipeController.get(
       return r;
     });
 
+    logger.info(`5`);
     for (let i = 0; i < migrated.length; i++) {
       const r = migrated[i];
       pgClient
@@ -150,7 +156,7 @@ recipeController.get(
         .catch((e: any) => console.error(e.stack));
     }
 
-    console.log("finish main");
+    logger.info(`6`);
 
     return res.send({ status: 200 });
   }
