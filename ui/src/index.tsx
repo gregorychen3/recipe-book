@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { App } from "./App";
 import { store } from "./app/store";
-import reportWebVitals from "./reportWebVitals";
+import { reportWebVitals } from "./reportWebVitals";
 import { theme } from "./theme";
 
 const container = document.getElementById("root")!;
@@ -17,7 +17,10 @@ root.render(
     <BrowserRouter>
       <Provider store={store}>
         <ThemeProvider theme={theme}>
-          <SnackbarProvider maxSnack={3} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
+          <SnackbarProvider
+            maxSnack={3}
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          >
             <App />
           </SnackbarProvider>
         </ThemeProvider>
