@@ -2,6 +2,7 @@ import express from "express";
 import logger from "../logger";
 const { MongoClient } = require("mongodb");
 const { Client } = require("pg");
+const { v4: uuidv4 } = require("uuid");
 
 const migrationController = express.Router();
 
@@ -9,11 +10,16 @@ migrationController.get(
   "/",
   /*auth,*/ async (_, res) => {
     logger.info(`1`);
-    const insertQ = "INSERT INTO recipe(id, body) VALUES(gen_random_uuid(), $1) RETURNING *";
+    const insertQ = "INSERT INTO recipe(id, body) VALUES($1, $2) RETURNING *";
 
     const pgdburl =
       "postgres://txlwfrblsnymrh:be0b38b28da1400dc6178fd3da5d79f1c1af197593029f4a6cede5d838d154a7@ec2-34-197-84-74.compute-1.amazonaws.com:5432/dd0hh4sp8fvbep";
-    const pgClient = new Client({ connectionString: pgdburl });
+    const pgClient = new Client({
+      connectionString: "recipe",
+      ssl: {
+        rejectUnauthorized: false,
+      },
+    });
 
     const mongoUrl =
       "mongodb+srv://gregorychen3:iloveEden2020!m@cluster-n22h8djp.xxzy7.mongodb.net/heroku_n22h8djp?retryWrites=true&w=majority";
@@ -33,7 +39,7 @@ migrationController.get(
     const recipes = JSON.parse(JSON.stringify(results));
     logger.info(`4`);
     const migrated = recipes.map((r: any) => {
-      r.id = r._id;
+      r.id = uuidv4();
       delete r._id;
 
       r.lastUpdatedAt = new Date().toISOString();
@@ -59,7 +65,7 @@ migrationController.get(
     for (let i = 0; i < migrated.length; i++) {
       const r = migrated[i];
       pgClient
-        .query(insertQ, [JSON.stringify(r)])
+        .query(insertQ, [r.id, JSON.stringify(r)])
         //.then((res) => console.log(res.rows[0]))
         .catch((e: any) => console.error(e.stack));
     }
