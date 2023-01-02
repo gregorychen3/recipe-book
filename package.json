@@ -32,7 +32,7 @@
     "@types/pg": "^8.6.6",
     "@types/uuid": "^9.0.0",
     "axios": "^0.21.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-validator": "^6.10.0",
     "http-errors": "^1.8.0",
     "morgan": "^1.10.0",
