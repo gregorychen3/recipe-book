@@ -2,10 +2,10 @@ import express, { NextFunction, Request, Response } from "express";
 import createError, { HttpError } from "http-errors";
 import morgan from "morgan";
 import path from "path";
-import recipeController from "./controllers/recipeController";
-import testController from "./controllers/testController";
+import { recipeController } from "./controllers/recipeController";
+import { testController } from "./controllers/testController";
 import "./db/db"; // for side effect of initializing db conn
-import logger from "./logger";
+import { logger } from "./logger";
 
 const server = express();
 
@@ -30,14 +30,16 @@ server.get("/*", (req, res) => {
 server.use((req, res, next) => next(createError(404)));
 
 // error handler
-server.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+server.use(
+  (err: HttpError, req: Request, res: Response, next: NextFunction) => {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get("env") === "development" ? err : {};
 
-  res.status(err.status ?? 500);
-  return res.send(err.message);
-});
+    res.status(err.status ?? 500);
+    return res.send(err.message);
+  }
+);
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {

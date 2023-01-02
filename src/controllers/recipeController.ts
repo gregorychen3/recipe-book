@@ -12,7 +12,7 @@ const createRecipeQ =
 const updateRecipeQ = "UPDATE recipe set body=$1 where id=$2 RETURNING body";
 const deleteRecipeQ = "DELETE FROM recipe WHERE id=$1 returning body";
 
-const recipeController = express.Router();
+export const recipeController = express.Router();
 
 recipeController.get("/", async (_, res) => {
   const dbResp = await db.query<{ body: Recipe }>(selectRecipesQ);
@@ -78,5 +78,3 @@ recipeController.delete(
     return res.send(dbResp.rows[0].body);
   }
 );
-
-export default recipeController;
