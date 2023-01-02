@@ -1,12 +1,12 @@
 import { Client } from "pg";
 import logger from "../logger";
 
-const PG_CONN_STR = process.env.PG_CONN_STR || "";
+const DATABASE_URL = process.env.DATABASE_URL || "";
 
 logger.info(`Connecting to postgres`);
 
 export const db = new Client({
-  connectionString: PG_CONN_STR,
+  connectionString: DATABASE_URL,
   ssl: {
     rejectUnauthorized: false,
   },
