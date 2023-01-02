@@ -12,14 +12,14 @@ const createRecipeQ =
 const updateRecipeQ = "UPDATE recipe set body=$1 where id=$2 RETURNING body";
 const deleteRecipeQ = "DELETE FROM recipe WHERE id=$1 returning body";
 
-export const recipeController = express.Router();
+export const recipeRouter = express.Router();
 
-recipeController.get("/", async (_, res) => {
+recipeRouter.get("/", async (_, res) => {
   const dbResp = await db.query<{ body: Recipe }>(selectRecipesQ);
   return res.send(dbResp.rows.map((row) => row.body));
 });
 
-recipeController.get("/:id", async (req, res) => {
+recipeRouter.get("/:id", async (req, res) => {
   const dbResp = await db.query<{ body: Recipe }>(selectRecipeQ, [
     req.params.id,
   ]);
@@ -30,7 +30,7 @@ recipeController.get("/:id", async (req, res) => {
   return res.send(dbResp.rows[0].body);
 });
 
-recipeController.post(
+recipeRouter.post(
   "/",
   /*auth,*/ recipeValidation,
   async (req: Request, res: Response) => {
@@ -50,7 +50,7 @@ recipeController.post(
   }
 );
 
-recipeController.post(
+recipeRouter.post(
   "/:id",
   /*auth,*/ recipeValidation,
   async (req: Request, res: Response) => {
@@ -70,7 +70,7 @@ recipeController.post(
   }
 );
 
-recipeController.delete(
+recipeRouter.delete(
   "/:id",
   /*auth,*/ async (req, res) => {
     const rid = req.params.id;

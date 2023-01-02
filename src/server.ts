@@ -2,10 +2,11 @@ import express, { NextFunction, Request, Response } from "express";
 import createError, { HttpError } from "http-errors";
 import morgan from "morgan";
 import path from "path";
-import { recipeController } from "./controllers/recipeController";
-import { testController } from "./controllers/testController";
-import "./db/db"; // for side effect of initializing db conn
+import { recipeRouter } from "./routes/recipeRouter";
+import { testRouter } from "./routes/testRouter";
 import { logger } from "./logger";
+
+import "./db/db"; // for side effect of initializing db conn
 
 const server = express();
 
@@ -17,8 +18,8 @@ const uiStaticAssetsPath = path.join(__dirname, "/../ui/build");
 server.use(express.static(uiStaticAssetsPath));
 logger.info(`Serving UI static assets from ${uiStaticAssetsPath}`);
 
-server.use("/test/", testController);
-server.use("/api/recipes", recipeController);
+server.use("/test/", testRouter);
+server.use("/api/recipes", recipeRouter);
 
 // catchall: send UI index.html file.
 server.get("/*", (req, res) => {
