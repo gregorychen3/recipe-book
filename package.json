@@ -2,16 +2,28 @@
   "name": "recipe-book",
   "version": "1.0.0",
   "description": "",
+  "homepage": "https://github.com/gregorychen3/recipe-book#readme",
+  "bugs": {
+    "url": "https://github.com/gregorychen3/recipe-book/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gregorychen3/recipe-book.git"
+  },
+  "license": "ISC",
+  "author": "",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/server.js",
-    "start:dev": "nodemon",
     "build": "npm run build:api && npm run build:ui",
     "build:api": "tsc",
     "build:ui": "cd ui && npm i && npm run build",
+    "start": "node dist/server.js",
+    "start:dev": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "nodemonConfig": {
+    "exec": "node --inspect=5858 -r ts-node/register ./src/server.ts",
+    "ext": "ts",
     "ignore": [
       "**/*.test.ts",
       "**/*.spec.ts",
@@ -20,9 +32,7 @@
     ],
     "watch": [
       "src"
-    ],
-    "exec": "node --inspect=5858 -r ts-node/register ./src/server.ts",
-    "ext": "ts"
+    ]
   },
   "dependencies": {
     "@types/express": "^4.17.15",
@@ -44,16 +54,6 @@
     "uuid": "^9.0.0",
     "winston": "^3.8.2"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/gregorychen3/recipe-book.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/gregorychen3/recipe-book/issues"
-  },
-  "homepage": "https://github.com/gregorychen3/recipe-book#readme",
   "engines": {
     "node": "=16"
   }
