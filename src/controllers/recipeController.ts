@@ -75,7 +75,7 @@ recipeController.delete(
   /*auth,*/ async (req, res) => {
     const rid = req.params.id;
     const dbResp = await db.query<{ body: Recipe }>(deleteRecipeQ, [rid]);
-    return res.send(dbResp.rows.map((row) => row.body));
+    return res.send(dbResp.rows[0].body);
   }
 );
 

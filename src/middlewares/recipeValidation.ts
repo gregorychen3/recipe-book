@@ -1,7 +1,7 @@
 import { check } from "express-validator";
 
 export const recipeValidation = [
-  check("id").exists().isString().notEmpty(),
+  check("id").exists().isString(),
   check("name").exists().isString().notEmpty(),
   check("servings").exists().isNumeric(),
   check("ingredients").exists().isArray(),
