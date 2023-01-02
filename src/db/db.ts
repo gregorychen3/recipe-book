@@ -5,7 +5,7 @@ const PG_CONN_STR = process.env.PG_CONN_STR || "";
 
 logger.info(`Connecting to postgres`);
 
-export const pgClient = new Client({
+export const db = new Client({
   connectionString: PG_CONN_STR,
   ssl: {
     rejectUnauthorized: false,
