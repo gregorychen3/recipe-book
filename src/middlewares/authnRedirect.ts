@@ -8,6 +8,6 @@ export const authnRedirect = (
   if (req.user) {
     return next();
   }
-  console.log(2);
-  return res.redirect("/login/federated/google");
+
+  return res.redirect("/authn/login/federated/google");
 };

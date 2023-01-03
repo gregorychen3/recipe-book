@@ -8,7 +8,7 @@ passport.use(
     {
       clientID: process.env["GOOGLE_CLIENT_ID"],
       clientSecret: process.env["GOOGLE_CLIENT_SECRET"],
-      callbackURL: "/oauth2/redirect/google",
+      callbackURL: "/authn/oauth2/redirect/google",
       scope: ["profile"],
     },
     function verify(issuer: any, profile: any, cb: any) {
@@ -67,10 +67,6 @@ passport.use(
 );
 
 export const authnRouter = express.Router();
-
-//authRouter.get("/login", function (req, res, next) {
-//  res.render("login");
-//});
 
 authnRouter.get("/login/federated/google", passport.authenticate("google"));
 
