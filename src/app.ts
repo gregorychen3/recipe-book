@@ -30,7 +30,6 @@ app.use(
   })
 );
 app.use(passport.authenticate("session"));
-
 app.use("/authn", authnRouter);
 
 app.use("/", uiRouter);

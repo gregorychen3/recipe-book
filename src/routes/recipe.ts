@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { v4 as uuidv4 } from "uuid";
 import { db } from "../db/db";
+import { authz } from "../middlewares/authz";
 import { recipeValidation } from "../middlewares/recipeValidation";
 import { Recipe } from "../recipe";
 
@@ -32,7 +33,8 @@ recipeRouter.get("/:id", async (req, res) => {
 
 recipeRouter.post(
   "/",
-  /*auth,*/ recipeValidation,
+  authz,
+  recipeValidation,
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -52,7 +54,8 @@ recipeRouter.post(
 
 recipeRouter.post(
   "/:id",
-  /*auth,*/ recipeValidation,
+  authz,
+  recipeValidation,
   async (req: Request, res: Response) => {
     const rid = req.params.id;
     const recipe: Recipe = req.body;
@@ -70,11 +73,8 @@ recipeRouter.post(
   }
 );
 
-recipeRouter.delete(
-  "/:id",
-  /*auth,*/ async (req, res) => {
-    const rid = req.params.id;
-    const dbResp = await db.query<{ body: Recipe }>(deleteRecipeQ, [rid]);
-    return res.send(dbResp.rows[0].body);
-  }
-);
+recipeRouter.delete("/:id", authz, async (req, res) => {
+  const rid = req.params.id;
+  const dbResp = await db.query<{ body: Recipe }>(deleteRecipeQ, [rid]);
+  return res.send(dbResp.rows[0].body);
+});
