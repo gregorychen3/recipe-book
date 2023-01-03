@@ -2,47 +2,45 @@ import express, { NextFunction, Request, Response } from "express";
 import createError, { HttpError } from "http-errors";
 import morgan from "morgan";
 import path from "path";
+import { logger } from "./logger";
 import { recipeRouter } from "./routes/recipe";
 import { testRouter } from "./routes/test";
-import { logger } from "./logger";
 
 import "./db/db"; // for side effect of initializing db conn
 
-const server = express();
+const app = express();
 
-server.use(morgan("dev"));
-server.use(express.json());
+app.use(morgan(process.env.NODE_ENV === "development" ? "dev" : "tiny"));
+app.use(express.json());
 
 // serve ui static files
 const uiStaticAssetsPath = path.join(__dirname, "/../ui/build");
-server.use(express.static(uiStaticAssetsPath));
+app.use(express.static(uiStaticAssetsPath));
 logger.info(`Serving UI static assets from ${uiStaticAssetsPath}`);
 
-server.use("/test/", testRouter);
-server.use("/api/recipes", recipeRouter);
+app.use("/test/", testRouter);
+app.use("/api/recipes", recipeRouter);
 
 // catchall: send UI index.html file.
-server.get("/*", (req, res) => {
+app.get("/*", (req, res) => {
   const file = path.join(__dirname, "/../ui/build/", "index.html");
   res.sendFile(file);
 });
 
 // catch 404 and forward to error handler
-server.use((req, res, next) => next(createError(404)));
+app.use((req, res, next) => next(createError(404)));
 
 // error handler
-server.use(
-  (err: HttpError, req: Request, res: Response, next: NextFunction) => {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get("env") === "development" ? err : {};
+app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get("env") === "development" ? err : {};
 
-    res.status(err.status ?? 500);
-    return res.send(err.message);
-  }
-);
+  res.status(err.status ?? 500);
+  return res.send(err.message);
+});
 
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
+app.listen(PORT, () => {
   logger.info(`Server is running in http://localhost:${PORT}`);
 });
