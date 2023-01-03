@@ -3,6 +3,7 @@ import createError, { HttpError } from "http-errors";
 import morgan from "morgan";
 import path from "path";
 import { logger } from "./logger";
+import { authRouter } from "./routes/auth";
 import { recipeRouter } from "./routes/recipe";
 import { testRouter } from "./routes/test";
 
@@ -17,6 +18,8 @@ app.use(express.json());
 const uiStaticAssetsPath = path.join(__dirname, "/../ui/build");
 app.use(express.static(uiStaticAssetsPath));
 logger.info(`Serving UI static assets from ${uiStaticAssetsPath}`);
+
+app.use("/", authRouter);
 
 app.use("/test/", testRouter);
 app.use("/api/recipes", recipeRouter);
