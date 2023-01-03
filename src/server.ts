@@ -2,8 +2,8 @@ import express, { NextFunction, Request, Response } from "express";
 import createError, { HttpError } from "http-errors";
 import morgan from "morgan";
 import path from "path";
-import { recipeRouter } from "./routes/recipeRouter";
-import { testRouter } from "./routes/testRouter";
+import { recipeRouter } from "./routes/recipe";
+import { testRouter } from "./routes/test";
 import { logger } from "./logger";
 
 import "./db/db"; // for side effect of initializing db conn
