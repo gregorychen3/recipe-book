@@ -4,4 +4,10 @@ export const authnRedirect = (
   req: Request,
   res: Response,
   next: NextFunction
-) => (req.user ? next() : res.redirect("/login/federated/google"));
+) => {
+  if (req.user) {
+    return next();
+  }
+  console.log(2);
+  return res.redirect("/login/federated/google");
+};
