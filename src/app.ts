@@ -3,11 +3,15 @@ import createError, { HttpError } from "http-errors";
 import morgan from "morgan";
 import path from "path";
 import { logger } from "./logger";
-import { authRouter } from "./routes/auth";
+import { authnRouter } from "./routes/authn";
 import { recipeRouter } from "./routes/recipe";
 import { testRouter } from "./routes/test";
+import session from "express-session";
+import passport from "passport";
 
 import "./db/db"; // for side effect of initializing db conn
+
+var SQLiteStore = require("connect-sqlite3")(session);
 
 const app = express();
 
@@ -19,7 +23,17 @@ const uiStaticAssetsPath = path.join(__dirname, "/../ui/build");
 app.use(express.static(uiStaticAssetsPath));
 logger.info(`Serving UI static assets from ${uiStaticAssetsPath}`);
 
-app.use("/", authRouter);
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: false,
+    store: new SQLiteStore({ db: "sessions.db", dir: "./var/db" }),
+  })
+);
+app.use(passport.authenticate("session"));
+
+app.use("/", authnRouter);
 
 app.use("/test/", testRouter);
 app.use("/api/recipes", recipeRouter);

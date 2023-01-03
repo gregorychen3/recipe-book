@@ -14,7 +14,8 @@ const deleteRecipeQ = "DELETE FROM recipe WHERE id=$1 returning body";
 
 export const recipeRouter = express.Router();
 
-recipeRouter.get("/", async (_, res) => {
+recipeRouter.get("/", async (req, res) => {
+  console.log(req.user);
   const dbResp = await db.query<{ body: Recipe }>(selectRecipesQ);
   return res.send(dbResp.rows.map((row) => row.body));
 });
