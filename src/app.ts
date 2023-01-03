@@ -19,7 +19,7 @@ const app = express();
 app.use(morgan(process.env.NODE_ENV === "development" ? "dev" : "tiny"));
 app.use(express.json());
 
-app.use("/test/", testRouter);
+app.use("/test", testRouter);
 
 app.use(
   session({
