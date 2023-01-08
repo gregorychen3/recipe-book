@@ -16,9 +16,12 @@ export function App() {
     <Box display="flex">
       <CssBaseline />
       <AppHeader />
-      <Box component="main" sx={{ flexGrow: 1, height: "100vh", overflow: "auto" }}>
+      <Box
+        component="main"
+        sx={{ flexGrow: 1, height: "100vh", overflow: "auto" }}
+      >
         <Toolbar />
-        <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
+        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
           <Switch>
             <Route path="/recipes/create">
               <CreateRecipePage />
