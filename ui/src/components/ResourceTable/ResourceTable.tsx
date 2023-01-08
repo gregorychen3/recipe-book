@@ -42,7 +42,7 @@ export interface ResourceTableProps<T, S> {
   columns: Column<T>[];
   actions?: Action[];
   selectActions?: SelectAction<T>[];
-  handleRowClick?: (item: T) => void;
+  onRowClick?: (item: T) => void;
   size?: "small" | "medium";
 }
 
@@ -58,7 +58,7 @@ export function ResourceTable<T, S>({
   title,
   actions,
   selectActions,
-  handleRowClick,
+  onRowClick,
   size = "medium",
 }: ResourceTableProps<T, S>) {
   const location = useLocation();
@@ -216,7 +216,7 @@ export function ResourceTable<T, S>({
                 return (
                   <TableRow
                     hover
-                    onClick={() => handleRowClick?.(item)}
+                    onClick={() => onRowClick?.(item)}
                     role="checkbox"
                     tabIndex={-1}
                     key={itemId}
