@@ -14,7 +14,6 @@ import { useSelector } from "react-redux";
 import { Link as RouterLink, useHistory } from "react-router-dom";
 import { selectActiveRequests } from "../features/api/apiSlice";
 import { GroupBy } from "../pages/RecipesPage";
-import { OauthAvatar } from "./OauthAvatar";
 
 const browseMenuOpts: { label: string; value: GroupBy }[] = [
   { label: "By Course", value: "course" },
@@ -34,7 +33,8 @@ export function AppHeader() {
 
   const isLoading = !_.isEmpty(useSelector(selectActiveRequests));
 
-  const handleMenu = (e: React.MouseEvent<HTMLElement>) => setAnchorEl(e.currentTarget);
+  const handleMenu = (e: React.MouseEvent<HTMLElement>) =>
+    setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
   const navToHome = () => h.push("/");
   const handleGroupByChanged = (groupBy: GroupBy) => {
@@ -45,7 +45,13 @@ export function AppHeader() {
   return (
     <AppBar position="absolute" color="inherit">
       <Toolbar>
-        <IconButton edge="start" color="inherit" onClick={navToHome} size="large" sx={{ mr: 2 }}>
+        <IconButton
+          edge="start"
+          color="inherit"
+          onClick={navToHome}
+          size="large"
+          sx={{ mr: 2 }}
+        >
           <RestaurantIcon />
         </IconButton>
         <Hidden smDown>
@@ -92,7 +98,6 @@ export function AppHeader() {
             <InfoIcon />
           </IconButton>
         </Hidden>
-        <OauthAvatar />
       </Toolbar>
       {isLoading && <LinearProgress />}
     </AppBar>
