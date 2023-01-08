@@ -9,57 +9,38 @@ passport.use(
       clientID: process.env["GOOGLE_CLIENT_ID"],
       clientSecret: process.env["GOOGLE_CLIENT_SECRET"],
       callbackURL: process.env["GOOGLE_CALLBACK_URL"],
-      scope: ["profile"],
+      scope: ["profile", "email"],
     },
     function verify(issuer: any, profile: any, cb: any) {
       authnDb.get(
-        "SELECT * FROM federated_credentials WHERE provider = ? AND subject = ?",
-        [issuer, profile.id],
+        "SELECT * FROM users WHERE id = ?",
+        [profile.id],
         function (err, row) {
           if (err) {
             return cb(err);
           }
+
           if (!row) {
             authnDb.run(
-              "INSERT INTO users (name) VALUES (?)",
-              [profile.displayName],
+              "INSERT INTO users (id, name) VALUES (?, ?)",
+              [profile.id, profile.displayName],
               function (err) {
                 if (err) {
                   return cb(err);
                 }
 
                 var id = this.lastID;
-                authnDb.run(
-                  "INSERT INTO federated_credentials (user_id, provider, subject) VALUES (?, ?, ?)",
-                  [id, issuer, profile.id],
-                  function (err) {
-                    if (err) {
-                      return cb(err);
-                    }
-                    var user = {
-                      id: id,
-                      name: profile.displayName,
-                    };
-                    return cb(null, user);
-                  }
-                );
+                var user = {
+                  id: id,
+                  name: profile.displayName,
+                };
+                return cb(null, user);
               }
             );
-          } else {
-            authnDb.get(
-              "SELECT * FROM users WHERE id = ?",
-              [row.user_id],
-              function (err, row) {
-                if (err) {
-                  return cb(err);
-                }
-                if (!row) {
-                  return cb(null, false);
-                }
-                return cb(null, row);
-              }
-            );
+            return;
           }
+
+          return cb(null, row);
         }
       );
     }
