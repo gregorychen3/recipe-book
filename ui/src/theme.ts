@@ -11,3 +11,13 @@ export const theme = createTheme({
     mode: "dark",
   },
 });
+
+theme.components = {
+  MuiTextField: {
+    defaultProps: {
+      variant: "standard",
+      fullWidth: true,
+      InputLabelProps: { shrink: true },
+    },
+  },
+};
