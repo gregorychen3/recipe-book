@@ -12,7 +12,7 @@ import { uiRouter } from "./routes/ui";
 
 import "./db/db"; // for side effect of initializing db conn
 
-var SQLiteStore = require("connect-sqlite3")(session);
+const SQLiteStore = require("connect-sqlite3")(session);
 
 const app = express();
 

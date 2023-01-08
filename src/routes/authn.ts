@@ -12,6 +12,7 @@ passport.use(
       scope: ["profile", "email"],
     },
     function verify(issuer: any, profile: any, cb: any) {
+      console.log(profile);
       authnDb.get(
         "SELECT * FROM users WHERE id = ?",
         [profile.id],
@@ -29,9 +30,8 @@ passport.use(
                   return cb(err);
                 }
 
-                var id = this.lastID;
-                var user = {
-                  id: id,
+                const user = {
+                  id: profile.id,
                   name: profile.displayName,
                 };
                 return cb(null, user);
