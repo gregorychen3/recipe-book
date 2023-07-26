@@ -1,6 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import AddIcon from "@mui/icons-material/Add";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import InfoIcon from "@mui/icons-material/Info";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
 import {
@@ -21,14 +20,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { selectActiveRequests } from "../features/api/apiSlice";
-import { GroupBy } from "../pages/RecipesPage";
 import { UserAvatar } from "./UserAvatar";
-
-const browseMenuOpts: { label: string; value: GroupBy }[] = [
-  { label: "By Course", value: "course" },
-  { label: "By Cuisine", value: "cuisine" },
-  { label: "A-Z", value: "alphabetical" },
-];
 
 const AppTitle = styled(Typography)<TypographyProps>(() => ({
   flexGrow: 1,
@@ -38,18 +30,9 @@ const AppTitle = styled(Typography)<TypographyProps>(() => ({
 export function AppHeader() {
   const nav = useNavigate();
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
   const isLoading = !_.isEmpty(useSelector(selectActiveRequests));
 
-  const handleMenu = (e: React.MouseEvent<HTMLElement>) =>
-    setAnchorEl(e.currentTarget);
-  const handleClose = () => setAnchorEl(null);
   const navToHome = () => nav("/");
-  const handleGroupByChanged = (groupBy: GroupBy) => {
-    nav(`/recipes?groupBy=${groupBy}`);
-    handleClose();
-  };
 
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
@@ -87,24 +70,7 @@ export function AppHeader() {
           </AppTitle>
         </Hidden>
         <div />
-        <Button onClick={handleMenu} color="inherit">
-          Browse
-          <ExpandMoreIcon fontSize="small" />
-        </Button>
-        <Menu
-          anchorEl={anchorEl}
-          anchorOrigin={{ vertical: "top", horizontal: "right" }}
-          keepMounted
-          transformOrigin={{ vertical: "top", horizontal: "right" }}
-          open={!!anchorEl}
-          onClose={handleClose}
-        >
-          {browseMenuOpts.map(({ label, value }) => (
-            <MenuItem onClick={() => handleGroupByChanged(value)} key={value}>
-              {label}
-            </MenuItem>
-          ))}
-        </Menu>
+
         <Hidden smDown>
           <Button color="inherit" component={RouterLink} to="/recipes/create">
             Add Recipe
