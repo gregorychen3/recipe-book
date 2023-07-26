@@ -57,29 +57,19 @@ const apiClient = (token: string) => {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
   return {
-    //
-    // video endpoints
-    // ---------------
+    listRecipes: async () => (await axios.get<Recipe[]>(`/api/recipes`)).data,
 
-    listRecipes: async () => {
-      return (await axios.get<Recipe[]>(`/api/recipes`)).data;
-    },
+    getRecipe: async (id: string) =>
+      (await axios.get<Recipe>(`/api/recipes/${id}`)).data,
 
-    getRecipe: async (id: string) => {
-      return (await axios.get<Recipe>(`/api/recipes/${id}`)).data;
-    },
+    createRecipe: async (r: Recipe) =>
+      (await axios.post<Recipe>(`/api/recipes`, r)).data,
 
-    createRecipe: async (r: Recipe) => {
-      return (await axios.post<Recipe>(`/api/recipes`, r)).data;
-    },
+    updateRecipe: async (r: Recipe) =>
+      (await axios.post<Recipe>(`/api/recipes/${r.id}`, r)).data,
 
-    updateRecipe: async (r: Recipe) => {
-      return (await axios.post<Recipe>(`/api/recipes/${r.id}`, r)).data;
-    },
-
-    deleteRecipe: async (id: string) => {
-      return (await axios.delete<{ id: string }>(`/api/recipes/${id}`)).data.id;
-    },
+    deleteRecipe: async (id: string) =>
+      (await axios.delete<{ id: string }>(`/api/recipes/${id}`)).data.id,
   };
 };
 
