@@ -7,12 +7,12 @@ import { DeleteRecipeDialog } from "../features/recipe/DeleteRecipeDialog";
 import { Recipe } from "../features/recipe/Recipe";
 import { RecipeHeader } from "../features/recipe/RecipeHeader";
 import { putRecipe, selectRecipe } from "../features/recipe/recipeSlice";
-import { useAccessTokenFn, useApiClient } from "../useApiClient";
+import { useTokenFn, useApiClient } from "../useApiClient";
 
 export function RecipePage() {
   const d = useDispatch();
   const nav = useNavigate();
-  const tokenFn = useAccessTokenFn();
+  const tokenFn = useTokenFn();
   const client = useApiClient();
 
   const [deleteDialogData, setDeleteDialogData] = useState<string | undefined>(
@@ -25,8 +25,10 @@ export function RecipePage() {
   const recipe = useSelector(selectRecipe(recipeId));
 
   useEffect(() => {
-    tokenFn().then((token) =>
-      client.getRecipe(token, recipeId).then((r) => d(putRecipe(r)))
+    tokenFn().then((tok) =>
+      client(tok)
+        .getRecipe(recipeId)
+        .then((r) => d(putRecipe(r)))
     );
   }, [client, d, recipeId, tokenFn]);
 
