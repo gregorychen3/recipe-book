@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
+import { auth } from "express-oauth2-jwt-bearer";
 import createError, { HttpError } from "http-errors";
 import morgan from "morgan";
 import path from "path";
@@ -15,6 +16,13 @@ app.use(morgan(process.env.NODE_ENV === "development" ? "dev" : "tiny"));
 app.use(express.json());
 
 app.use("/test", testRouter);
+
+const jwtCheck = auth({
+  audience: "http://localhost:3000",
+  issuerBaseURL: "https://dev-cuxf3af6zqwbel75.us.auth0.com/",
+  tokenSigningAlg: "RS256",
+});
+app.use(jwtCheck);
 
 app.use("/", uiRouter);
 
