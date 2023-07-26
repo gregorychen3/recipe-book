@@ -1,18 +1,13 @@
 import express, { NextFunction, Request, Response } from "express";
-import session from "express-session";
 import createError, { HttpError } from "http-errors";
 import morgan from "morgan";
-import passport from "passport";
 import path from "path";
 import { logger } from "./logger";
-import { authnRouter } from "./routes/authn";
 import { recipeRouter } from "./routes/recipe";
 import { testRouter } from "./routes/test";
 import { uiRouter } from "./routes/ui";
 
 import "./db/db"; // for side effect of initializing db conn
-
-const SQLiteStore = require("connect-sqlite3")(session);
 
 const app = express();
 
@@ -20,17 +15,6 @@ app.use(morgan(process.env.NODE_ENV === "development" ? "dev" : "tiny"));
 app.use(express.json());
 
 app.use("/test", testRouter);
-
-app.use(
-  session({
-    secret: "keyboard cat",
-    resave: false,
-    saveUninitialized: false,
-    store: new SQLiteStore({ db: "sessions.db", dir: "./var/db" }),
-  })
-);
-app.use(passport.authenticate("session"));
-app.use("/authn", authnRouter);
 
 app.use("/", uiRouter);
 
