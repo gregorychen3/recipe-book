@@ -2,7 +2,7 @@ import { Grid } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Recipe } from "../../../src/recipe";
 import { useApi } from "../app/hooks";
 import { RecipeForm } from "../features/recipe/RecipeForm";
@@ -11,7 +11,7 @@ import { putRecipe } from "../features/recipe/recipeSlice";
 
 export function CreateRecipePage() {
   const d = useDispatch();
-  const h = useHistory();
+  const nav = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
   const [headerText, setHeaderText] = useState("");
@@ -26,7 +26,7 @@ export function CreateRecipePage() {
         variant: "success",
       });
       d(putRecipe(resp.data));
-      h.push(`/recipes/${resp.data.id}`);
+      nav(`/recipes/${resp.data.id}`);
     });
   };
 

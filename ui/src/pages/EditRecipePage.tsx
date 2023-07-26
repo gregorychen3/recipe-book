@@ -2,7 +2,7 @@ import { Grid } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Recipe } from "../../../src/recipe";
 import { useApi } from "../app/hooks";
 import { RecipeForm } from "../features/recipe/RecipeForm";
@@ -11,12 +11,13 @@ import { putRecipe, selectRecipe } from "../features/recipe/recipeSlice";
 
 export function EditRecipePage() {
   const d = useDispatch();
-  const h = useHistory();
+  const nav = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
   const [headerText, setHeaderText] = useState("");
 
-  const { recipeId } = useParams<{ recipeId: string }>();
+  const params = useParams<{ recipeId: string }>();
+  const recipeId = params.recipeId!;
   const recipe = useSelector(selectRecipe(recipeId));
 
   const getRecipe = useApi<Recipe>("GET", `/api/recipes/${recipeId}`);
@@ -42,7 +43,7 @@ export function EditRecipePage() {
         variant: "success",
       });
       d(putRecipe(resp.data));
-      h.push(`/recipes/${recipeId}`);
+      nav(`/recipes/${recipeId}`);
     });
   };
 
