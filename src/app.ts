@@ -22,7 +22,7 @@ app.use("/api/recipes", recipeRouter);
 
 // catchall: send UI index.html file.
 app.get("/*", (_, res) => {
-  const file = path.join(__dirname, "/../ui/build/", "index.html");
+  const file = path.join(__dirname, "/../ui/dist/", "index.html");
   res.sendFile(file);
 });
 
