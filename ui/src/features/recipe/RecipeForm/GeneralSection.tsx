@@ -17,11 +17,18 @@ export function GeneralSection() {
         <LabelDivider label="GENERAL" />
       </Grid>
       <Grid item xs={12}>
-        <ControlledTextField textFieldProps={{ label: "Recipe Name", fullWidth: true }} ctrlProps={{ name: "name" }} />
+        <ControlledTextField
+          textFieldProps={{ label: "Recipe Name", fullWidth: true }}
+          ctrlProps={{ name: "name" }}
+        />
       </Grid>
       <Grid item xs={4}>
         <ControlledTextField
-          textFieldProps={{ label: "Servings", type: "number", fullWidth: true }}
+          textFieldProps={{
+            label: "Servings",
+            type: "number",
+            fullWidth: true,
+          }}
           ctrlProps={{ name: "servings" }}
         />
       </Grid>

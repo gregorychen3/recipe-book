@@ -8,7 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 import { useSnackbar } from "notistack";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useApi } from "../../app/hooks";
 import { removeRecipe, selectRecipe } from "../../features/recipe/recipeSlice";
 
@@ -16,15 +16,21 @@ interface DeleteRecipeDialogProps {
   recipeId?: string;
   onClose: () => void;
 }
-export function DeleteRecipeDialog({ recipeId, onClose }: DeleteRecipeDialogProps) {
+export function DeleteRecipeDialog({
+  recipeId,
+  onClose,
+}: DeleteRecipeDialogProps) {
   const d = useDispatch();
-  const h = useHistory();
+  const nav = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
   const recipe = useSelector(selectRecipe(recipeId ?? ""));
   const recipeName = recipe ? recipe.name : "";
 
-  const deleteRecipe = useApi<{ id: string }>("DELETE", `/api/recipes/${recipeId}`);
+  const deleteRecipe = useApi<{ id: string }>(
+    "DELETE",
+    `/api/recipes/${recipeId}`
+  );
   const handleDelete = () => {
     if (!recipeId) {
       return;
@@ -32,10 +38,12 @@ export function DeleteRecipeDialog({ recipeId, onClose }: DeleteRecipeDialogProp
 
     const [call] = deleteRecipe();
     call.then((resp) => {
-      enqueueSnackbar(`Successfully deleted recipe ${resp.data.id}`, { variant: "success" });
+      enqueueSnackbar(`Successfully deleted recipe ${resp.data.id}`, {
+        variant: "success",
+      });
       d(removeRecipe(resp.data.id));
       onClose();
-      h.push("/recipes");
+      nav("/recipes");
     });
   };
 
@@ -43,8 +51,17 @@ export function DeleteRecipeDialog({ recipeId, onClose }: DeleteRecipeDialogProp
     <Dialog open={!!recipeId} onClose={onClose}>
       <DialogTitle>Confirm Delete Recipe</DialogTitle>
       <DialogContent>
-        <DialogContentText>The recipe will be permanently deleted.</DialogContentText>
-        <TextField disabled margin="dense" label="Recipe Name" type="text" fullWidth value={recipeName} />
+        <DialogContentText>
+          The recipe will be permanently deleted.
+        </DialogContentText>
+        <TextField
+          disabled
+          margin="dense"
+          label="Recipe Name"
+          type="text"
+          fullWidth
+          value={recipeName}
+        />
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">

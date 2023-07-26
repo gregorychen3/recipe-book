@@ -12,7 +12,11 @@ const DisabledListItem = styled("li")(({ theme }) => ({
 export function AboutPage() {
   return (
     <>
-      <img src={imagePath} alt="gregandally" style={{ height: "100%", width: "100%" }} />
+      <img
+        src={imagePath}
+        alt="gregandally"
+        style={{ height: "100%", width: "100%" }}
+      />
       <Typography variant="h4">Greg and Ally's Recipe Book (v4)</Typography>
       <br />
       <Typography variant="h6">Project Purpose</Typography>
@@ -67,7 +71,9 @@ export function AboutPage() {
           <li>
             v4
             <ul>
-              <li>UI: React Hooks, Redux Toolkit, Material UI, Google Sign-in</li>
+              <li>
+                UI: React Hooks, Redux Toolkit, Material UI, Google Sign-in
+              </li>
               <li>Backend: TypeScript, Express.js, MongoDB</li>
               <li>Deployment: Heroku</li>
             </ul>
@@ -77,7 +83,11 @@ export function AboutPage() {
       <Typography variant="h6">Contact</Typography>
       <Typography variant="body1">
         Kindly direct all inquiries to{" "}
-        <Link href="mailto:cenaacasaperdue@gmail.com" target="_blank" rel="noopener">
+        <Link
+          href="mailto:cenaacasaperdue@gmail.com"
+          target="_blank"
+          rel="noopener"
+        >
           cenaacasaperdue@gmail.com
         </Link>
         , thank you.

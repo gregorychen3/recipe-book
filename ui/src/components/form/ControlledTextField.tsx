@@ -21,7 +21,9 @@ export function ControlledTextField(props: ControlledTextFieldProps) {
 
         const { onChange: fieldOnChange, ...restFieldProps } = field;
 
-        const handleChange: ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement> = (e) => {
+        const handleChange: ChangeEventHandler<
+          HTMLTextAreaElement | HTMLInputElement
+        > = (e) => {
           if (onChange) {
             onChange?.(e);
             return;
@@ -33,7 +35,9 @@ export function ControlledTextField(props: ControlledTextFieldProps) {
             return;
           }
 
-          textFieldProps.type === "number" ? fieldOnChange(+value) : fieldOnChange(value);
+          textFieldProps.type === "number"
+            ? fieldOnChange(+value)
+            : fieldOnChange(value);
         };
 
         return (

@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { AppHeader } from "./components/AppHeader";
 import { AboutPage } from "./pages/AboutPage";
 import { CreateRecipePage } from "./pages/CreateRecipePage";
@@ -10,6 +10,8 @@ import { EditRecipePage } from "./pages/EditRecipePage";
 import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
 import { RecipePage } from "./pages/RecipePage";
 import { RecipesPage } from "./pages/RecipesPage";
+
+import "./App.css";
 
 export function App() {
   return (
@@ -22,29 +24,24 @@ export function App() {
       >
         <Toolbar />
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-          <Switch>
-            <Route path="/recipes/create">
-              <CreateRecipePage />
-            </Route>
-            <Route path="/recipes/:recipeId/edit">
-              <EditRecipePage />
-            </Route>
-            <Route path="/recipes/:recipeId">
-              <RecipePage />
-            </Route>
-            <Route path="/recipes">
-              <RecipesPage />
-            </Route>
-            <Route path="/about">
-              <AboutPage />
-            </Route>
-            <Route path="/privacy-policy">
-              <PrivacyPolicyPage />
-            </Route>
-            <Route path="/">
-              <Redirect to="/recipes" />
-            </Route>
-          </Switch>
+          <Routes>
+            <Route
+              path="/recipes/create"
+              element={<CreateRecipePage />}
+            ></Route>
+            <Route
+              path="/recipes/:recipeId/edit"
+              element={<EditRecipePage />}
+            ></Route>
+            <Route path="/recipes/:recipeId" element={<RecipePage />}></Route>
+            <Route path="/recipes" element={<RecipesPage />}></Route>
+            <Route path="/about" element={<AboutPage />}></Route>
+            <Route
+              path="/privacy-policy"
+              element={<PrivacyPolicyPage />}
+            ></Route>
+            <Route path="/" element={<Navigate to="/recipes" replace />} />
+          </Routes>
         </Container>
       </Box>
     </Box>

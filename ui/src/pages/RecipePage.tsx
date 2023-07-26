@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Recipe as RecipeModel } from "../../../src/recipe";
 import { useApi } from "../app/hooks";
 import { DeleteRecipeDialog } from "../features/recipe/DeleteRecipeDialog";
@@ -11,13 +11,15 @@ import { putRecipe, selectRecipe } from "../features/recipe/recipeSlice";
 
 export function RecipePage() {
   const d = useDispatch();
-  const h = useHistory();
+  const nav = useNavigate();
 
   const [deleteDialogData, setDeleteDialogData] = useState<string | undefined>(
     undefined
   );
 
-  const { recipeId } = useParams<{ recipeId: string }>();
+  const params = useParams<{ recipeId: string }>();
+  const recipeId = params.recipeId!;
+
   const recipe = useSelector(selectRecipe(recipeId));
 
   const getRecipe = useApi<RecipeModel>("GET", `/api/recipes/${recipeId}`);
@@ -32,7 +34,7 @@ export function RecipePage() {
 
   const handleShowDeleteDialog = () => setDeleteDialogData(recipe.id);
   const handleCloseDeleteDialog = () => setDeleteDialogData(undefined);
-  const handleEditClicked = () => h.push(`/recipes/${recipeId}/edit`);
+  const handleEditClicked = () => nav(`/recipes/${recipeId}/edit`);
 
   return (
     <>

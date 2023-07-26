@@ -6,7 +6,7 @@ import { RecipeList } from "../features/recipe/RecipeList";
 import { putRecipes } from "../features/recipe/recipeSlice";
 
 export const GroupByValues = ["course", "cuisine", "alphabetical"] as const;
-export type GroupBy = typeof GroupByValues[number];
+export type GroupBy = (typeof GroupByValues)[number];
 
 export function RecipesPage() {
   const d = useDispatch();

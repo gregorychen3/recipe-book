@@ -5,13 +5,13 @@ import RestaurantIcon from "@mui/icons-material/Restaurant";
 import { Button, Hidden, LinearProgress, Menu, MenuItem } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import IconButton from "@mui/material/IconButton";
-import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography, { TypographyProps } from "@mui/material/Typography";
+import { styled } from "@mui/material/styles";
 import _ from "lodash";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link as RouterLink, useHistory } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { selectActiveRequests } from "../features/api/apiSlice";
 import { GroupBy } from "../pages/RecipesPage";
 
@@ -27,7 +27,7 @@ const AppTitle = styled(Typography)<TypographyProps>(() => ({
 }));
 
 export function AppHeader() {
-  const h = useHistory();
+  const nav = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -36,9 +36,9 @@ export function AppHeader() {
   const handleMenu = (e: React.MouseEvent<HTMLElement>) =>
     setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
-  const navToHome = () => h.push("/");
+  const navToHome = () => nav("/");
   const handleGroupByChanged = (groupBy: GroupBy) => {
-    h.push(`/recipes?groupBy=${groupBy}`);
+    nav(`/recipes?groupBy=${groupBy}`);
     handleClose();
   };
 

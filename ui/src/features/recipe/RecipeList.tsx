@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Recipe } from "../../../../src/recipe";
 import { Column, ResourceTable } from "../../components/ResourceTable";
 import { selectRecipes } from "./recipeSlice";
@@ -16,7 +16,7 @@ const columns: Column<Recipe>[] = [
 ];
 
 export function RecipeList() {
-  const h = useHistory();
+  const nav = useNavigate();
 
   const recipes = Object.values(useSelector(selectRecipes));
 
@@ -25,7 +25,7 @@ export function RecipeList() {
       title="Recipes"
       size="small"
       columns={columns}
-      onRowClick={(r) => h.push(`recipes/${r.id}`)}
+      onRowClick={(r) => nav(`/recipes/${r.id}`)}
       items={recipes}
       defaultSortColumn="name"
       idExtractor={(r) => r.id}

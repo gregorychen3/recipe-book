@@ -10,7 +10,10 @@ import {
 import Radio from "@mui/material/Radio";
 import { Controller, UseControllerProps } from "react-hook-form";
 
-export type RadioGroupOpt<V> = { label: FormControlLabelProps["label"]; value: V };
+export type RadioGroupOpt<V> = {
+  label: FormControlLabelProps["label"];
+  value: V;
+};
 
 export type ControlledRadioGroupProps<V> = {
   label?: string;
@@ -30,11 +33,20 @@ export function ControlledRadioGroup<V>(props: ControlledRadioGroupProps<V>) {
         const errMsg = fieldState.error?.message ?? "Invalid";
 
         return (
-          <FormControl variant="standard" {...muiFormControlProps} error={hasErr}>
+          <FormControl
+            variant="standard"
+            {...muiFormControlProps}
+            error={hasErr}
+          >
             {label && <FormLabel>{label}</FormLabel>}
             <RadioGroup {...field}>
               {opts.map(({ value, label }, idx) => (
-                <FormControlLabel value={value} label={label} control={<Radio />} key={idx} />
+                <FormControlLabel
+                  value={value}
+                  label={label}
+                  control={<Radio />}
+                  key={idx}
+                />
               ))}
             </RadioGroup>
             {hasErr && <FormHelperText>{errMsg}</FormHelperText>}
