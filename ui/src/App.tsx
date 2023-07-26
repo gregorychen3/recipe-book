@@ -1,32 +1,54 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import CssBaseline from "@mui/material/CssBaseline";
+import Toolbar from "@mui/material/Toolbar";
+import { Redirect, Route, Switch } from "react-router-dom";
+import { AppHeader } from "./components/AppHeader";
+import { AboutPage } from "./pages/AboutPage";
+import { CreateRecipePage } from "./pages/CreateRecipePage";
+import { EditRecipePage } from "./pages/EditRecipePage";
+import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
+import { RecipePage } from "./pages/RecipePage";
+import { RecipesPage } from "./pages/RecipesPage";
+
 import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0);
-
+export function App() {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank"></a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <Box display="flex">
+      <CssBaseline />
+      <AppHeader />
+      <Box
+        component="main"
+        sx={{ flexGrow: 1, height: "100vh", overflow: "auto" }}
+      >
+        <Toolbar />
+        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Switch>
+            <Route path="/recipes/create">
+              <CreateRecipePage />
+            </Route>
+            <Route path="/recipes/:recipeId/edit">
+              <EditRecipePage />
+            </Route>
+            <Route path="/recipes/:recipeId">
+              <RecipePage />
+            </Route>
+            <Route path="/recipes">
+              <RecipesPage />
+            </Route>
+            <Route path="/about">
+              <AboutPage />
+            </Route>
+            <Route path="/privacy-policy">
+              <PrivacyPolicyPage />
+            </Route>
+            <Route path="/">
+              <Redirect to="/recipes" />
+            </Route>
+          </Switch>
+        </Container>
+      </Box>
+    </Box>
   );
 }
-
-export default App;
