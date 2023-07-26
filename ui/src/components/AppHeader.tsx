@@ -17,8 +17,8 @@ import Typography, { TypographyProps } from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import _ from "lodash";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useAppSelector } from "../app/hooks";
 import { selectActiveRequests } from "../features/api/apiSlice";
 import { UserAvatar } from "./UserAvatar";
 
@@ -30,7 +30,7 @@ const AppTitle = styled(Typography)<TypographyProps>(() => ({
 export function AppHeader() {
   const nav = useNavigate();
 
-  const isLoading = !_.isEmpty(useSelector(selectActiveRequests));
+  const isLoading = !_.isEmpty(useAppSelector(selectActiveRequests));
 
   const navToHome = () => nav("/");
 

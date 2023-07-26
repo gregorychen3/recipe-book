@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { getApiClient } from "../features/api/apiClient";
 import { useTokenFn } from "../features/api/useTokenFn";
 import { RecipeList } from "../features/recipe/RecipeList";
 import { putRecipes } from "../features/recipe/recipeSlice";
+import { useAppDispatch } from "../app/hooks";
 
 export function RecipesPage() {
-  const d = useDispatch();
+  const d = useAppDispatch();
 
   const tokenFn = useTokenFn();
 

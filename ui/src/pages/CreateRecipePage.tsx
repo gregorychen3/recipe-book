@@ -1,9 +1,9 @@
 import { Grid } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Recipe } from "../../../src/recipe";
+import { useAppDispatch } from "../app/hooks";
 import { getApiClient } from "../features/api/apiClient";
 import { useTokenFn } from "../features/api/useTokenFn";
 import { RecipeForm } from "../features/recipe/RecipeForm";
@@ -11,7 +11,7 @@ import { RecipeHeader } from "../features/recipe/RecipeHeader";
 import { putRecipe } from "../features/recipe/recipeSlice";
 
 export function CreateRecipePage() {
-  const d = useDispatch();
+  const d = useAppDispatch();
   const nav = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const tokenFn = useTokenFn();

@@ -1,6 +1,5 @@
 import { Grid } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { getApiClient } from "../features/api/apiClient";
 import { useTokenFn } from "../features/api/useTokenFn";
@@ -8,9 +7,10 @@ import { DeleteRecipeDialog } from "../features/recipe/DeleteRecipeDialog";
 import { Recipe } from "../features/recipe/Recipe";
 import { RecipeHeader } from "../features/recipe/RecipeHeader";
 import { putRecipe, selectRecipe } from "../features/recipe/recipeSlice";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 
 export function RecipePage() {
-  const d = useDispatch();
+  const d = useAppDispatch();
   const nav = useNavigate();
   const tokenFn = useTokenFn();
 
@@ -21,7 +21,7 @@ export function RecipePage() {
   const params = useParams<{ recipeId: string }>();
   const recipeId = params.recipeId!;
 
-  const recipe = useSelector(selectRecipe(recipeId));
+  const recipe = useAppSelector(selectRecipe(recipeId));
 
   useEffect(() => {
     tokenFn().then((token) =>

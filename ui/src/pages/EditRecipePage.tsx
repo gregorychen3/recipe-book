@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { useNavigate, useParams } from "react-router-dom";
 import { Recipe } from "../../../src/recipe";
 import { getApiClient } from "../features/api/apiClient";
@@ -11,7 +11,7 @@ import { RecipeHeader } from "../features/recipe/RecipeHeader";
 import { putRecipe, selectRecipe } from "../features/recipe/recipeSlice";
 
 export function EditRecipePage() {
-  const d = useDispatch();
+  const d = useAppDispatch();
   const nav = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const tokenFn = useTokenFn();
@@ -20,7 +20,7 @@ export function EditRecipePage() {
 
   const params = useParams<{ recipeId: string }>();
   const recipeId = params.recipeId!;
-  const recipe = useSelector(selectRecipe(recipeId));
+  const recipe = useAppSelector(selectRecipe(recipeId));
 
   useEffect(() => {
     tokenFn().then((token) =>

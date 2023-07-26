@@ -7,11 +7,11 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 import { useSnackbar } from "notistack";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { removeRecipe, selectRecipe } from "../../features/recipe/recipeSlice";
 import { getApiClient } from "../api/apiClient";
 import { useTokenFn } from "../api/useTokenFn";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 interface DeleteRecipeDialogProps {
   recipeId?: string;
@@ -21,12 +21,12 @@ export function DeleteRecipeDialog({
   recipeId,
   onClose,
 }: DeleteRecipeDialogProps) {
-  const d = useDispatch();
+  const d = useAppDispatch();
   const nav = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const tokenFn = useTokenFn();
 
-  const recipe = useSelector(selectRecipe(recipeId ?? ""));
+  const recipe = useAppSelector(selectRecipe(recipeId ?? ""));
   const recipeName = recipe ? recipe.name : "";
 
   const handleDelete = () => {

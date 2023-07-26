@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import { LabelDivider } from "mui-label-divider";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../../app/hooks";
 import { ControlledAutocomplete } from "../../../components/form/ControlledAutocomplete";
 import { ControlledTextField } from "../../../components/form/ControlledTextField";
 import { CourseValues } from "../../../types";
@@ -8,7 +8,7 @@ import { getCuisines } from "../helpers";
 import { selectRecipes } from "../recipeSlice";
 
 export function GeneralSection() {
-  const recipes = useSelector(selectRecipes);
+  const recipes = useAppSelector(selectRecipes);
   const cuisines = getCuisines(Object.values(recipes));
 
   return (

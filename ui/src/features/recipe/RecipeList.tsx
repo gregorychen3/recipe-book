@@ -1,6 +1,6 @@
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Recipe } from "../../../../src/recipe";
+import { useAppSelector } from "../../app/hooks";
 import { Column, ResourceTable } from "../../components/ResourceTable";
 import { selectRecipes } from "./recipeSlice";
 
@@ -18,7 +18,7 @@ const columns: Column<Recipe>[] = [
 export function RecipeList() {
   const nav = useNavigate();
 
-  const recipes = Object.values(useSelector(selectRecipes));
+  const recipes = Object.values(useAppSelector(selectRecipes));
 
   return (
     <ResourceTable
