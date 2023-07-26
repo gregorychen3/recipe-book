@@ -14,6 +14,7 @@ import { RecipesPage } from "./pages/RecipesPage";
 import "./App.css";
 import { LoginButton } from "./components/LoginButton";
 import { LogoutButton } from "./components/LogoutButton";
+import { Profile } from "./Profile";
 
 export function App() {
   return (
@@ -27,6 +28,7 @@ export function App() {
         <Toolbar />
         <LoginButton />
         <LogoutButton />
+        <Profile />
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
           <Routes>
             <Route
