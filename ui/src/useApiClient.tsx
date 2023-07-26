@@ -1,12 +1,24 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import axios, { AxiosError } from "axios";
 import { enqueueSnackbar } from "notistack";
 import { Recipe } from "../../src/recipe";
+import { auth0Config } from "./auth0Config";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-export const useApiClient = () => {
-  return apiClient;
-};
+const useAccessToken = () =>
+  useAuth0().getAccessTokenSilently({
+    authorizationParams: {
+      audience: `https://${auth0Config.domain}/api/v2/`,
+      scope: "read:current_user",
+    },
+  });
+
+export const useApiClient = () =>
+  useAccessToken().then((token) => {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    return apiClient;
+  });
 
 const globalCatchInterceptor = (e: AxiosError) => {
   const method = e.config?.method?.toUpperCase();
@@ -54,3 +66,5 @@ const apiClient = {
   deleteRecipe: async (id: string) =>
     (await axios.delete<{ id: string }>(`/api/recipes/${id}`)).data.id,
 };
+
+export type ApiClient = typeof apiClient;

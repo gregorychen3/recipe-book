@@ -2,7 +2,7 @@ import { Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { useApiClient } from "../useApiClient";
+import { ApiClient, useApiClient } from "../useApiClient";
 import { DeleteRecipeDialog } from "../features/recipe/DeleteRecipeDialog";
 import { Recipe } from "../features/recipe/Recipe";
 import { RecipeHeader } from "../features/recipe/RecipeHeader";
@@ -11,7 +11,12 @@ import { putRecipe, selectRecipe } from "../features/recipe/recipeSlice";
 export function RecipePage() {
   const d = useDispatch();
   const nav = useNavigate();
-  const client = useApiClient();
+  const clientPromise = useApiClient();
+
+  const [client, setClient] = useState<ApiClient | undefined>(undefined);
+  useEffect(() => {
+    clientPromise.then(setClient);
+  }, [clientPromise]);
 
   const [deleteDialogData, setDeleteDialogData] = useState<string | undefined>(
     undefined
@@ -23,7 +28,7 @@ export function RecipePage() {
   const recipe = useSelector(selectRecipe(recipeId));
 
   useEffect(() => {
-    client.getRecipe(recipeId).then((r) => d(putRecipe(r)));
+    client?.getRecipe(recipeId).then((r) => d(putRecipe(r)));
   }, [client, d, recipeId]);
 
   if (!recipe) {
