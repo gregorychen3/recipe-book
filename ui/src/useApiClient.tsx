@@ -3,22 +3,28 @@ import axios, { AxiosError } from "axios";
 import { enqueueSnackbar } from "notistack";
 import { Recipe } from "../../src/recipe";
 import { auth0Config } from "./auth0Config";
+import { useCallback } from "react";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-const useAccessToken = () =>
-  useAuth0().getAccessTokenSilently({
-    authorizationParams: {
-      audience: `https://${auth0Config.domain}/api/v2/`,
-      scope: "read:current_user",
-    },
-  });
+export const useAccessTokenFn = () => {
+  const { getAccessTokenSilently } = useAuth0();
 
-export const useApiClient = () =>
-  useAccessToken().then((token) => {
-    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    return apiClient;
-  });
+  const fn = useCallback(
+    () =>
+      getAccessTokenSilently({
+        authorizationParams: {
+          audience: `https://${auth0Config.domain}/api/v2/`,
+          scope: "read:current_user",
+        },
+      }),
+    [getAccessTokenSilently]
+  );
+
+  return fn;
+};
+
+export const useApiClient = () => apiClient;
 
 const globalCatchInterceptor = (e: AxiosError) => {
   const method = e.config?.method?.toUpperCase();
@@ -52,19 +58,30 @@ const apiClient = {
   // video endpoints
   // ---------------
 
-  listRecipes: async () => (await axios.get<Recipe[]>(`/api/recipes`)).data,
+  listRecipes: async (accessToken: string) => {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+    return (await axios.get<Recipe[]>(`/api/recipes`)).data;
+  },
 
-  getRecipe: async (id: string) =>
-    (await axios.get<Recipe>(`/api/recipes/${id}`)).data,
+  getRecipe: async (accessToken: string, id: string) => {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+    return (await axios.get<Recipe>(`/api/recipes/${id}`)).data;
+  },
 
-  createRecipe: async (r: Recipe) =>
-    (await axios.post<Recipe>(`/api/recipes`, r)).data,
+  createRecipe: async (accessToken: string, r: Recipe) => {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+    return (await axios.post<Recipe>(`/api/recipes`, r)).data;
+  },
 
-  updateRecipe: async (r: Recipe) =>
-    (await axios.post<Recipe>(`/api/recipes/${r.id}`, r)).data,
+  updateRecipe: async (accessToken: string, r: Recipe) => {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+    return (await axios.post<Recipe>(`/api/recipes/${r.id}`, r)).data;
+  },
 
-  deleteRecipe: async (id: string) =>
-    (await axios.delete<{ id: string }>(`/api/recipes/${id}`)).data.id,
+  deleteRecipe: async (accessToken: string, id: string) => {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+    return (await axios.delete<{ id: string }>(`/api/recipes/${id}`)).data.id;
+  },
 };
 
 export type ApiClient = typeof apiClient;
