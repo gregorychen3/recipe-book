@@ -9,22 +9,19 @@ import { QueryParamProvider } from "use-query-params";
 import { ReactRouter6Adapter } from "use-query-params/adapters/react-router-6";
 import { App } from "./App";
 import { store } from "./app/store";
+import { auth0Config } from "./auth0Config";
 import "./index.css";
 import { theme } from "./theme";
-
-const domain = "dev-cuxf3af6zqwbel75.us.auth0.com";
-const clientId = "yXN9cXHPym1LpOkyrItZ2hl7gPD84EF7";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Auth0Provider
-      domain={domain}
-      clientId={clientId}
+      domain={auth0Config.domain}
+      clientId={auth0Config.clientId}
       authorizationParams={{
         redirect_uri: window.location.origin,
-        audience: "http://localhost:3000",
-        scope:
-          "openid profile email read:current_user update:current_user_metadata",
+        audience: auth0Config.audience,
+        scope: auth0Config.scope,
       }}
     >
       <BrowserRouter>
