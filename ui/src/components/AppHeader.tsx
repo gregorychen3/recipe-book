@@ -1,8 +1,16 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import AddIcon from "@mui/icons-material/Add";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import InfoIcon from "@mui/icons-material/Info";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
-import { Button, Hidden, LinearProgress, Menu, MenuItem } from "@mui/material";
+import {
+  Button,
+  Hidden,
+  LinearProgress,
+  Menu,
+  MenuItem,
+  Tooltip,
+} from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
@@ -14,6 +22,7 @@ import { useSelector } from "react-redux";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { selectActiveRequests } from "../features/api/apiSlice";
 import { GroupBy } from "../pages/RecipesPage";
+import { UserAvatar } from "./UserAvatar";
 
 const browseMenuOpts: { label: string; value: GroupBy }[] = [
   { label: "By Course", value: "course" },
@@ -41,6 +50,24 @@ export function AppHeader() {
     nav(`/recipes?groupBy=${groupBy}`);
     handleClose();
   };
+
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+
+  const handleAvatarClicked = (e: React.MouseEvent<HTMLElement>) => {
+    if (!isAuthenticated) {
+      loginWithRedirect();
+      return;
+    }
+
+    setAnchorElUser(e.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => setAnchorElUser(null);
+
+  const handleLogout = () =>
+    logout({ logoutParams: { returnTo: window.location.origin } });
 
   return (
     <AppBar position="absolute" color="inherit">
@@ -98,6 +125,26 @@ export function AppHeader() {
             <InfoIcon />
           </IconButton>
         </Hidden>
+        <Tooltip title={isAuthenticated ? "Open settings" : "Log in"}>
+          <IconButton onClick={handleAvatarClicked} sx={{ p: 0 }}>
+            <UserAvatar />
+          </IconButton>
+        </Tooltip>
+        <Menu
+          sx={{ mt: "45px" }}
+          anchorEl={anchorElUser}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          keepMounted
+          transformOrigin={{ vertical: "top", horizontal: "right" }}
+          open={Boolean(anchorElUser)}
+          onClose={handleCloseUserMenu}
+        >
+          <MenuItem onClick={handleCloseUserMenu}>
+            <Typography textAlign="center" onClick={handleLogout}>
+              Logout
+            </Typography>
+          </MenuItem>
+        </Menu>
       </Toolbar>
       {isLoading && <LinearProgress />}
     </AppBar>
