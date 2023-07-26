@@ -21,7 +21,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       domain={domain}
       clientId={clientId}
       authorizationParams={{
-        redirect_uri: window.location.origin, // TODO
+        redirect_uri: window.location.origin,
+        audience: "https://dev-cuxf3af6zqwbel75.us.auth0.com/api/v2/",
+        scope: "read:current_user update:current_user_metadata",
       }}
     >
       <BrowserRouter>
