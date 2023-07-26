@@ -1,8 +1,8 @@
 import { Client } from "pg";
 import { logger } from "../logger";
 
-const DATABASE_URL = process.env.DATABASE_URL || "";
-console.log(DATABASE_URL);
+const DATABASE_URL =
+  process.env.DATABASE_URL || "postgresql://localhost/recipe";
 
 logger.info(`Connecting to postgres`);
 
