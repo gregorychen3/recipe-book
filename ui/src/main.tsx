@@ -22,7 +22,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       clientId={clientId}
       authorizationParams={{
         redirect_uri: window.location.origin,
-        audience: "https://dev-cuxf3af6zqwbel75.us.auth0.com/api/v2/",
+        audience: "http://localhost:3000",
         scope:
           "openid profile email read:current_user update:current_user_metadata",
       }}
