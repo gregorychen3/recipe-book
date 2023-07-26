@@ -7,7 +7,7 @@ import { Recipe } from "../../../src/recipe";
 import { RecipeForm } from "../features/recipe/RecipeForm";
 import { RecipeHeader } from "../features/recipe/RecipeHeader";
 import { putRecipe } from "../features/recipe/recipeSlice";
-import { getApiClient, useTokenFn } from "../useApiClient";
+import { getApiClient, useTokenFn } from "../features/api/apiClient";
 
 export function CreateRecipePage() {
   const d = useDispatch();

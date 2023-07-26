@@ -7,7 +7,7 @@ import { DeleteRecipeDialog } from "../features/recipe/DeleteRecipeDialog";
 import { Recipe } from "../features/recipe/Recipe";
 import { RecipeHeader } from "../features/recipe/RecipeHeader";
 import { putRecipe, selectRecipe } from "../features/recipe/recipeSlice";
-import { getApiClient, useTokenFn } from "../useApiClient";
+import { getApiClient, useTokenFn } from "../features/api/apiClient";
 
 export function RecipePage() {
   const d = useDispatch();
