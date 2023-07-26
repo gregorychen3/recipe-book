@@ -25,7 +25,7 @@ export function RecipeList() {
       title="Recipes"
       size="small"
       columns={columns}
-      onRowClick={(r) => nav(`recipes/${r.id}`)}
+      onRowClick={(r) => nav(`/recipes/${r.id}`)}
       items={recipes}
       defaultSortColumn="name"
       idExtractor={(r) => r.id}
