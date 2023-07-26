@@ -1,19 +1,24 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useApiClient } from "../useApiClient";
 import { RecipeList } from "../features/recipe/RecipeList";
 import { putRecipes } from "../features/recipe/recipeSlice";
+import { getApiClient, useTokenFn } from "../useApiClient";
 
 export const GroupByValues = ["course", "cuisine", "alphabetical"] as const;
 export type GroupBy = (typeof GroupByValues)[number];
 
 export function RecipesPage() {
   const d = useDispatch();
-  const client = useApiClient();
+
+  const tokenFn = useTokenFn();
 
   useEffect(() => {
-    client.listRecipes().then((recipes) => d(putRecipes(recipes)));
-  }, [client, d]);
+    tokenFn().then((token) =>
+      getApiClient({ token })
+        .listRecipes()
+        .then((recipes) => d(putRecipes(recipes)))
+    );
+  }, [d, tokenFn]);
 
   return <RecipeList />;
 }

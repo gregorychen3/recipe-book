@@ -4,16 +4,16 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Recipe } from "../../../src/recipe";
-import { useApiClient } from "../useApiClient";
 import { RecipeForm } from "../features/recipe/RecipeForm";
 import { RecipeHeader } from "../features/recipe/RecipeHeader";
 import { putRecipe, selectRecipe } from "../features/recipe/recipeSlice";
+import { getApiClient, useTokenFn } from "../useApiClient";
 
 export function EditRecipePage() {
   const d = useDispatch();
   const nav = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
-  const client = useApiClient();
+  const tokenFn = useTokenFn();
 
   const [headerText, setHeaderText] = useState("");
 
@@ -22,8 +22,12 @@ export function EditRecipePage() {
   const recipe = useSelector(selectRecipe(recipeId));
 
   useEffect(() => {
-    client.getRecipe(recipeId).then((r) => d(putRecipe(r)));
-  }, [client, d, recipeId]);
+    tokenFn().then((token) =>
+      getApiClient({ token })
+        .getRecipe(recipeId)
+        .then((r) => d(putRecipe(r)))
+    );
+  }, [d, recipeId, tokenFn]);
 
   useEffect(() => {
     setHeaderText(recipe?.name ?? "");
@@ -34,13 +38,17 @@ export function EditRecipePage() {
   }
 
   const handleSubmit = (recipe: Recipe) => {
-    client.updateRecipe(recipe).then((r) => {
-      d(putRecipe(r));
-      nav(`/recipes/${r.id}`);
-      enqueueSnackbar(`Successfully updated recipe ${r.name}`, {
-        variant: "success",
-      });
-    });
+    tokenFn().then((token) =>
+      getApiClient({ token })
+        .updateRecipe(recipe)
+        .then((r) => {
+          d(putRecipe(r));
+          nav(`/recipes/${r.id}`);
+          enqueueSnackbar(`Successfully updated recipe ${r.name}`, {
+            variant: "success",
+          });
+        })
+    );
   };
 
   const handleRecipeEdited = (recipe: Recipe) => setHeaderText(recipe.name);

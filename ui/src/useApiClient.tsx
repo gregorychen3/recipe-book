@@ -24,8 +24,6 @@ export const useTokenFn = () => {
   return fn;
 };
 
-export const useApiClient = () => apiClient;
-
 const globalCatchInterceptor = (e: AxiosError) => {
   const method = e.config?.method?.toUpperCase();
   const url = e.config?.url;
@@ -47,14 +45,20 @@ const globalCatchInterceptor = (e: AxiosError) => {
 
 axios.interceptors.response.use(null, globalCatchInterceptor);
 
-export const disableGlobalCatchInterceptor = () =>
-  axios.interceptors.response.clear();
+const disableGlobalCatchInterceptor = () => axios.interceptors.response.clear();
 
-export const enableGlobalCatchInterceptor = () =>
+const enableGlobalCatchInterceptor = () =>
   axios.interceptors.response.use(null, globalCatchInterceptor);
 
-const apiClient = (token: string) => {
-  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+export const getApiClient = (opts: {
+  token: string;
+  notifyOnError?: boolean;
+}) => {
+  axios.defaults.headers.common["Authorization"] = `Bearer ${opts.token}`;
+
+  opts.notifyOnError
+    ? enableGlobalCatchInterceptor()
+    : disableGlobalCatchInterceptor();
 
   return {
     listRecipes: async () => (await axios.get<Recipe[]>(`/api/recipes`)).data,
@@ -72,5 +76,3 @@ const apiClient = (token: string) => {
       (await axios.delete<{ id: string }>(`/api/recipes/${id}`)).data.id,
   };
 };
-
-export type ApiClient = typeof apiClient;
