@@ -31,22 +31,16 @@ export function App() {
         <Profile />
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
           <Routes>
-            <Route
-              path="/recipes/create"
-              element={<CreateRecipePage />}
-            ></Route>
+            <Route path="/recipes/create" element={<CreateRecipePage />} />
             <Route
               path="/recipes/:recipeId/edit"
               element={<EditRecipePage />}
-            ></Route>
-            <Route path="/recipes/:recipeId" element={<RecipePage />}></Route>
-            <Route path="/recipes" element={<RecipesPage />}></Route>
-            <Route path="/about" element={<AboutPage />}></Route>
-            <Route
-              path="/privacy-policy"
-              element={<PrivacyPolicyPage />}
-            ></Route>
-            <Route path="/" element={<Navigate to="/recipes" replace />} />
+            />
+            <Route path="/recipes/:recipeId" element={<RecipePage />} />
+            <Route path="/recipes" element={<RecipesPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+            <Route path="/" element={<RecipesPage />} />
           </Routes>
         </Container>
       </Box>
