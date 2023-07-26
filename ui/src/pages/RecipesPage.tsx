@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Recipe } from "../../../src/recipe";
-import { useApi } from "../app/hooks";
+import { useApiClient } from "../useApiClient";
 import { RecipeList } from "../features/recipe/RecipeList";
 import { putRecipes } from "../features/recipe/recipeSlice";
 
@@ -10,12 +9,11 @@ export type GroupBy = (typeof GroupByValues)[number];
 
 export function RecipesPage() {
   const d = useDispatch();
+  const client = useApiClient();
 
-  const getRecipes = useApi<Recipe[]>("GET", "/api/recipes");
   useEffect(() => {
-    const [call] = getRecipes();
-    call.then((resp) => d(putRecipes(resp.data)));
-  }, [getRecipes, d]);
+    client.listRecipes().then((recipes) => d(putRecipes(recipes)));
+  }, [client, d]);
 
   return <RecipeList />;
 }

@@ -2,8 +2,7 @@ import { Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { Recipe as RecipeModel } from "../../../src/recipe";
-import { useApi } from "../app/hooks";
+import { useApiClient } from "../useApiClient";
 import { DeleteRecipeDialog } from "../features/recipe/DeleteRecipeDialog";
 import { Recipe } from "../features/recipe/Recipe";
 import { RecipeHeader } from "../features/recipe/RecipeHeader";
@@ -12,6 +11,7 @@ import { putRecipe, selectRecipe } from "../features/recipe/recipeSlice";
 export function RecipePage() {
   const d = useDispatch();
   const nav = useNavigate();
+  const client = useApiClient();
 
   const [deleteDialogData, setDeleteDialogData] = useState<string | undefined>(
     undefined
@@ -22,11 +22,9 @@ export function RecipePage() {
 
   const recipe = useSelector(selectRecipe(recipeId));
 
-  const getRecipe = useApi<RecipeModel>("GET", `/api/recipes/${recipeId}`);
   useEffect(() => {
-    const [call] = getRecipe();
-    call.then((resp) => d(putRecipe(resp.data)));
-  }, [getRecipe, d]);
+    client.getRecipe(recipeId).then((r) => d(putRecipe(r)));
+  }, [client, d, recipeId]);
 
   if (!recipe) {
     return null;
