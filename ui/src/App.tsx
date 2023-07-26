@@ -3,6 +3,7 @@ import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import { Route, Routes } from "react-router-dom";
+import "./App.css";
 import { AppHeader } from "./components/AppHeader";
 import { AboutPage } from "./pages/AboutPage";
 import { CreateRecipePage } from "./pages/CreateRecipePage";
@@ -10,10 +11,6 @@ import { EditRecipePage } from "./pages/EditRecipePage";
 import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
 import { RecipePage } from "./pages/RecipePage";
 import { RecipesPage } from "./pages/RecipesPage";
-
-import "./App.css";
-import { LoginButton } from "./components/LoginButton";
-import { Profile } from "./Profile";
 
 export function App() {
   return (
@@ -25,8 +22,6 @@ export function App() {
         sx={{ flexGrow: 1, height: "100vh", overflow: "auto" }}
       >
         <Toolbar />
-        <LoginButton />
-        <Profile />
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
           <Routes>
             <Route path="/recipes/create" element={<CreateRecipePage />} />

@@ -9,9 +9,8 @@ import { QueryParamProvider } from "use-query-params";
 import { ReactRouter6Adapter } from "use-query-params/adapters/react-router-6";
 import { App } from "./App";
 import { store } from "./app/store";
-import { theme } from "./theme";
-
 import "./index.css";
+import { theme } from "./theme";
 
 const domain = "dev-cuxf3af6zqwbel75.us.auth0.com";
 const clientId = "yXN9cXHPym1LpOkyrItZ2hl7gPD84EF7";

@@ -12,7 +12,6 @@ import {
   Tooltip,
 } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
-import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Typography, { TypographyProps } from "@mui/material/Typography";
@@ -23,6 +22,7 @@ import { useSelector } from "react-redux";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { selectActiveRequests } from "../features/api/apiSlice";
 import { GroupBy } from "../pages/RecipesPage";
+import { UserAvatar } from "./UserAvatar";
 
 const browseMenuOpts: { label: string; value: GroupBy }[] = [
   { label: "By Course", value: "course" },
@@ -51,21 +51,23 @@ export function AppHeader() {
     handleClose();
   };
 
-  const {
-    user,
-    isAuthenticated,
-    isLoading: isAuth0Loading,
-    logout,
-  } = useAuth0();
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-  const handleOpenUserMenu = (e: React.MouseEvent<HTMLElement>) =>
+
+  const handleAvatarClicked = (e: React.MouseEvent<HTMLElement>) => {
+    if (!isAuthenticated) {
+      loginWithRedirect();
+      return;
+    }
+
     setAnchorElUser(e.currentTarget);
+  };
+
   const handleCloseUserMenu = () => setAnchorElUser(null);
 
-  const handleSignOut = () => {
+  const handleLogout = () =>
     logout({ logoutParams: { returnTo: window.location.origin } });
-  };
 
   return (
     <AppBar position="absolute" color="inherit">
@@ -123,9 +125,9 @@ export function AppHeader() {
             <InfoIcon />
           </IconButton>
         </Hidden>
-        <Tooltip title="Open settings">
-          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-            <Avatar alt={user?.name} src={user?.picture} />
+        <Tooltip title={isAuthenticated ? "Open settings" : "Log in"}>
+          <IconButton onClick={handleAvatarClicked} sx={{ p: 0 }}>
+            <UserAvatar />
           </IconButton>
         </Tooltip>
         <Menu
@@ -138,7 +140,7 @@ export function AppHeader() {
           onClose={handleCloseUserMenu}
         >
           <MenuItem onClick={handleCloseUserMenu}>
-            <Typography textAlign="center" onClick={handleSignOut}>
+            <Typography textAlign="center" onClick={handleLogout}>
               Logout
             </Typography>
           </MenuItem>
