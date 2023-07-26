@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { AppHeader } from "./components/AppHeader";
 import { AboutPage } from "./pages/AboutPage";
 import { CreateRecipePage } from "./pages/CreateRecipePage";
@@ -13,7 +13,6 @@ import { RecipesPage } from "./pages/RecipesPage";
 
 import "./App.css";
 import { LoginButton } from "./components/LoginButton";
-import { LogoutButton } from "./components/LogoutButton";
 import { Profile } from "./Profile";
 
 export function App() {
@@ -27,7 +26,6 @@ export function App() {
       >
         <Toolbar />
         <LoginButton />
-        <LogoutButton />
         <Profile />
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
           <Routes>

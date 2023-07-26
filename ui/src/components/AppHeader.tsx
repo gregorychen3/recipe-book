@@ -1,9 +1,18 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import AddIcon from "@mui/icons-material/Add";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import InfoIcon from "@mui/icons-material/Info";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
-import { Button, Hidden, LinearProgress, Menu, MenuItem } from "@mui/material";
+import {
+  Button,
+  Hidden,
+  LinearProgress,
+  Menu,
+  MenuItem,
+  Tooltip,
+} from "@mui/material";
 import AppBar from "@mui/material/AppBar";
+import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Typography, { TypographyProps } from "@mui/material/Typography";
@@ -40,6 +49,22 @@ export function AppHeader() {
   const handleGroupByChanged = (groupBy: GroupBy) => {
     nav(`/recipes?groupBy=${groupBy}`);
     handleClose();
+  };
+
+  const {
+    user,
+    isAuthenticated,
+    isLoading: isAuth0Loading,
+    logout,
+  } = useAuth0();
+
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const handleOpenUserMenu = (e: React.MouseEvent<HTMLElement>) =>
+    setAnchorElUser(e.currentTarget);
+  const handleCloseUserMenu = () => setAnchorElUser(null);
+
+  const handleSignOut = () => {
+    logout({ logoutParams: { returnTo: window.location.origin } });
   };
 
   return (
@@ -98,6 +123,26 @@ export function AppHeader() {
             <InfoIcon />
           </IconButton>
         </Hidden>
+        <Tooltip title="Open settings">
+          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+            <Avatar alt={user?.name} src={user?.picture} />
+          </IconButton>
+        </Tooltip>
+        <Menu
+          sx={{ mt: "45px" }}
+          anchorEl={anchorElUser}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          keepMounted
+          transformOrigin={{ vertical: "top", horizontal: "right" }}
+          open={Boolean(anchorElUser)}
+          onClose={handleCloseUserMenu}
+        >
+          <MenuItem onClick={handleCloseUserMenu}>
+            <Typography textAlign="center" onClick={handleSignOut}>
+              Logout
+            </Typography>
+          </MenuItem>
+        </Menu>
       </Toolbar>
       {isLoading && <LinearProgress />}
     </AppBar>
