@@ -1,4 +1,10 @@
-import { Checkbox, CheckboxProps, FormControl, FormControlLabel, FormHelperText } from "@mui/material";
+import {
+  Checkbox,
+  CheckboxProps,
+  FormControl,
+  FormControlLabel,
+  FormHelperText,
+} from "@mui/material";
 import { Controller, UseControllerProps } from "react-hook-form";
 
 export type ControlledCheckboxProps = {
@@ -21,7 +27,9 @@ export function ControlledCheckbox(props: ControlledCheckboxProps) {
           <FormControl error={hasErr}>
             <FormControlLabel
               label={label}
-              control={<Checkbox checked={field.value} {...field} {...checkboxProps} />}
+              control={
+                <Checkbox checked={field.value} {...field} {...checkboxProps} />
+              }
             />
             {hasErr && <FormHelperText>{errMsg}</FormHelperText>}
           </FormControl>

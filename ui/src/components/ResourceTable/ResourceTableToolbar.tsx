@@ -9,17 +9,20 @@ import _ from "lodash";
 import { ChangeEvent, useState } from "react";
 import { Action, SelectAction } from "./actions";
 
-const StyledToolbar = styled(MuiToolbar, { shouldForwardProp: (p) => p !== "active" })<{ active: boolean }>(
-  ({ active, theme }) => ({
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(1),
-    ...(active
-      ? {
-          backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-        }
-      : {}),
-  })
-);
+const StyledToolbar = styled(MuiToolbar, {
+  shouldForwardProp: (p) => p !== "active",
+})<{ active: boolean }>(({ active, theme }) => ({
+  paddingLeft: theme.spacing(2),
+  paddingRight: theme.spacing(1),
+  ...(active
+    ? {
+        backgroundColor: alpha(
+          theme.palette.primary.main,
+          theme.palette.action.activatedOpacity
+        ),
+      }
+    : {}),
+}));
 
 const ToolbarTitle = styled(Typography)`
   flex: 1 1 100%;
@@ -34,7 +37,14 @@ interface ToolbarProps<T> {
   onSearch: (searchText: string) => void;
 }
 
-export function Toolbar<T>({ title, actions, selectActions, selectedItems, searchText, onSearch }: ToolbarProps<T>) {
+export function Toolbar<T>({
+  title,
+  actions,
+  selectActions,
+  selectedItems,
+  searchText,
+  onSearch,
+}: ToolbarProps<T>) {
   const [showSearchInput, setShowSearchInput] = useState(false);
 
   const handleSearchButtonClicked = () => {
@@ -48,8 +58,9 @@ export function Toolbar<T>({ title, actions, selectActions, selectedItems, searc
   };
 
   const debouncedSearch = _.debounce(onSearch, 300);
-  const handleSearchChanged = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-    debouncedSearch(e.target.value);
+  const handleSearchChanged = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => debouncedSearch(e.target.value);
 
   const numSelected = selectedItems.length;
 
@@ -59,7 +70,13 @@ export function Toolbar<T>({ title, actions, selectActions, selectedItems, searc
         {title} {numSelected > 0 ? `(${numSelected} selected)` : undefined}
       </ToolbarTitle>
 
-      {showSearchInput && <TextField defaultValue={searchText} onChange={handleSearchChanged} autoFocus />}
+      {showSearchInput && (
+        <TextField
+          defaultValue={searchText}
+          onChange={handleSearchChanged}
+          autoFocus
+        />
+      )}
       <IconButton onClick={handleSearchButtonClicked} color="primary">
         <SearchIcon />
       </IconButton>
@@ -73,7 +90,9 @@ export function Toolbar<T>({ title, actions, selectActions, selectedItems, searc
       {numSelected > 0 &&
         selectActions?.map((action) => (
           <Tooltip key={action.title} title={action.title}>
-            <IconButton onClick={() => action.onClick(selectedItems)}>{action.icon}</IconButton>
+            <IconButton onClick={() => action.onClick(selectedItems)}>
+              {action.icon}
+            </IconButton>
           </Tooltip>
         ))}
     </StyledToolbar>

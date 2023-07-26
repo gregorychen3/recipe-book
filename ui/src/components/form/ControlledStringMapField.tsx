@@ -6,7 +6,12 @@ import { useFieldArray } from "react-hook-form";
 import { ControlledTextField } from "./ControlledTextField";
 
 function isTuple(x: any): x is { k: string; v: string } {
-  return x.hasOwnProperty("k") && x.hasOwnProperty("v") && typeof x.k === "string" && typeof x.v === "string";
+  return (
+    x.hasOwnProperty("k") &&
+    x.hasOwnProperty("v") &&
+    typeof x.k === "string" &&
+    typeof x.v === "string"
+  );
 }
 
 function isTupleMap(x: any): x is { k: string; v: string }[] {
@@ -22,11 +27,16 @@ export interface ControlledStringMapFieldProps {
   disabled?: boolean;
 }
 
-export function ControlledStringMapField({ name, disabled = false }: ControlledStringMapFieldProps) {
+export function ControlledStringMapField({
+  name,
+  disabled = false,
+}: ControlledStringMapFieldProps) {
   const { fields, append, remove } = useFieldArray({ name });
 
   if (!isTupleMap(fields)) {
-    throw new Error(`Invalid value passed to form field ${name}: ${JSON.stringify(fields)}`);
+    throw new Error(
+      `Invalid value passed to form field ${name}: ${JSON.stringify(fields)}`
+    );
   }
 
   return (
@@ -35,7 +45,10 @@ export function ControlledStringMapField({ name, disabled = false }: ControlledS
         <React.Fragment key={field.id}>
           <Grid item xs={6}>
             <ControlledTextField
-              ctrlProps={{ name: `${name}.${idx}.k`, rules: { required: "Required" } }}
+              ctrlProps={{
+                name: `${name}.${idx}.k`,
+                rules: { required: "Required" },
+              }}
               textFieldProps={{
                 label: idx === 0 ? "Key" : undefined,
                 fullWidth: true,
@@ -55,7 +68,11 @@ export function ControlledStringMapField({ name, disabled = false }: ControlledS
               }}
             />
             {!disabled && (
-              <IconButton onClick={() => remove(idx)} size="small" sx={{ ml: 1 }}>
+              <IconButton
+                onClick={() => remove(idx)}
+                size="small"
+                sx={{ ml: 1 }}
+              >
                 <DeleteOutlineIcon color="error" />
               </IconButton>
             )}

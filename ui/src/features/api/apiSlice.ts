@@ -39,4 +39,5 @@ export const { reducer: apiReducer } = apiSlice;
 // SELECTORS
 // ---------
 
-export const selectActiveRequests = (state: RootState) => state.api.requestsById;
+export const selectActiveRequests = (state: RootState) =>
+  state.api.requestsById;

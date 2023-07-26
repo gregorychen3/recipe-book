@@ -7,8 +7,8 @@ import { IngredientsSection } from "./IngredientsSection";
 import { InstructionsSection } from "./InstructionsSection";
 import { SourcesSection } from "./SourcesSection";
 import {
-  defaultValues,
   RecipeFormValues,
+  defaultValues,
   recipeFromValues,
   valuesFromRecipe,
 } from "./types";

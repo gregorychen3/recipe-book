@@ -18,11 +18,11 @@ import {
   withDefault,
 } from "use-query-params";
 import { notEmpty } from "../../helpers";
-import { Action, SelectAction } from "./actions";
-import { Column } from "./column";
-import { isOrder, Order } from "./order";
 import { TableHead } from "./ResourceTableHead";
 import { Toolbar } from "./ResourceTableToolbar";
+import { Action, SelectAction } from "./actions";
+import { Column } from "./column";
+import { Order, isOrder } from "./order";
 
 const Container = styled(Paper)`
   width: 100%;

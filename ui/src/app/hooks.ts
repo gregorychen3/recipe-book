@@ -2,7 +2,11 @@ import axios, { AxiosRequestConfig, AxiosResponse, Method } from "axios";
 import { useSnackbar } from "notistack";
 import { useCallback } from "react";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { getNextRequestId, putRequest, removeRequest } from "../features/api/apiSlice";
+import {
+  getNextRequestId,
+  putRequest,
+  removeRequest,
+} from "../features/api/apiSlice";
 import type { AppDispatch, RootState } from "./store";
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
@@ -11,8 +15,10 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-export const setAuthHeader = (val: string) => (axios.defaults.headers.common["Authorization"] = val);
-export const clearAuthHeader = () => delete axios.defaults.headers.common["Authorization"];
+export const setAuthHeader = (val: string) =>
+  (axios.defaults.headers.common["Authorization"] = val);
+export const clearAuthHeader = () =>
+  delete axios.defaults.headers.common["Authorization"];
 
 export const useApi = <R>(
   method: Method,
@@ -62,13 +68,18 @@ export const useApi = <R>(
           promise = axios.patch(url, data, configWithCancel);
           break;
         default:
-          return [Promise.reject(new Error(`Unsupported method ${method}`)), canceler.abort] as const;
+          return [
+            Promise.reject(new Error(`Unsupported method ${method}`)),
+            canceler.abort,
+          ] as const;
       }
 
       return [
         promise
           .catch((e) => {
-            enqueueSnackbar(`${method} ${url} failed: ${e?.message ?? e}`, { variant: "error" });
+            enqueueSnackbar(`${method} ${url} failed: ${e?.message ?? e}`, {
+              variant: "error",
+            });
             throw e;
           })
           .finally(() => d(removeRequest({ id }))),

@@ -14,9 +14,11 @@ export type ControlledAutocompleteProps<
   Multiple extends boolean | undefined,
   DisableClearable extends boolean | undefined,
   FreeSolo extends boolean | undefined,
-  ChipComponent extends React.ElementType = ChipTypeMap["defaultComponent"]
+  ChipComponent extends React.ElementType = ChipTypeMap["defaultComponent"],
 > = {
-  onChange?: (value: AutocompleteValue<T, Multiple, DisableClearable, FreeSolo>) => void;
+  onChange?: (
+    value: AutocompleteValue<T, Multiple, DisableClearable, FreeSolo>
+  ) => void;
   textFieldProps: TextFieldProps;
   ctrlProps: UseControllerProps;
   autocompleteProps: Omit<
@@ -29,7 +31,7 @@ export function ControlledAutocomplete<
   T,
   Multiple extends boolean | undefined = undefined,
   DisableClearable extends boolean | undefined = undefined,
-  FreeSolo extends boolean | undefined = undefined
+  FreeSolo extends boolean | undefined = undefined,
 >(props: ControlledAutocompleteProps<T, Multiple, DisableClearable, FreeSolo>) {
   const { onChange, ctrlProps, textFieldProps, autocompleteProps } = props;
 
@@ -43,8 +45,10 @@ export function ControlledAutocomplete<
 
         const { onChange: fieldOnChange, ...restFieldProps } = field;
 
-        const handleChange = (_: unknown, value: AutocompleteValue<T, Multiple, DisableClearable, FreeSolo>) =>
-          onChange ? onChange(value) : fieldOnChange(value);
+        const handleChange = (
+          _: unknown,
+          value: AutocompleteValue<T, Multiple, DisableClearable, FreeSolo>
+        ) => (onChange ? onChange(value) : fieldOnChange(value));
 
         return (
           <Autocomplete

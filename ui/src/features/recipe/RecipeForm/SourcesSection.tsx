@@ -3,18 +3,21 @@ import { LabelDivider } from "mui-label-divider";
 import React from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { ControlledTextField } from "../../../components/form/ControlledTextField";
-import { defaultSource, RecipeFormValues } from "./types";
+import { RecipeFormValues, defaultSource } from "./types";
 
 export function SourcesSection() {
-  const { fields, append } = useFieldArray<RecipeFormValues>({ name: "sources" });
+  const { fields, append } = useFieldArray<RecipeFormValues>({
+    name: "sources",
+  });
   const { setValue } = useFormContext<RecipeFormValues>();
 
-  const handleSourceFieldChanged = (idx: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(`sources.${idx}`, { value: e.target.value });
-    if (idx === fields.length - 1) {
-      append(defaultSource());
-    }
-  };
+  const handleSourceFieldChanged =
+    (idx: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      setValue(`sources.${idx}`, { value: e.target.value });
+      if (idx === fields.length - 1) {
+        append(defaultSource());
+      }
+    };
 
   return (
     <>
