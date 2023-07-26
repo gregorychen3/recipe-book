@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Recipe } from "../../../src/recipe";
-import { useApi } from "../app/hooks";
+import { getApiClient } from "../features/api/apiClient";
+import { useTokenFn } from "../features/api/useTokenFn";
 import { RecipeForm } from "../features/recipe/RecipeForm";
 import { RecipeHeader } from "../features/recipe/RecipeHeader";
 import { putRecipe, selectRecipe } from "../features/recipe/recipeSlice";
@@ -13,6 +14,7 @@ export function EditRecipePage() {
   const d = useDispatch();
   const nav = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
+  const tokenFn = useTokenFn();
 
   const [headerText, setHeaderText] = useState("");
 
@@ -20,13 +22,13 @@ export function EditRecipePage() {
   const recipeId = params.recipeId!;
   const recipe = useSelector(selectRecipe(recipeId));
 
-  const getRecipe = useApi<Recipe>("GET", `/api/recipes/${recipeId}`);
-  const updateRecipe = useApi<Recipe>("POST", `/api/recipes/${recipeId}`);
-
   useEffect(() => {
-    const [call] = getRecipe();
-    call.then((resp) => d(putRecipe(resp.data)));
-  }, [getRecipe, d]);
+    tokenFn().then((token) =>
+      getApiClient({ token })
+        .getRecipe(recipeId)
+        .then((r) => d(putRecipe(r)))
+    );
+  }, [d, recipeId, tokenFn]);
 
   useEffect(() => {
     setHeaderText(recipe?.name ?? "");
@@ -37,14 +39,17 @@ export function EditRecipePage() {
   }
 
   const handleSubmit = (recipe: Recipe) => {
-    const [call] = updateRecipe(recipe);
-    call.then((resp) => {
-      enqueueSnackbar(`Successfully updated recipe ${resp.data.name}`, {
-        variant: "success",
-      });
-      d(putRecipe(resp.data));
-      nav(`/recipes/${recipeId}`);
-    });
+    tokenFn().then((token) =>
+      getApiClient({ token })
+        .updateRecipe(recipe)
+        .then((r) => {
+          d(putRecipe(r));
+          nav(`/recipes/${r.id}`);
+          enqueueSnackbar(`Successfully updated recipe ${r.name}`, {
+            variant: "success",
+          });
+        })
+    );
   };
 
   const handleRecipeEdited = (recipe: Recipe) => setHeaderText(recipe.name);

@@ -9,8 +9,9 @@ import TextField from "@mui/material/TextField";
 import { useSnackbar } from "notistack";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useApi } from "../../app/hooks";
 import { removeRecipe, selectRecipe } from "../../features/recipe/recipeSlice";
+import { getApiClient } from "../api/apiClient";
+import { useTokenFn } from "../api/useTokenFn";
 
 interface DeleteRecipeDialogProps {
   recipeId?: string;
@@ -23,28 +24,28 @@ export function DeleteRecipeDialog({
   const d = useDispatch();
   const nav = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
+  const tokenFn = useTokenFn();
 
   const recipe = useSelector(selectRecipe(recipeId ?? ""));
   const recipeName = recipe ? recipe.name : "";
 
-  const deleteRecipe = useApi<{ id: string }>(
-    "DELETE",
-    `/api/recipes/${recipeId}`
-  );
   const handleDelete = () => {
     if (!recipeId) {
       return;
     }
 
-    const [call] = deleteRecipe();
-    call.then((resp) => {
-      enqueueSnackbar(`Successfully deleted recipe ${resp.data.id}`, {
-        variant: "success",
-      });
-      d(removeRecipe(resp.data.id));
-      onClose();
-      nav("/recipes");
-    });
+    tokenFn().then((token) =>
+      getApiClient({ token })
+        .deleteRecipe(recipeId)
+        .then((id) => {
+          enqueueSnackbar(`Successfully deleted recipe ${id}`, {
+            variant: "success",
+          });
+          d(removeRecipe(id));
+          onClose();
+          nav("/recipes");
+        })
+    );
   };
 
   return (
