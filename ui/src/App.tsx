@@ -12,6 +12,7 @@ import { RecipePage } from "./pages/RecipePage";
 import { RecipesPage } from "./pages/RecipesPage";
 
 import "./App.css";
+import { LoginButton } from "./components/LoginButton";
 
 export function App() {
   return (
@@ -23,6 +24,7 @@ export function App() {
         sx={{ flexGrow: 1, height: "100vh", overflow: "auto" }}
       >
         <Toolbar />
+        <LoginButton />
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
           <Routes>
             <Route
