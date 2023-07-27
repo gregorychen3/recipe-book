@@ -7,7 +7,7 @@ interface Props {
 
 export const AuthGuard = ({ component }: Props) => {
   const Component = withAuthenticationRequired(component, {
-    onRedirecting: () => <div>Loading...</div>,
+    onRedirecting: () => <div>Redirecting...</div>,
   });
 
   return <Component />;
