@@ -5,12 +5,12 @@ import Toolbar from "@mui/material/Toolbar";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { AppHeader } from "./components/AppHeader";
-import { AboutPage } from "./pages/AboutPage";
-import { CreateRecipePage } from "./pages/CreateRecipePage";
-import { EditRecipePage } from "./pages/EditRecipePage";
-import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
-import { RecipePage } from "./pages/RecipePage";
-import { RecipesPage } from "./pages/RecipesPage";
+import { AboutPage } from "./app/AboutPage";
+import { CreateRecipePage } from "./features/recipe/CreateRecipePage";
+import { EditRecipePage } from "./features/recipe/EditRecipePage";
+import { PrivacyPolicyPage } from "./app/PrivacyPolicyPage";
+import { RecipePage } from "./features/recipe/RecipePage";
+import { RecipesPage } from "./features/recipe/RecipesPage";
 
 export function App() {
   return (

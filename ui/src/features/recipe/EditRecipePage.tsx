@@ -1,14 +1,14 @@
 import { Grid } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { useNavigate, useParams } from "react-router-dom";
-import { Recipe } from "../../../src/recipe";
-import { getApiClient } from "../features/api/apiClient";
-import { useTokenFn } from "../features/api/useTokenFn";
-import { RecipeForm } from "../features/recipe/RecipeForm";
-import { RecipeHeader } from "../features/recipe/RecipeHeader";
-import { putRecipe, selectRecipe } from "../features/recipe/recipeSlice";
+import { Recipe } from "../../../../src/recipe";
+import { getApiClient } from "../api/apiClient";
+import { useTokenFn } from "../api/useTokenFn";
+import { RecipeForm } from "./RecipeForm";
+import { RecipeHeader } from "./RecipeHeader";
+import { putRecipe, selectRecipe } from "./recipeSlice";
 
 export function EditRecipePage() {
   const d = useAppDispatch();
