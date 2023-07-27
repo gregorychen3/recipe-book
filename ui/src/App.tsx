@@ -4,11 +4,11 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
+import { AboutPage } from "./components/layout/AboutPage";
 import { AppHeader } from "./components/layout/AppHeader";
-import { AboutPage } from "./app/AboutPage";
+import { PrivacyPolicyPage } from "./components/layout/PrivacyPolicyPage";
 import { CreateRecipePage } from "./features/recipe/CreateRecipePage";
 import { EditRecipePage } from "./features/recipe/EditRecipePage";
-import { PrivacyPolicyPage } from "./app/PrivacyPolicyPage";
 import { RecipePage } from "./features/recipe/RecipePage";
 import { RecipesPage } from "./features/recipe/RecipesPage";
 
