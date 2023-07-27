@@ -13,6 +13,8 @@ import { auth0Config } from "./auth0Config";
 import "./index.css";
 import { theme } from "./theme";
 
+console.log(window.location.origin);
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Auth0Provider
