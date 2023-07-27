@@ -8,6 +8,7 @@ import { CreateRecipePage } from "./features/recipe/CreateRecipePage";
 import { EditRecipePage } from "./features/recipe/EditRecipePage";
 import { RecipePage } from "./features/recipe/RecipePage";
 import { RecipesPage } from "./features/recipe/RecipesPage";
+import { AuthGuard } from "./features/user/AuthGuard";
 
 export function App() {
   const { isLoading } = useAuth0();
@@ -19,13 +20,28 @@ export function App() {
   return (
     <Routes>
       <Route element={<AppLayout />}>
-        <Route path="/recipes/create" element={<CreateRecipePage />} />
-        <Route path="/recipes/:recipeId/edit" element={<EditRecipePage />} />
-        <Route path="/recipes/:recipeId" element={<RecipePage />} />
-        <Route path="/recipes" element={<RecipesPage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-        <Route path="/" element={<RecipesPage />} />
+        <Route
+          path="/recipes/create"
+          element={<AuthGuard component={CreateRecipePage} />}
+        />
+        <Route
+          path="/recipes/:recipeId/edit"
+          element={<AuthGuard component={EditRecipePage} />}
+        />
+        <Route
+          path="/recipes/:recipeId"
+          element={<AuthGuard component={RecipePage} />}
+        />
+        <Route
+          path="/recipes"
+          element={<AuthGuard component={RecipesPage} />}
+        />
+        <Route path="/about" element={<AuthGuard component={AboutPage} />} />
+        <Route
+          path="/privacy-policy"
+          element={<AuthGuard component={PrivacyPolicyPage} />}
+        />
+        <Route path="/" element={<AuthGuard component={RecipesPage} />} />
       </Route>
     </Routes>
   );
