@@ -1,13 +1,13 @@
 import { Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getApiClient } from "../features/api/apiClient";
-import { useTokenFn } from "../features/api/useTokenFn";
-import { DeleteRecipeDialog } from "../features/recipe/DeleteRecipeDialog";
-import { Recipe } from "../features/recipe/Recipe";
-import { RecipeHeader } from "../features/recipe/RecipeHeader";
-import { putRecipe, selectRecipe } from "../features/recipe/recipeSlice";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { getApiClient } from "../api/apiClient";
+import { useTokenFn } from "../api/useTokenFn";
+import { DeleteRecipeDialog } from "./DeleteRecipeDialog";
+import { Recipe } from "./Recipe";
+import { RecipeHeader } from "./RecipeHeader";
+import { putRecipe, selectRecipe } from "./recipeSlice";
 
 export function RecipePage() {
   const d = useAppDispatch();

@@ -9,7 +9,7 @@ import { QueryParamProvider } from "use-query-params";
 import { ReactRouter6Adapter } from "use-query-params/adapters/react-router-6";
 import { App } from "./App";
 import { store } from "./app/store";
-import { auth0Config } from "./auth0Config";
+import { auth0Config } from "./features/user/auth0Config";
 import "./index.css";
 import { theme } from "./theme";
 

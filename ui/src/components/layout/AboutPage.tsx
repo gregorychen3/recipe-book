@@ -1,7 +1,7 @@
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { IconButton, Link, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { IconWithText } from "../components/IconWithText";
+import { IconWithText } from "../IconWithText";
 
 const imagePath = "./gregandally.jpg";
 

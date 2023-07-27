@@ -1,5 +1,5 @@
 import { Grid, Typography } from "@mui/material";
-import { ActionMenu } from "../../components/ActionMenu";
+import { ActionMenu } from "./ActionMenu";
 
 interface Props {
   title: string;
