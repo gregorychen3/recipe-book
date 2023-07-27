@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { AboutPage } from "./components/layout/AboutPage";
@@ -9,6 +10,12 @@ import { RecipePage } from "./features/recipe/RecipePage";
 import { RecipesPage } from "./features/recipe/RecipesPage";
 
 export function App() {
+  const { isLoading } = useAuth0();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Routes>
       <Route element={<AppLayout />}>
