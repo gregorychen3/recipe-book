@@ -17,12 +17,9 @@ app.use(express.json());
 
 app.use("/test", testRouter);
 
-app.use(jwtCheck);
-app.use(jwtDecode);
-
 app.use("/", uiRouter);
 
-app.use("/api/recipes", recipeRouter);
+app.use("/api/recipes", jwtCheck, jwtDecode, recipeRouter);
 
 // catchall: send UI index.html file.
 app.get("/*", (_, res) => {
