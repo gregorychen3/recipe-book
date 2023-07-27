@@ -2,12 +2,13 @@ import express, { NextFunction, Request, Response } from "express";
 import createError, { HttpError } from "http-errors";
 import morgan from "morgan";
 import path from "path";
+import "./db/db"; // for side effect of initializing db conn
 import { logger } from "./logger";
+import { jwtCheck } from "./middlewares/jwtCheck";
+import { jwtDecode } from "./middlewares/jwtDecode";
 import { recipeRouter } from "./routes/recipe";
 import { testRouter } from "./routes/test";
 import { uiRouter } from "./routes/ui";
-
-import "./db/db"; // for side effect of initializing db conn
 
 const app = express();
 
@@ -15,6 +16,9 @@ app.use(morgan(process.env.NODE_ENV === "development" ? "dev" : "tiny"));
 app.use(express.json());
 
 app.use("/test", testRouter);
+
+app.use(jwtCheck);
+app.use(jwtDecode);
 
 app.use("/", uiRouter);
 

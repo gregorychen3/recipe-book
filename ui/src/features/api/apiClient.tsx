@@ -9,8 +9,9 @@ export const getApiClient = (opts: {
   notifyOnError?: boolean;
 }) => {
   axios.defaults.headers.common["Authorization"] = `Bearer ${opts.token}`;
+  const notifyOnError = opts.notifyOnError ?? true;
 
-  opts.notifyOnError
+  notifyOnError
     ? enableGlobalCatchInterceptor()
     : disableGlobalCatchInterceptor();
 

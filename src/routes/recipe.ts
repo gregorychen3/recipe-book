@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { v4 as uuidv4 } from "uuid";
 import { db } from "../db/db";
+import { requireEditPermission } from "../middlewares/authorization";
 import { recipeValidation } from "../middlewares/recipeValidation";
 import { Recipe } from "../recipe";
 
@@ -32,6 +33,7 @@ recipeRouter.get("/:id", async (req, res) => {
 
 recipeRouter.post(
   "/",
+  requireEditPermission,
   recipeValidation,
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
@@ -52,6 +54,7 @@ recipeRouter.post(
 
 recipeRouter.post(
   "/:id",
+  requireEditPermission,
   recipeValidation,
   async (req: Request, res: Response) => {
     const rid = req.params.id;
@@ -70,7 +73,7 @@ recipeRouter.post(
   }
 );
 
-recipeRouter.delete("/:id", async (req, res) => {
+recipeRouter.delete("/:id", requireEditPermission, async (req, res) => {
   const rid = req.params.id;
   const dbResp = await db.query<{ body: Recipe }>(deleteRecipeQ, [rid]);
   return res.send(dbResp.rows[0].body);

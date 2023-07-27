@@ -9,8 +9,8 @@ export const useTokenFn = () => {
     () =>
       getAccessTokenSilently({
         authorizationParams: {
-          audience: `https://${auth0Config.domain}/api/v2/`,
-          scope: "read:current_user",
+          audience: auth0Config.audience,
+          scope: auth0Config.scope,
         },
       }),
     [getAccessTokenSilently]
