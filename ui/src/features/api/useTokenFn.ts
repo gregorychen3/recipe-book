@@ -10,7 +10,7 @@ export const useTokenFn = () => {
       getAccessTokenSilently({
         authorizationParams: {
           audience: auth0Config.audience,
-          scope: "read:current_user",
+          scope: "read:recipes edit:recipes",
         },
       }),
     [getAccessTokenSilently]
