@@ -4,7 +4,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import { AppHeader } from "./components/AppHeader";
+import { AppHeader } from "./components/layout/AppHeader";
 import { AboutPage } from "./app/AboutPage";
 import { CreateRecipePage } from "./features/recipe/CreateRecipePage";
 import { EditRecipePage } from "./features/recipe/EditRecipePage";

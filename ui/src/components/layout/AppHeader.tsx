@@ -18,9 +18,9 @@ import { styled } from "@mui/material/styles";
 import _ from "lodash";
 import React, { useState } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
-import { useAppSelector } from "../app/hooks";
-import { selectActiveRequests } from "../features/api/apiSlice";
-import { UserAvatar } from "./UserAvatar";
+import { useAppSelector } from "../../app/hooks";
+import { selectActiveRequests } from "../../features/api/apiSlice";
+import { UserAvatar } from "../../features/user/UserAvatar";
 
 const AppTitle = styled(Typography)<TypographyProps>(() => ({
   flexGrow: 1,
