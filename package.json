@@ -41,7 +41,7 @@
     "@types/node": "^16.18.11",
     "@types/pg": "^8.6.6",
     "@types/uuid": "^9.0.0",
-    "axios": "^1.2.2",
+    "axios": "^1.8.2",
     "express": "^4.18.2",
     "express-oauth2-jwt-bearer": "^1.5.0",
     "express-validator": "^6.14.2",
