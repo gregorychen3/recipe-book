@@ -29,7 +29,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "fuse.js": "^6.6.2",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "mui-label-divider": "^4.0.21",
     "notistack": "^3.0.1",
     "prettier": "^3.0.0",
